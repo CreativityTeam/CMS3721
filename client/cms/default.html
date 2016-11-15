@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en" ng-app="cms">
+<head>
+	<meta charset="utf-8" />
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>CMS || Manage App Project || Created By Creativity App Team</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Bootstrap core CSS     -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Paper Dashboard core CSS    -->
+    <link href="assets/css/paper-dashboard.css" rel="stylesheet"/>
+    <link href="assets/css/demo.css" rel="stylesheet"/>
+
+	<link rel="stylesheet" href="assets/loadres/css/main.css">
+	<script src="assets/loadres/js/modernizr-2.6.2.min.js"></script>   
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.css" rel="stylesheet" />
+    <!--  Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    
+
+</head>
+<body ng-controller="DefaultController">
+<div id="loader-wrapper">
+			<div id="loader"></div>
+			<div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+</div>
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a ui-sref="home" class="simple-text">
+                    Creativity App
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li>
+                    <a ui-sref="home">
+                        <i class="ti-panel"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="user" ng-click="manageuser()">
+                        <i class="ti-user"></i>
+                        <p>User</p>
+                    </a>
+                     <div ng-hide="isHide.user">
+                        <ul class="manage">
+                             <li ng-hide="isHide.supperUser">
+                                <a ui-sref="usermanage">
+                                    User
+                                </a>
+                            </li>
+                            <li ng-class="list">
+                                <a href="#">
+                                    Favorite Restaurant
+                                </a>
+                            </li>
+                            <li class="list">
+                                <a href="#">
+                                    Favorite Food
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a ui-sref="restaurant" ng-click="managerestaurant()">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Restaurant</p>
+                    </a>
+                     <div ng-hide="isHide.res">
+                        <ul class="manage">
+                            <li>
+                                <a href="#">
+                                    Create Restaurant
+                                </a>
+                            </li>
+                            <li class="list">
+                                <a href="#">
+                                    Comment
+                                </a>
+                            </li>
+                            <li class="list">
+                                <a href="#">
+                                    Service
+                                </a>
+                            </li>
+                            <li class="list">
+                                <a href="#">
+                                    Publicity
+                                </a>
+                            </li>
+                            <li class="list">
+                                <a href="#">
+                                    Food
+                                </a>
+                            </li>
+                            <li class="list">
+                                <a href="#">
+                                    Order
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a ui-sref="photo">
+                        <i class="ti-save-alt"></i>
+                        <p>Photos</p>
+                    </a>
+                </li>
+                <li ng-hide="isHide.supperUser">
+                    <a ui-sref="comment">
+                        <i class="ti-text"></i>
+                        <p>Comment</p>
+                    </a>
+                </li>
+                <li ng-hide="isHide.supperUser">
+                    <a ui-sref="food">
+                        <i class="ti-receipt"></i>
+                        <p>Food</p>
+                    </a>
+                </li>
+                <li ng-hide="isHide.supperUser">
+                    <a ui-sref="order">
+                        <i class="ti-bell"></i>
+                        <p>Order</p>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="message">
+                        <i class="ti-email"></i>
+                        <p>Message</p>
+                    </a>
+                </li>
+                <li ng-hide="isHide.supperUser">
+                    <a ui-sref="publicity">
+                        <i class="ti-cloud-up"></i>
+                        <p>Publicity</p>
+                    </a>
+                </li>
+                <li ng-hide="isHide.supperUser">
+                    <a ui-sref="service">
+                        <i class="ti-rss"></i>
+                        <p>Service</p>
+                    </a>
+                </li>
+            </ul>
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Welcome {{ name }}</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="ti-panel"></i>
+								<p>Stats</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-bell"></i>
+                                    <p class="notification">5</p>
+									<p>Notifications</p>
+									<b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Notification 1</a></li>
+                                <li><a href="#">Notification 2</a></li>
+                                <li><a href="#">Notification 3</a></li>
+                                <li><a href="#">Notification 4</a></li>
+                                <li><a href="#">Another notification</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                            <a ng-click="logout()">
+								<i class="ti-settings"></i>
+								<p>Sign Out</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+	        <div class="container-fluid">
+                <div ui-view></div>
+	        </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="http://www.creative-tim.com">
+                                Creative Tim
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://blog.creative-tim.com">
+                               Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.creative-tim.com/license">
+                                Licenses
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright pull-right">
+                    &copy; <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creativity App</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+
+    <!--   Core JS Files   -->
+    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/js/paper-dashboard.js" type="text/javascript"></script>
+
+    <!--  Angular Plugin -->
+    <script src="node_modules/angular/angular.min.js"></script>
+
+    <!--  Angular Router -->
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.js"></script>
+    <script src="jslib/mainjs/main.js"></script>
+    <script src="jslib/mainjs/mainroute.js"></script>
+    <script src="jslib/config/constant.js"></script>
+    <script src="jslib/config/service.js"></script>
+    <script src="jslib/controllers/defaultctrl.js"></script>
+    <script src="jslib/controllers/userctrl.js"></script>
+    <script src="jslib/controllers/photoctrl.js"></script>
+    <script src="assets/loadres/js/main.js"></script>
+</html>

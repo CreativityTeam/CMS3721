@@ -1,0 +1,43 @@
+{
+  "name": "mobile-project",
+  "version": "1.0.0",
+  "description": "Mobile Project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CreativityTeam/CMS3721.git"
+  },
+  "keywords": [
+    "mobile",
+    "mobile",
+    "project"
+  ],
+  "author": "Creative Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CreativityTeam/CMS3721/issues"
+  },
+  "homepage": "https://github.com/CreativityTeam/CMS3721.git#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "express-validator": "^2.20.10",
+    "jwt-simple": "^0.5.0",
+    "moment": "^2.15.1",
+    "mongoose": "^4.6.1",
+    "multer": "^1.2.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0"
+  }
+}

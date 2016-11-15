@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="Loginapp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Narrow Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a ui-sref="home" ui-sref-active="active">Home</a></li>
+            <li role="presentation"><a ui-sref="about" ui-sref-active="active">About</a></li>
+            <li role="presentation"><a ui-sref="register" ui-sref-active="active">Register</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Login App</h3>
+      </div>
+      <div ui-view></div>      
+
+      <footer class="footer">
+        <p>&copy; 2016 Company, Inc.</p>
+      </footer>
+
+    </div> <!-- /container -->
+  </body>
+  <!-- Angular Js-->
+  <script type="text/javascript" src="angular/angular.min.js"></script>
+  <!-- Angular Ui Router Js-->
+  <script src="angular-ui-router/release/angular-ui-router.min.js"></script>
+  <!-- LoginApp Js-->
+  <script src="js/loginapp.js"></script>
+  <!-- Main Route Js-->
+  <script src="js/approute.js"></script>
+  <!-- Constant Js-->
+  <script src="js/constant.js"></script>
+  <!-- Constant Js-->
+  <script src="js/service.js"></script>
+  <!-- Controller for Home Page-->
+  <script src="basectrl.js"></script>
+  <!-- Controller for About Page-->
+  <Script src="aboutctrl.js"></script>
+  <!-- Controller for Login Page-->
+  <Script src="loginctrl.js"></script>
+  <!-- Controller for Register Page-->
+  <Script src="registerctrl.js"></script>
+</html>

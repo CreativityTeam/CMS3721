@@ -1,0 +1,73 @@
+<div class="row">
+	<toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Photo Manager</h4>		
+				<loading></loading>
+			</div>
+			<form class="content">
+				<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="exampleInputEmail1">User Id</label>
+								<input type="text" class="form-control border-input" placeholder="User Id" value="{{ user._id }}" disabled>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="inputype">Photo</label>
+								<input id = "file" type="file" class="form-control border-input" placeholder="File">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="inputype">Description</label>
+								<input type="text" class="form-control border-input" placeholder="Decription" ng-model="photo.decription" required>
+							</div>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<button class="btn btn-sm btn-info" ng-click="uploadPhoto()"><strong>Upload Photo</strong></button>
+							</div>
+						</div>
+				</div>
+  			</form>
+			<div class="content table-responsive">
+				<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+      							<div class="input-group">
+        							<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        							<input type="text" class="form-control" placeholder="Search Photo" ng-model="searchPhoto">
+      							</div>      
+   							</div>
+						</div>
+				</div>
+				<table class="table">
+					<thead>
+						<th>ID</th>
+						<th>Photo</th>
+						<th>UserID</th>
+						<th>URL</th>
+						<th>Decription</th>
+						<th>Tool</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="photo in photoList | filter:searchPhoto">
+							<td>{{ photo._id }}</td>
+							<td><img ng-src="{{photo.url}}" border=3 height=100 width=100></img></td>
+							<td>{{ photo.userid }}</td>
+							<td>{{ photo.url }}</td>
+							<td>{{ photo.description }}</td>
+							<td><button class="btn btn-danger" ng-click="remove(photo._id)">Remove</button></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
