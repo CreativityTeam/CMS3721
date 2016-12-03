@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var configAuth = require('../config/auth');
 var Restaurant = require('../models/restaurant');
+var jwt = require('jwt-simple');
 
 router.post('/register',function(req,res){
     var userid = req.body._id;
@@ -56,10 +57,10 @@ router.get('/findad/:token',function(req,res){
     var decoded = jwt.decode(token,configAuth.secret);
     Restaurant.findAdmin(decoded._id,function(err,restaurant){
         if(err) throw err;
-        if(!restaurant){
+        if(!restaurant.hasOwnProperty('_id')){
             res.json({
                 success:false,
-                msg : "You dont have any restaurant, Please create it"
+                msg : "You dont have any restaurants, Click here to create your restaurant"
             });    
         }else{
             res.json({

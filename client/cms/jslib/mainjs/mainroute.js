@@ -20,7 +20,8 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('restaurant',{
             url: '/restaurant',
-            templateUrl: 'table.html'
+            controller : 'rescontroller',
+            templateUrl: 'resmng.html'
         })
         .state('comment',{
             url: '/comment',
