@@ -1,6 +1,6 @@
 var userctrl = angular.module("userctrl",[]);
 
-userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPOINT,toaster){
+userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPOINT,toaster,NgMap,NavigatorGeolocation){
     $scope.searchName = "";
     $scope.map = "map.html";
      var getinfo = function(){
@@ -61,6 +61,14 @@ userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPO
          });      
     };
 
+    var getUserCurrentLocation = function(){
+        NavigatorGeolocation.getCurrentPosition().then(function(position) {
+            $scope.lat = position.coords.latitude;
+            $scope.lng = position.coords.longitude;
+        });
+    }
+
+    getUserCurrentLocation()
     getAllUser();
     getinfo();  
 });
