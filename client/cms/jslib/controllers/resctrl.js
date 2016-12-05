@@ -1,6 +1,6 @@
 var resctrl = angular.module("resctrl",[]);
 
-resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,NgMap,NavigatorGeolocation){
+resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster){
     /**Set Register Form to Hide */
     $('#resform').hide(); 
     $scope.isfilledAdd = false;       
@@ -28,23 +28,27 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     };
 
     $scope.validateadd= function(){
-        let addressList= [];  
         $http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + $scope.restaurant.address + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
-            var results = response.results;
-            console.log(response);
-            for(address in results){  
-                addressList.push(results[address].geometry.location);
-            }
+            initmap(response);
         });
-        $scope.addressResult = addressList;
-        console.log(addressList);
         $scope.isfilledAdd = true;
     }
 
-    $scope.open = function(){
-        NgMap.getMap().then(function(map) {
-            infowindow.open(map);
+    function initmap(addressList){
+        var position = {
+            lat: addressList.results[0].geometry.location.lat, 
+            lng: addressList.results[0].geometry.location.lng
+        };
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center:  position
         });
+        for(address in addressList.results){
+            var marker = new google.maps.Marker({
+                position: addressList.results[address].geometry.location,
+                map: map
+            }); 
+        }
     }
 
     getRestaurant();

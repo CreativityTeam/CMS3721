@@ -46,9 +46,7 @@
 				</form>
 				<div class="row" ng-show="isfilledAdd">
 					<div class="col-md-12">
-						 <ng-map zoom = "11" center="[{{addressResult[0].lat}}, {{addressResult[0].lng}}]">
-							  <marker ng-repeat="p in addressResult" position="[{{p.lat}}, {{p.lng}}]"></marker>
-						 </ng-map>
+						 <div id="map"></div>
 					</div>
 				</div>
 			</div>

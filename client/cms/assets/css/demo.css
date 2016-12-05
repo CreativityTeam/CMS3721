@@ -76,3 +76,8 @@ ul.manage {
 ul.manage li.list {
   	padding-top: 20px;
 }
+
+#map {
+    height: 400px;
+    width: 100%;
+}
