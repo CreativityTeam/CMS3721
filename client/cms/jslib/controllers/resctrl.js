@@ -3,6 +3,7 @@ var resctrl = angular.module("resctrl",[]);
 resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster){
     /**Set Register Form to Hide */
     $('#resform').hide(); 
+    var map;
     $scope.isfilledAdd = false;       
     /**Get restaurant that belong to current user */
     var getRestaurant = function(){
@@ -39,18 +40,26 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             lat: addressList.results[0].geometry.location.lat, 
             lng: addressList.results[0].geometry.location.lng
         };
-        var map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
           zoom: 12,
           center:  position
         });
-        for(address in addressList.results){
-            var marker = new google.maps.Marker({
-                position: addressList.results[address].geometry.location,
+        for (var i = 0; i < addressList.results.length; i++) {
+            var marker = "marker" + i;
+            marker = new google.maps.Marker({
+                position: addressList.results[i].geometry.location,
+                animation: google.maps.Animation.DROP,
                 map: map
-            }); 
+            });
+            var location = addressList.results[i].geometry.location
+            google.maps.event.addListener(marker,'click', (function(marker,location){ 
+                return function() {
+                    console.log(location);
+                };
+            })(marker,location)); 
         }
     }
-
+    
     getRestaurant();
     getCurrentUser();
 });
