@@ -2,7 +2,7 @@ var app = angular.module('cms',[
     'ui.router',
     'mainroute',
     'globalvar',
-    'authservice',
+    'appservice',
     'defaultctrl',
     'userctrl',
     'photoctrl',

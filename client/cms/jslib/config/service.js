@@ -1,6 +1,6 @@
-var authservice = angular.module('authservice',[]);
+var appservice = angular.module('appservice',[]);
 
-authservice.service('AuthService',function($q, $http,API_ENDPOINT){
+appservice.service('AuthService',function($q, $http,API_ENDPOINT){
     var token_local = "Create Toke Pls";
     var isAuthenticated = false;
     var authToken;
@@ -68,4 +68,27 @@ authservice.service('AuthService',function($q, $http,API_ENDPOINT){
     tokensave : function() {return authToken;},
     isAuthenticated: function() {return isAuthenticated;}
   };
+});
+
+appservice.service('checkConnection',function($q, $http,API_ENDPOINT){
+    this.check = function(){
+        var async = $q.defer();
+        $http.get(API_ENDPOINT.url + '/checkconnections').then(function(response){
+            if(response.status == 200){
+                async.resolve(response.status);
+            }else{
+                async.reject(response.status);         
+            }
+        });
+        return async.promise;
+        /*return $q(function(resolve,reject){
+            $http.get(API_ENDPOINT.url + '/checkconnection').then(function(response){
+                if (response.status == 200){
+                    resolve(response.status); 
+                }else{
+                    reject(response.status);    
+                }
+            });
+        })*/
+    };
 });

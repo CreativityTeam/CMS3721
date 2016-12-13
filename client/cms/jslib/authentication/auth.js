@@ -1,6 +1,6 @@
 var auth = angular.module('auth',[
     'globalvar',
-    'authservice',
+    'appservice',
     'toaster',
     'ngAnimate'
 ]);
@@ -23,16 +23,6 @@ auth.directive('loading',function(){
 });
 
 auth.controller('logincontroller',function($scope,$http,$window,AuthService,API_ENDPOINT,toaster){
-    var checkconnection = function(){
-        $http.get(API_ENDPOINT.url + '/checkconnection').success(function(response){
-            if (response.status == 200){
-                $scope.isHide = true;   
-            }else{
-                $scope.isHide = false;   
-            }
-        });
-    }
-    checkconnection();
     $scope.login = function(){
         $scope.loading = true;
         AuthService.login($scope.user).then(function(msg){
