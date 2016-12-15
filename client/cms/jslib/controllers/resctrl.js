@@ -78,7 +78,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                     if(idCityInList == idCity){
                         $scope.districts = data.data.city[i].Quan   
                     }
-                })(data.data.city[i].id,$scope.restaurant.city.id)*/
+                })(data.data.city[i].id,$scope.restaurant.city.id)
             }
         })    
     }
