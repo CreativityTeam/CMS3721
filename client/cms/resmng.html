@@ -28,12 +28,28 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-4">
 							<div class="form-group">
-								<label>Address</label>
-								<input type="text" class="form-control border-input" ng-model="restaurant.address">
+								<label>House Number</label>
+								<input type="text" class="form-control border-input" ng-model="restaurant.housenumber">
 							</div>
-						</div>				
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="sel2">District</label>
+								<select class="form-control" id="sel2" ng-model="restaurant.district.id" ng-disabled="!restaurant.city.id">
+    								<option ng-repeat="district in districts" value="{{district.id}}">{{ district.name }}</option>
+  								</select>
+							</div>
+						</div>	
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="sel1">City</label>
+								<select class="form-control" id="sel1" ng-change="loadDistrict()" ng-model="restaurant.city.id">
+    								<option value="{{city.id}}" ng-repeat="city in cities">{{ city.name }}</option>
+  								</select>
+							</div>
+						</div>					
 					</div>
 					<div class="row">
 						<div class="col-md-12">

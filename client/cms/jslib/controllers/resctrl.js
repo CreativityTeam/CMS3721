@@ -60,6 +60,29 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }
     }
     
+    var loadCity = function(){
+        $http.get("jslib/config/countryVN.json").then(function(data){
+            $scope.cities = data.data.city;
+        })
+    }
+
+    $scope.loadDistrict = function(){
+        $http.get("jslib/config/countryVN.json").then(function(data){
+            for(var i = 0;i < data.data.city.length;i++){
+                /**Cach viet 1 */
+                if(data.data.city[i].id == $scope.restaurant.city.id){
+                        $scope.districts = data.data.city[i].Quan   
+                }
+                /**Cach viet 2 */
+                (function(idCityInList,idCity){
+                    if(idCityInList == idCity){
+                        $scope.districts = data.data.city[i].Quan   
+                    }
+                })(data.data.city[i].id,$scope.restaurant.city.id)*/
+            }
+        })    
+    }
+    loadCity();
     getRestaurant();
     getCurrentUser();
 });

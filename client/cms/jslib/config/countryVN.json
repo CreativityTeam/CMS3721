@@ -1,0 +1,40 @@
+{ "city" : [
+    {
+        "id" : 1,
+        "name" : "Ho Chi Minh City",
+        "Quan" : [
+            {"id" : 1,"name" : "Quan 1"},
+            {"id" : 2,"name" : "Quan 2"},
+            {"id" : 3,"name" : "Quan 3"},
+            {"id" : 4,"name" : "Quan 4"},
+            {"id" : 5,"name" : "Quan 5"},
+            {"id" : 6,"name" : "Quan 6"},
+            {"id" : 7,"name" : "Quan 7"},
+            {"id" : 8,"name" : "Quan 8"},
+            {"id" : 9,"name" : "Quan 9"},
+            {"id" : 10,"name" : "Quan 10"},
+            {"id" : 11,"name" : "Quan 11"},
+            {"id" : 12,"name" : "Quan 12"},
+            {"id" : 13,"name" : "Quan Go Vap"},
+            {"id" : 14,"name" : "Quan Thu Duc"},
+            {"id" : 15,"name" : "Quan Binh Thanh"},
+            {"id" : 16,"name" : "Quan Phu Nhuan"},
+            {"id" : 17,"name" : "Quan Tan Binh"},
+            {"id" : 18,"name" : "Quan Tan Phu"},
+            {"id" : 19,"name" : "Quan Binh Tan"},
+            {"id" : 20,"name" : "Huyen Nha Be"},
+            {"id" : 21,"name" : "Huyen Hoc Mon"},
+            {"id" : 22,"name" : "Huyen Can Gio"}
+        ]
+    },
+    {
+        "id" : 2,
+        "name" : "Ha Noi City",
+        "Quan" : [
+            {"id" : 1,"name" : "Quan Hoan Kien"},
+            {"id" : 2,"name" : "Quan Ba Dinh"},
+            {"id" : 3,"name" : "Quan Hai Ba Trung"},
+            {"id" : 4,"name" : "Quan Cau Giay"}
+        ]
+    }
+]}
