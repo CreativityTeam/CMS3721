@@ -11,8 +11,13 @@ var RestaurantSchema = mongoose.Schema({
         type : String
     },
     location:{
-        longitude : Number,
-        latitude : Number
+        housenumber : String,
+        district : String,
+        city : String,
+        point:{
+            longitude : Number,
+            latitude : Number
+        }
     },
     comments:[{
         type: mongoose.Schema.Types.ObjectId,
@@ -47,9 +52,8 @@ module.exports.getRestaurantById = function(id,callback){
     Restaurant.findById(id,callback);
 };
 
-module.exports.findRes = function(name,callback){
-    var query = { res_name : name };
-    Restaurant.find(query,callback);
+module.exports.findRes = function(callback){
+    Restaurant.find(callback);
 };
 
 module.exports.findAdmin = function(id,callback){
@@ -79,22 +83,6 @@ module.exports.findServiceBeLong = function(id,callback){
 
 module.exports.findPublicitiesBeLong = function(id,callback){
     Restaurant.findById(id).populate('publicities').exec(callback);
-};
-
-module.exports.findResLocation = function(longitude,latitude,callback){
-    var query = {
-        'location.longitude' : longitude,
-        'location.latitude' : latitude
-    };
-    Restaurant.find(query,callback);
-};
-
-module.exports.findOneRes = function(longitude,latitude,callback){
-    var query = {
-        'location.longitude' : longitude,
-        'location.latitude' : latitude
-    };
-    Restaurant.findOne(query,callback);
 };
 
 module.exports.deleteRestaurant = function(id,callback){

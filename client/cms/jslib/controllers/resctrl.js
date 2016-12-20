@@ -1,9 +1,10 @@
 var resctrl = angular.module("resctrl",[]);
 
-resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster){
+resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q){
     /**Set Register Form to Hide */
     $('#resform').hide(); 
     var map;
+    $scope.isvalidateadd = true;
     $scope.isfilledAdd = false;       
     /**Get restaurant that belong to current user */
     var getRestaurant = function(){
@@ -28,10 +29,32 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $('#resform').fadeIn(1500);
     };
 
-    $scope.validateadd= function(){
-        $http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + $scope.restaurant.address + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
-            initmap(response);
+    var getNameAddress = function(){
+        return $q(function(resolve,reject){
+            $http.get("jslib/config/countryVN.json").then(function(data){
+                var nameStreet = $scope.restaurant.housenumber + " " + $scope.restaurant.street;
+                var nameCity = data.data.city[$scope.restaurant.city.id - 1].name;
+                var nameDistrict = data.data.city[$scope.restaurant.city.id - 1].Quan[$scope.restaurant.district.id - 1].name;
+                var address = {
+                    street : nameStreet,
+                    district : nameDistrict,
+                    city : nameCity,
+                    fullName : nameStreet + ", " + nameDistrict + ", " + nameCity,
+                    queryName : $scope.restaurant.street + ", " + nameDistrict + ", " + nameCity
+                }
+                resolve(address);
+            }); 
         });
+    }
+
+    $scope.validateadd= function(){
+        var promise = getNameAddress();
+        promise.then(function(dataAddress){
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + dataAddress.queryName + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
+                initmap(response);
+            });
+        });    
+        $scope.isvalidateadd = false;
         $scope.isfilledAdd = true;
     }
 
@@ -49,6 +72,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             marker = new google.maps.Marker({
                 position: addressList.results[i].geometry.location,
                 animation: google.maps.Animation.DROP,
+                draggable:true,
                 map: map
             });
             var location = addressList.results[i].geometry.location
@@ -73,12 +97,6 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 if(data.data.city[i].id == $scope.restaurant.city.id){
                         $scope.districts = data.data.city[i].Quan   
                 }
-                /**Cach viet 2 */
-                (function(idCityInList,idCity){
-                    if(idCityInList == idCity){
-                        $scope.districts = data.data.city[i].Quan   
-                    }
-                })(data.data.city[i].id,$scope.restaurant.city.id)
             }
         })    
     }

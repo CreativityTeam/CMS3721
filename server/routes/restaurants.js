@@ -7,34 +7,31 @@ var jwt = require('jwt-simple');
 router.post('/register',function(req,res){
     var userid = req.body._id;
     var res_name = req.body.name;
+    var housenumber = req.body.housenumber;
+    var district = req.body.district;
+    var city = req.body.city;
     var longitude = req.body.longitude;
     var latitude = req.body.latitude;
     var newRestaurant = new Restaurant({
         user_id : userid,
         res_name : res_name,
         location:{
-            longitude : longitude,
-            latitude : latitude
+            housenumber : housenumber,
+            district : district,
+            city : city,
+            point: {
+                longitude : longitude,
+                latitude : latitude
+            }
         }
     });
-    Restaurant.findOneRes(newRestaurant.location.longitude,newRestaurant.location.latitude,function(err,restaurant){
+    Restaurant.createRestaurant(newRestaurant,function(err,restaurant){
         if(err) throw err;
-        if(restaurant){
             res.json({
-                success : false,
-                msg : "You have created restaurant at current location",
+                success : true,
+                msg : "Successfully Create Restaurant",
                 data : restaurant 
-            });    
-        }else{
-            Restaurant.createRestaurant(newRestaurant,function(err,restaurant){
-                if(err) throw err;
-                res.json({
-                    success : true,
-                    msg : "Successfully Create Restaurant",
-                    data : restaurant 
-                });
             });
-        }
     });
 });
 
@@ -87,41 +84,14 @@ router.get('/finduser/:id',function(req,res){
 
 /**Input : Name res*/
 /**Output : List Restaurants */
-router.get('/findres/:name',function(req,res){
-    Restaurant.findRes(req.params.name,function(err,restaurant){
+router.get('/findres',function(req,res){
+    Restaurant.findRes(function(err,restaurant){
         if(err) throw err;
-        if(!restaurant){
-            res.json({
-                success:false,
-                msg : "No restaurant is found"
-            });    
-        }else{
             res.json({
                 success:true,
                 msg : "Find done",
                 data : restaurant
             });
-        }
-    });
-});
-
-/**Input : Location x,y*/
-/**Output : Restaurant */
-router.get('/findreslocation/:longitude/:latitude',function(req,res){
-    Restaurant.findResLocation(req.params.longitude,req.params.latitude,function(err,restaurant){
-        if(err) throw err;
-        if(!restaurant){
-            res.json({
-                success:false,
-                msg : "No restaurant is found"
-            });    
-        }else{
-            res.json({
-                success:true,
-                msg : "Find done",
-                data : restaurant
-            });
-        }
     });
 });
 

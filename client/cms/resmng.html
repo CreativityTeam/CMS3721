@@ -23,21 +23,27 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="exampleInputEmail1">Restaurant Name</label>
-								<input type="text" class="form-control border-input" placeholder="Restaurant Name" ng-model="restaurant.res_name">
+								<input type="text" class="form-control border-input" placeholder="Restaurant Name" ng-model="restaurant.res_name" required>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-2">
 							<div class="form-group">
 								<label>House Number</label>
-								<input type="text" class="form-control border-input" ng-model="restaurant.housenumber">
+								<input type="text" class="form-control border-input" ng-model="restaurant.housenumber" required>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label>Street</label>
+								<input type="text" class="form-control border-input" ng-model="restaurant.street" required>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="sel2">District</label>
-								<select class="form-control" id="sel2" ng-model="restaurant.district.id" ng-disabled="!restaurant.city.id">
+								<select class="form-control" id="sel2" ng-model="restaurant.district.id" ng-disabled="!restaurant.city.id" required>
     								<option ng-repeat="district in districts" value="{{district.id}}">{{ district.name }}</option>
   								</select>
 							</div>
@@ -45,7 +51,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="sel1">City</label>
-								<select class="form-control" id="sel1" ng-change="loadDistrict()" ng-model="restaurant.city.id">
+								<select class="form-control" id="sel1" ng-change="loadDistrict()" ng-model="restaurant.city.id" required>
     								<option value="{{city.id}}" ng-repeat="city in cities">{{ city.name }}</option>
   								</select>
 							</div>
@@ -55,7 +61,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<button class="btn btn-sm btn-info" ng-click="validateadd()"><strong>Check Address</strong></button>
-								<button class="btn btn-sm btn-info" ng-click="submitres()" ng-disabled="validateadd"><strong>Submit</strong></button>
+								<button class="btn btn-sm btn-info" ng-click="submitres()" ng-disabled="isvalidateadd"><strong>Submit</strong></button>
 							</div>
 						</div>
 					</div>
