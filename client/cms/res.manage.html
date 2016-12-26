@@ -1,0 +1,52 @@
+<div class="row">
+	<toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Restaurant List</h4>		
+				<loading></loading>
+			</div>
+			<div class="content table-responsive">
+				<form>
+    				<div class="form-group">
+      					<div class="input-group">
+        					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchName">
+      						</div>      
+   						</div>
+  				</form>
+				<table class="table">
+					<thead>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Gender</th>
+						<th>Role</th>
+						<th>Address</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input class="form-control" ng-model="newUser._id" disabled></td>
+							<td><input class="form-control" ng-model="newUser.local.name" disabled></td>
+							<td><input class="form-control" ng-model="newUser.local.email" disabled></td>
+							<td><input class="form-control" ng-model="newUser.gender" disabled></td>
+							<td><input class="form-control" ng-model="newUser.role"></td>
+							<td><input class="form-control" ng-model="newUser.address" disabled></td>
+							<td><button class="btn btn-info" ng-click="updateRole()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></td>
+						</tr>
+						<tr ng-repeat="user in userList | filter:searchName">
+							<td>{{ user._id }}</td>
+							<td>{{ user.local.name }}</td>
+							<td>{{ user.local.email }}</td>
+							<td>{{ user.gender }}</td>
+							<td>{{ user.role }}</td>
+							<td>{{ user.address }}</td>
+							<td><button class="btn btn-warning" ng-click="edit(user._id)">Edit</button></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>

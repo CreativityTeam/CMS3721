@@ -23,6 +23,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'resmng.html'
         })
+        .state('restaurantmanager',{
+            url: '/resmanager',
+            controller : 'rescontroller',
+            templateUrl: 'res.manage.html'
+        })
         .state('comment',{
             url: '/comment',
             templateUrl: 'typography.html'

@@ -8,6 +8,7 @@ router.post('/register',function(req,res){
     var userid = req.body._id;
     var res_name = req.body.name;
     var housenumber = req.body.housenumber;
+    var street = req.body.street;
     var district = req.body.district;
     var city = req.body.city;
     var longitude = req.body.longitude;
@@ -17,6 +18,7 @@ router.post('/register',function(req,res){
         res_name : res_name,
         location:{
             housenumber : housenumber,
+            street : street,
             district : district,
             city : city,
             point: {
@@ -54,7 +56,7 @@ router.get('/findad/:token',function(req,res){
     var decoded = jwt.decode(token,configAuth.secret);
     Restaurant.findAdmin(decoded._id,function(err,restaurant){
         if(err) throw err;
-        if(!restaurant.hasOwnProperty('_id')){
+        if(restaurant.length == 0){
             res.json({
                 success:false,
                 msg : "You dont have any restaurants, Click here to create your restaurant"

@@ -12,6 +12,7 @@ var RestaurantSchema = mongoose.Schema({
     },
     location:{
         housenumber : String,
+        street : String,
         district : String,
         city : String,
         point:{
