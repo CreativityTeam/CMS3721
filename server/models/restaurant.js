@@ -7,7 +7,7 @@ var RestaurantSchema = mongoose.Schema({
     res_name:{
         type : String
     },
-    desciption:{
+    description:{
         type : String
     },
     location:{

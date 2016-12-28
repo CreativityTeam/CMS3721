@@ -1,6 +1,6 @@
 var resctrl = angular.module("resctrl",[]);
 
-resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q){
+resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window){
     /**Set Register Form to Hide */
     var map;
     $('#resform').hide();
@@ -10,7 +10,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     var getRestaurant = function(){
         $http.get(API_ENDPOINT.url + '/api/restaurants/findad/' + AuthService.tokensave()).success(function(response){
             if(response.success){
-                $scope.restaurant = response.data;    
+                $scope.restaurantBelongUser = response.data;    
             }else{
                 $scope.errormsg = response.msg; 
             }
@@ -25,8 +25,19 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         });
     } 
 
+    /**Process when Add restaurant click */
     $scope.showformres = function(){
+        $scope.isClickAddButton = true;
         $('#resform').fadeIn(1500);
+    };
+
+    /**Process form thats closed */
+    $scope.hideformres = function(){
+        $scope.isClickAddButton = false;
+        $scope.isClickEditButton = false;
+        $scope.restaurant = null;
+        $scope.isfilledAdd = false;
+        $('#resform').fadeOut(1000);
     };
 
     var getNameAddress = function(){
@@ -47,10 +58,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         });
     }
 
+    /**Check Address */
     $scope.validateadd= function(){
         var promise = getNameAddress();
         promise.then(function(dataAddress){
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?v=3.27&address=" + dataAddress.queryName + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?v=3.27&address=" + dataAddress.district + dataAddress.city + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
                 initmap(response,dataAddress);
             });
         });    
@@ -94,6 +106,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $scope.saveRestaurant = {
             _id : $scope.user._id,
             name : $scope.restaurant.res_name,
+            description : $scope.restaurant.description,
             housenumber : $scope.restaurant.housenumber,
             street : $scope.restaurant.street,
             district : $scope.oldAddress.district,
@@ -101,9 +114,15 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             longitude : $scope.mapPosition.lng,
             latitude : $scope.mapPosition.lat
         }
-        $http.post(API_ENDPOINT.url + '/api/restaurants/register',$scope.saveRestaurant).success(function(data){
-            console.log(data);
-        });
+        if($scope.isClickEditButton){
+            $http.put(API_ENDPOINT.url + '/api/restaurants/updateinfo/' + $scope.restaurant.id,$scope.saveRestaurant).success(function(data){
+                getRestaurant();
+            });    
+        }else{
+            $http.post(API_ENDPOINT.url + '/api/restaurants/register',$scope.saveRestaurant).success(function(data){
+                getRestaurant();
+            });
+        }
     }
     var loadCity = function(){
         $http.get("jslib/config/countryVN.json").then(function(data){
@@ -121,7 +140,50 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             }
         })    
     }
+
+    /**Get all restaurant */
+    var getAllRestaurant = function(){
+        $http.get(API_ENDPOINT.url + '/api/restaurants/findres').success(function(data){
+            $scope.listRestaurant = data.data;
+        });
+    };
+
+    /**Open Map */
+    $scope.openMap = function(location){
+        $window.open("http://www.google.com/maps/place/" + location.latitude + "," + location.longitude + "/@" + location.latitude + "," + location.longitude + ",17z");
+    }
+
+    /**Edit restaurant */
+    $scope.edit = function(id){
+        $scope.isClickEditButton = true;
+        $scope.isClickAddButton = true;
+        $('#resform').fadeIn(1500);
+        $http.get(API_ENDPOINT.url + '/api/restaurants/findinfo/' + id).success(function(data){
+            $scope.restaurant = {
+                id: data.data._id,
+                res_name : data.data.res_name,
+                description : data.data.description,
+                housenumber : data.data.location.housenumber,
+                street : data.data.location.street,
+            }
+        });
+    }
+
+    /**Delete Restaurant */
+    $scope.delete = function(id) {
+        $scope.restaurant = null;
+        $scope.isClickEditButton = false;
+        for(var i in $scope.restaurantBelongUser){
+            if($scope.restaurantBelongUser[i]._id == id){
+                $scope.restaurantBelongUser.splice(i,1);
+            }
+        }
+        $http.delete(API_ENDPOINT.url + '/api/restaurants/deleteRestaurant/' + id).success(function(data){
+            getRestaurant();
+        });
+    }
     loadCity();
     getRestaurant();
     getCurrentUser();
+    getAllRestaurant();
 });

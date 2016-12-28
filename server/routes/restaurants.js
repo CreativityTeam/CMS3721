@@ -11,11 +11,13 @@ router.post('/register',function(req,res){
     var street = req.body.street;
     var district = req.body.district;
     var city = req.body.city;
+    var description = req.body.description;
     var longitude = req.body.longitude;
     var latitude = req.body.latitude;
     var newRestaurant = new Restaurant({
         user_id : userid,
         res_name : res_name,
+        description : description,
         location:{
             housenumber : housenumber,
             street : street,
@@ -288,8 +290,13 @@ router.put('/updateinfo/:id',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
         if(err) throw err;
         restaurant.res_name = req.body.name;
-        restaurant.location.longitude = req.body.longitude;
-        restaurant.location.latitude = req.body.latitude;
+        restaurant.description = req.body.description;
+        restaurant.location.housenumber = req.body.housenumber;
+        restaurant.location.street = req.body.street;
+        restaurant.location.district = req.body.district;
+        restaurant.location.city = req.body.city;
+        restaurant.location.point.longitude = req.body.longitude;
+        restaurant.location.point.latitude = req.body.latitude;
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
             if(err) throw err;
             res.json({

@@ -11,7 +11,7 @@
     				<div class="form-group">
       					<div class="input-group">
         					<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchName">
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchRes">
       						</div>      
    						</div>
   				</form>
@@ -19,29 +19,14 @@
 					<thead>
 						<th>ID</th>
 						<th>Name</th>
-						<th>Email</th>
-						<th>Gender</th>
-						<th>Role</th>
-						<th>Address</th>
+						<th>Dia Chi</th>
 					</thead>
 					<tbody>
-						<tr>
-							<td><input class="form-control" ng-model="newUser._id" disabled></td>
-							<td><input class="form-control" ng-model="newUser.local.name" disabled></td>
-							<td><input class="form-control" ng-model="newUser.local.email" disabled></td>
-							<td><input class="form-control" ng-model="newUser.gender" disabled></td>
-							<td><input class="form-control" ng-model="newUser.role"></td>
-							<td><input class="form-control" ng-model="newUser.address" disabled></td>
-							<td><button class="btn btn-info" ng-click="updateRole()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></td>
-						</tr>
-						<tr ng-repeat="user in userList | filter:searchName">
-							<td>{{ user._id }}</td>
-							<td>{{ user.local.name }}</td>
-							<td>{{ user.local.email }}</td>
-							<td>{{ user.gender }}</td>
-							<td>{{ user.role }}</td>
-							<td>{{ user.address }}</td>
-							<td><button class="btn btn-warning" ng-click="edit(user._id)">Edit</button></td>
+						<tr ng-repeat="restaurantItem in listRestaurant | filter:searchRes">
+							<td>{{ restaurantItem._id }}</td>
+							<td>{{ restaurantItem.res_name }}</td>
+							<td>{{ restaurantItem.location.housenumber }}, {{ restaurantItem.location.street }}, {{ restaurantItem.location.district }}, {{ restaurantItem.location.city }}</td>
+							<td><button class="btn btn-warning" ng-click="openMap(restaurantItem.location.point)">Open Google Map</button></td>
 						</tr>
 					</tbody>
 				</table>

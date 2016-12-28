@@ -8,8 +8,15 @@
 				<div class="row" ng-show = "errormsg">
 					<div class="col-md-12">
 						<div class="alert alert-info" role="alert">
-							<a class="alert-link" ng-click="showformres()"> {{ errormsg }} </a>
+							<a class="alert-link" > {{ errormsg }} </a>
 						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						 <a type="button" class="btn btn-sm btn-info" ng-click="showformres()" ng-hide="isClickAddButton">Add Restaurant</a>
+						 <a type="button" class="btn btn-sm btn-info" ng-click="hideformres()" ng-show="isClickAddButton">Close Form</a>
+						 <a type="button" class="btn btn-sm btn-danger" ng-click="delete(restaurant.id)" ng-show="isClickEditButton">Delete Restaurant</a>
 					</div>
 				</div>
 				<form id="resform">
@@ -60,6 +67,14 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
+								<label for="sel1">Description</label>
+								<textarea class="form-control" rows="5" ng-model="restaurant.description"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
 								<button class="btn btn-sm btn-info" ng-click="validateadd()"><strong>Check Address</strong></button>
 								<button class="btn btn-sm btn-info" ng-click="submitres()" ng-disabled="isvalidateadd"><strong>Submit</strong></button>
 							</div>
@@ -72,6 +87,30 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div class="col-md-12" ng-repeat="restaurantItem in restaurantBelongUser">
+		<div class="panel panel-info">
+  				<div class="panel-heading">
+    					<h3 class="panel-title">{{ restaurantItem.res_name }}</h3>
+ 		 		</div>
+  				<div class="panel-body">
+					  	<div class="row">
+							  <div class="col-md-12">
+								  <span class="ti-direction-alt" aria-hidden="true"></span> Location : {{ restaurantItem.location.housenumber }}, {{ restaurantItem.location.street }}, {{ restaurantItem.location.district }}, {{ restaurantItem.location.city }}
+							  </div>
+					  	</div>
+						<div class="row">
+							  <div class="col-md-12">
+								  <span class="ti-bookmark" aria-hidden="true"></span> Description : {{ restaurantItem.description }}
+							  </div>
+					  	</div>
+						<div class="row">				
+							<div class="col-md-12">
+								<a ng-click="edit(restaurantItem._id)"><i class="ti-pencil-alt"></i> Edit</a>
+							</div>
+						</div>
+  				</div>
 		</div>
 	</div>
 </div>
