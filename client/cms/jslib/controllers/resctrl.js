@@ -112,7 +112,12 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             district : $scope.oldAddress.district,
             city :  $scope.oldAddress.city,
             longitude : $scope.mapPosition.lng,
-            latitude : $scope.mapPosition.lat
+            latitude : $scope.mapPosition.lat,
+            photo1 :  $scope.restaurant.photo1,
+            photo2 :  $scope.restaurant.photo2,
+            photo3 :  $scope.restaurant.photo3,
+            photo4 :  $scope.restaurant.photo4,
+            photo5 :  $scope.restaurant.photo5
         }
         if($scope.isClickEditButton){
             $http.put(API_ENDPOINT.url + '/api/restaurants/updateinfo/' + $scope.restaurant.id,$scope.saveRestaurant).success(function(data){
@@ -165,6 +170,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 description : data.data.description,
                 housenumber : data.data.location.housenumber,
                 street : data.data.location.street,
+                photo1 : data.data.photo1,
+                photo2 : data.data.photo2,
+                photo3 : data.data.photo3,
+                photo4 : data.data.photo4,
+                photo5 : data.data.photo5
             }
         });
     }
