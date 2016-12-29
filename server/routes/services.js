@@ -18,9 +18,11 @@ var Service = require('../models/service');
 router.post('/create', function (req, res) {
     var service_name = req.body.service_name;
     var service_price = req.body.service_price;
+    var service_desciption = req.body.service_desciption;
     var newService = new Service({
         service_name: service_name,
-        service_price: service_price
+        service_price: service_price,
+        service_desciption : service_desciption
     });
 
     Service.createService(newService, function (err, service) {

@@ -231,6 +231,31 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         });    
     }
 
+    $scope.showFormService = function(){
+        $scope.isClickAddButtonService = true;
+    }
+
+    $scope.hideFormService = function(){
+        $scope.isClickAddButtonService = false;
+    }
+
+    var loadService = function(){
+         $http.delete(API_ENDPOINT.url + '/api/restaurants/findservice/' + $scope.restaurant._id).success(function(data){
+                $scope.listService = data.data;
+        });       
+    }
+
+    /**Submit service */
+    $scope.registerService = function(idres){
+        $http.post(API_ENDPOINT.url + '/api/services/create',$scope.service).success(function(data){
+            if(data.success){
+                $http.put(API_ENDPOINT.url + '/api/restaurants/updateservices/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
+                    loadService();
+                });   
+            }
+        }); 
+    }
+
     loadCity();
     getRestaurant();
     getCurrentUser();

@@ -37,6 +37,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'cmtres.manager.html'
         })
+        .state('reservice',{
+            url: '/serviceres',
+            controller : 'rescontroller',
+            templateUrl: 'res.service.html'
+        })
         .state('food',{
             url: '/food',
             templateUrl: 'icons.html'

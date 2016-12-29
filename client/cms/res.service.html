@@ -1,0 +1,76 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Service Management</h4>			
+			</div>
+			<div class="content table-responsive">
+				<form>
+    				<div class="form-group">
+      					<div class="input-group">
+        					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchCmt">
+      					</div>      
+   					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="sel1">Select Your Restaurant</label>
+								<select class="form-control" id="sel1" ng-change="getCommend()" ng-model="restaurant._id" required>
+    								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
+  								</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-12">
+						 		<a type="button" class="btn btn-sm btn-info" ng-click="showFormService()" ng-hide="isClickAddButtonService">Add Service</a>
+						 		<a type="button" class="btn btn-sm btn-info" ng-click="hideFormService()" ng-show="isClickAddButtonService">Close Form</a>
+						 		<a type="button" class="btn btn-sm btn-danger" ng-click="delete(restaurant.id)" ng-show="isClickEditButton">Delete Service</a>
+								<a type="button" class="btn btn-sm btn-info" ng-click="registerService(restaurant.id)" ng-show="isClickAddButtonService">Submit Service</a>
+							</div>
+						</div>
+					</div>	
+					<div class="col-md-12" ng-show="isClickAddButtonService">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Serive Name</label>
+									<input type="text" class="form-control border-input" ng-model="service.service_name" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Service Price</label>
+									<input type="text" class="form-control border-input" ng-model="service.service_price" required>
+								</div>
+							</div>			
+						</div>
+					</div>	
+					<div class="col-md-12" ng-show="isClickAddButtonService">
+						<div class="form-group">
+								<label for="sel1">Service Description</label>
+								<textarea class="form-control" rows="5" ng-model="service.service_desciption"></textarea>
+						</div>
+					</div>
+  				</form>
+				<table class="table">
+					<thead>
+						<th>ID</th>
+						<th>Service Name</th>
+						<th>Price</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="comment in listComment | filter:searchCmt">
+							<td>{{ comment.comments._id }}</td>
+							<td>{{ comment.comments.user_id }}</td>
+							<td>{{ comment.comments.content }}</td>
+							<td><button class="btn btn-warning" ng-click="reportCommend(rcomment.comments._id,comment.comments.is_reported)">Report</button></td>
+							<td><button class="btn btn-warning" ng-click="deleteCommend(restaurant._id,comment.comments._id)">Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
