@@ -1,16 +1,16 @@
 var resctrl = angular.module("resctrl",[]);
 
 resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window){
-    /**Set Register Form to Hide */
     var map;
     $('#resform').hide();
+    /**Set Register Form to Hide */
     $scope.isvalidateadd = true;
     $scope.isfilledAdd = false;       
     /**Get restaurant that belong to current user */
     var getRestaurant = function(){
         $http.get(API_ENDPOINT.url + '/api/restaurants/findad/' + AuthService.tokensave()).success(function(response){
             if(response.success){
-                $scope.restaurantBelongUser = response.data;    
+                $scope.restaurantBelongUser = response.data;
             }else{
                 $scope.errormsg = response.msg; 
             }
@@ -182,6 +182,45 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             getRestaurant();
         });
     }
+
+    /**Get commend restaurant */
+    $scope.getCommend = function(){
+        for(var i in $scope.restaurantBelongUser){
+            if($scope.restaurantBelongUser[i]._id == $scope.restaurant._id && $scope.restaurantBelongUser[i].comments.length != 0){
+                loadComment();    
+            }
+        }   
+    }
+
+    /**Delete Commend */
+    $scope.deleteCommend = function(idres,idcmt){
+        for(var i in $scope.listComment){
+            if($scope.listComment[i]._id == idcmt){
+                $scope.listComment.splice(i,1);
+            }
+        }
+        $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment' + id).success(function(data){});
+        $http.delete(API_ENDPOINT.url + '/api/restaurants/deletecomment/' + idres +'/' + idcmt).success(function(data){});  
+    }
+
+    /**Report Commend */
+     $scope.reportCommend = function(id,isreported){
+        if(isreported){
+            $scope.is_reported = false;
+        }else{
+           $scope.is_reported = true; 
+        }
+        $http.put(API_ENDPOINT.url + '/api/comments/updateinfo' + id,$scope.is_reported).success(function(data){
+            loadComment();
+        });   
+    }
+
+    var loadComment = function(){
+        $http.delete(API_ENDPOINT.url + '/api/restaurants/findcomment/' + $scope.restaurant._id).success(function(data){
+                $scope.listComment = data.data;
+        });    
+    }
+
     loadCity();
     getRestaurant();
     getCurrentUser();

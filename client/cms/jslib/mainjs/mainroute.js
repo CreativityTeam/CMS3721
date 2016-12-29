@@ -30,7 +30,12 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('comment',{
             url: '/comment',
-            templateUrl: 'typography.html'
+            templateUrl: 'cmt.manager.html'
+        })
+        .state('commentres',{
+            url: '/commentres',
+            controller : 'rescontroller',
+            templateUrl: 'cmtres.manager.html'
         })
         .state('food',{
             url: '/food',

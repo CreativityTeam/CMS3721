@@ -28,10 +28,21 @@ var RestaurantSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'rating'
     }],
-    photos:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'photo'
-    }],
+    photo1:{
+        type : String
+    },
+    photo2:{
+        type : String
+    },
+    photo3:{
+        type : String
+    },
+    photo4:{
+        type : String
+    },
+    photo5:{
+        type : String
+    },
     services:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'service'
@@ -72,10 +83,6 @@ module.exports.findCommentOfRestaurant = function(id,callback){
 
 module.exports.findRating = function(id,callback){
     Restaurant.findById(id).populate('ratings').exec(callback);
-};
-
-module.exports.findPhotoBeLong = function(id,callback){
-    Restaurant.findById(id).populate('photos').exec(callback);
 };
 
 module.exports.findServiceBeLong = function(id,callback){

@@ -104,18 +104,11 @@ router.get('/findres',function(req,res){
 router.get('/findcomment/:id',function(req,res){
     Restaurant.findCommentOfRestaurant(req.params.id,function(err,restaurant){
         if(err) throw err;
-        if(restaurant.comments == null){
-            res.json({
-                success:false,
-                msg : "Your Restaurant has no comment"
-            });    
-        }else{
-            res.json({
+        res.json({
                 success:true,
                 msg : "Find done",
                 data : restaurant.comments
-            });
-        }
+        });
     });
 });
 
@@ -124,38 +117,11 @@ router.get('/findcomment/:id',function(req,res){
 router.get('/findrating/:id',function(req,res){
     Restaurant.findRating(req.params.id,function(err,restaurant){
         if(err) throw err;
-        if(restaurant.ratings == null){
-            res.json({
-                success:false,
-                msg : "Your Restaurant has no ratting"
-            });    
-        }else{
-            res.json({
+        res.json({
                 success:true,
                 msg : "Find done",
                 data : restaurant.ratings
-            });
-        }
-    });
-});
-
-/**Input : Restaurant ID */
-/**Output : Photo of Rrestaurant */
-router.get('/findphoto/:id',function(req,res){
-    Restaurant.findPhotoBeLong(req.params.id,function(err,restaurant){
-        if(err) throw err;
-        if(restaurant.photos == null){
-            res.json({
-                success:false,
-                msg : "Your Restaurant has no photo"
-            });    
-        }else{
-            res.json({
-                success:true,
-                msg : "Find done",
-                data : restaurant.photos
-            });
-        }
+        });
     });
 });
 
@@ -164,18 +130,11 @@ router.get('/findphoto/:id',function(req,res){
 router.get('/findservice/:id',function(req,res){
     Restaurant.findServiceBeLong(req.params.id,function(err,restaurant){
         if(err) throw err;
-        if(restaurant.services == null){
-            res.json({
-                success:false,
-                msg : "Your Restaurant has no service"
-            });    
-        }else{
             res.json({
                 success:true,
                 msg : "Find done",
                 data : restaurant.services
             });
-        }
     });
 });
 
@@ -184,35 +143,11 @@ router.get('/findservice/:id',function(req,res){
 router.get('/findpublicity/:id',function(req,res){
     Restaurant.findPublicitiesBeLong(req.params.id,function(err,restaurant){
         if(err) throw err;
-        if(restaurant.publicities == null){
-            res.json({
-                success:false,
-                msg : "Your Restaurant has no publicities"
-            });    
-        }else{
             res.json({
                 success:true,
                 msg : "Find done",
                 data : restaurant.publicities
             });
-        }
-    });
-});
-
-/**Input : ID Photo */
-/**Output : Array Restaurant */
-router.put('/updatephoto/:id/:idphoto',function(req,res){
-    Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
-        restaurant.photos.push(req.params.idphoto);
-        Restaurant.createRestaurant(restaurant,function(err,restaurant){
-            if(err) throw err;
-            res.json({
-                success : true,
-                data : restaurant,
-                msg : "Successfully update"
-            });
-        });
     });
 });
 
@@ -322,25 +257,6 @@ router.delete('/deletecomment/:id/:idcomment',function(req,res){
                         success : true,
                         msg : "Successfully Delete",
                         data : restaurant.comments
-            });
-        });
-    });
-});
-
-router.delete('/deletephoto/:id/:idphoto',function(req,res){
-    Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
-        for(var i = 0;i < restaurant.photos.length ; i++){
-            if(restaurant.photos[i] == req.params.idphoto){
-                restaurant.photos.splice(i,1);
-            }
-        }
-        Restaurant.createRestaurant(restaurant,function(err,restaurant){
-                if(err) throw err;
-                res.json({
-                    success : true,
-                    msg : "Successfully Delete",
-                    data : restaurant.photos
             });
         });
     });

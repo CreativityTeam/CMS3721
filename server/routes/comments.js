@@ -112,13 +112,8 @@ router.put('/updateinfo/:id',function(req,res){
     var newDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset()*60000));
     Comment.getCommentById(req.params.id,function(err,comment){
         if(err) throw err;        
-        if (req.body.content){
-            comment.content = req.body.content;
-        }
-        if (req.body.is_reported){
-            comment.is_reported = req.body.is_reported;
-        }
-
+        comment.content = req.body.content;
+        comment.is_reported = req.body.is_reported;
         comment.date_modified = newDate;
         Comment.createComment(comment,function(err,comment){
             if(err) throw err;

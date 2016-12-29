@@ -1,0 +1,50 @@
+<div class="row">
+	<toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Comment Management</h4>		
+				<loading></loading>
+			</div>
+			<div class="content table-responsive">
+				<form>
+    				<div class="form-group">
+      					<div class="input-group">
+        					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchCmt">
+      					</div>      
+   					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="sel1">Select Your Restaurant</label>
+								<select class="form-control" id="sel1" ng-change="getCommend()" ng-model="restaurant._id" required>
+    								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
+  								</select>
+						</div>
+					</div>	
+  				</form>
+				<table class="table">
+					<thead>
+						<th>ID</th>
+						<th>ID User Cmt</th>
+						<th>Content</th>
+						<th>Date Created</th>
+						<th>Reported</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="comment in listComment | filter:searchCmt">
+							<td>{{ comment.comments._id }}</td>
+							<td>{{ comment.comments.user_id }}</td>
+							<td>{{ comment.comments.content }}</td>
+							<td>{{ comment.comments.date_created }}</td>
+							<td>{{ comment.comments.is_reported }}</td>
+							<td><button class="btn btn-warning" ng-click="reportCommend(rcomment.comments._id,comment.comments.is_reported)">Report</button></td>
+							<td><button class="btn btn-warning" ng-click="deleteCommend(restaurant._id,comment.comments._id)">Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</div>
