@@ -1,0 +1,129 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Publicity Management</h4>			
+			</div>
+			<div class="content">
+				<form>
+					<div class="form-group">
+      					<div class="input-group">
+        					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchPublicity">
+      					</div>      
+   					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="sel1">Select Your Restaurant</label>
+								<select class="form-control" id="sel1" ng-change="loadPublicity()" ng-model="restaurant._id" required>
+    								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
+  								</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="showFormPub()" ng-show="isRestaurantSelected">Add Publicity</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormPub()" ng-show="isClickAddButtonPublicity">Close Form</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormPub()" ng-show="isClickAddButtonPublicity">Submit Publicity</a>
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonPublicity">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Publicity Name</label>
+								<input type="text" class="form-control border-input" ng-model="publicity.housenumber" required>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Publicity Price</label>
+								<input type="text" class="form-control border-input" ng-model="publicity.street" required>
+							</div>
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonPublicity">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="sel1">Publicity Description</label>
+								<textarea class="form-control" rows="5" ng-model="publicity.description"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonPublicity">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 1</label>
+								<input type="text" class="form-control border-input" ng-model="publicity.photo1" required>							
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo1}}" border=3 height=100 width=100 ng-show="publicity.photo1"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonPublicity">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 2</label>
+								<input type="text" class="form-control border-input" ng-model="publicity.photo2" required>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo2}}" border=3 height=100 width=100 ng-show="publicity.photo2"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonPublicity">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 3</label>
+								<input type="text" class="form-control border-input" ng-model="publicity.photo3" required>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo3}}" border=3 height=100 width=100 ng-show="publicity.photo3"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonPublicity">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 4</label>
+								<input type="text" class="form-control border-input" ng-model="publicity.photo4" required>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo4}}" border=3 height=100 width=100 ng-show="publicity.photo4"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonPublicity">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 5</label>
+								<input type="text" class="form-control border-input" ng-model="publicity.photo5" required>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo5}}" border=3 height=100 width=100 ng-show="publicity.photo5"></img>	
+						</div>
+					</div>
+				</form>
+				<table class="table">
+					<thead>
+						<th>ID</th>
+						<th>Publicity Name</th>
+						<th>Publicity Price</th>
+						<th>Publicity Description</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="publicItem in listPublicity | filter:searchPublicity">
+							<td>{{ publicItem._id }}</td>
+							<td>{{ publicItem.publicity_name }}</td>
+							<td>{{ publicItem.publicity_price }}</td>
+							<td>{{ publicItem.publicity_desciption }}</td>
+							<td><button class="btn btn-warning" ng-click="editService(serviceItem._id)">Edit</button></td>
+							<td><button class="btn btn-warning" ng-click="deleteService(restaurant._id,serviceItem._id)">Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

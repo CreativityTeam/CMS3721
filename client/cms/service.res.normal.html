@@ -9,7 +9,7 @@
     				<div class="form-group">
       					<div class="input-group">
         					<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchCmt">
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchService">
       					</div>      
    					</div>
 					<div class="col-md-12">
@@ -60,7 +60,7 @@
 						<th>Service Description</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="serviceItem in listService | filter:searchCmt">
+						<tr ng-repeat="serviceItem in listService | filter:searchService">
 							<td>{{ serviceItem._id }}</td>
 							<td>{{ serviceItem.service_name }}</td>
 							<td>{{ serviceItem.service_price }}</td>

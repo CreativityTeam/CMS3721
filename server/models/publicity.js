@@ -12,10 +12,21 @@ var PublicitySchema = mongoose.Schema({
         type: String
     },
 
-    photos: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'photo'
-    }],
+    photo1:{
+        type : String
+    },
+    photo2:{
+        type : String
+    },
+    photo3:{
+        type : String
+    },
+    photo4:{
+        type : String
+    },
+    photo5:{
+        type : String
+    },
 
     publicity_price: {
         type: Number
@@ -40,11 +51,6 @@ module.exports.getPublicityByName = function (name, callback) {
 
 module.exports.getAllPublicity = function (callback) {
     Publicity.find(callback);
-};
-
-/**Find all photos belong to this Publicity */
-module.exports.findPhotosBelong = function (id, callback) {
-    Publicity.findById(id).populate('photos').exec(callback);
 };
 
 /*Remove Publicity*/

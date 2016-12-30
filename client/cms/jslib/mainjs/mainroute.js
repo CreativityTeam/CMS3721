@@ -42,6 +42,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'service.res.normal.html'
         })
+        .state('pubres',{
+            url: '/publicityres',
+            controller : 'rescontroller',
+            templateUrl: 'pub.res.normal.html'
+        })
         .state('food',{
             url: '/food',
             templateUrl: 'icons.html'
@@ -56,7 +61,7 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('publicity',{
             url: '/publicity',
-            templateUrl: 'notifications.html'
+            templateUrl: 'pub.manage.html'
         })
         .state('photo',{
             url: '/photo',

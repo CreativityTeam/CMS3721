@@ -182,6 +182,9 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         });
     }
 
+    /**--------------------- */
+    /**Start Comment Controller */
+    /**--------------------- */
     /**Delete Restaurant */
     $scope.delete = function(id) {
         $scope.restaurant = null;
@@ -236,7 +239,13 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 $scope.listComment = data.data;
         });    
     }
+    /**--------------------- */
+    /**End Comment Controller */
+    /**--------------------- */
 
+    /**--------------------- */
+    /**Start Service Function */
+    /**--------------------- */
     $scope.showFormService = function(){
         $scope.isClickAddButtonService = true;
         $scope.isEditService = false;
@@ -296,7 +305,26 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             }
         });    
     }
-    /** */
+    /**--------------------- */
+    /**End Service Function */
+    /**--------------------- */
+    $scope.showFormPub = function(){
+        $scope.isClickAddButtonPublicity = true;
+        $scope.publicity = null;
+    }
+    $scope.hideFormPub = function(){
+        $scope.isClickAddButtonPublicity = false;
+        $scope.publicity = null;
+    }
+    $scope.loadPublicity = function(){
+         $scope.isRestaurantSelected = true;
+         $http.get(API_ENDPOINT.url + '/api/restaurants/findpublicity/' + $scope.restaurant._id).success(function(data){
+                $scope.listPublicity = data.data;
+        }); 
+    }
+    /**--------------------- */
+    /**Start Publicities Function */
+    /**--------------------- */
     loadCity();
     getRestaurant();
     getCurrentUser();
