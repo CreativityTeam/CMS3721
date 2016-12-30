@@ -28,6 +28,8 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     /**Process when Add restaurant click */
     $scope.showformres = function(){
         $scope.isClickAddButton = true;
+        $scope.isClickEditButton = false;
+        $scope.restaurant = null;
         $('#resform').fadeIn(1500);
     };
 
@@ -126,6 +128,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }else{
             $http.post(API_ENDPOINT.url + '/api/restaurants/register',$scope.saveRestaurant).success(function(data){
                 getRestaurant();
+                $scope.restaurant = null;
             });
         }
     }
@@ -209,8 +212,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 $scope.listComment.splice(i,1);
             }
         }
-        $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment' + id).success(function(data){});
-        $http.delete(API_ENDPOINT.url + '/api/restaurants/deletecomment/' + idres +'/' + idcmt).success(function(data){});  
+        $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment' + id).success(function(data){
+            if(data.success){
+                $http.delete(API_ENDPOINT.url + '/api/restaurants/deletecomment/' + idres +'/' + idcmt).success(function(data){});  
+            }
+        });
     }
 
     /**Report Commend */
@@ -233,29 +239,64 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
 
     $scope.showFormService = function(){
         $scope.isClickAddButtonService = true;
+        $scope.isEditService = false;
+        $scope.service = null
     }
 
     $scope.hideFormService = function(){
         $scope.isClickAddButtonService = false;
+        $scope.isEditService = false;
+        $scope.service = null;
     }
 
-    var loadService = function(){
-         $http.delete(API_ENDPOINT.url + '/api/restaurants/findservice/' + $scope.restaurant._id).success(function(data){
+    $scope.loadService = function(){
+         $scope.isRestaurantSelected = true;
+         $http.get(API_ENDPOINT.url + '/api/restaurants/findservice/' + $scope.restaurant._id).success(function(data){
                 $scope.listService = data.data;
-        });       
+        }); 
     }
 
     /**Submit service */
     $scope.registerService = function(idres){
+        if($scope.isEditService){
+            $http.put(API_ENDPOINT.url + '/api/services/updateinfo/' + $scope.service._id,$scope.service).success(function(data){
+                $scope.loadService();
+            });    
+        }else{
         $http.post(API_ENDPOINT.url + '/api/services/create',$scope.service).success(function(data){
             if(data.success){
                 $http.put(API_ENDPOINT.url + '/api/restaurants/updateservices/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
-                    loadService();
-                });   
-            }
+                    $scope.loadService();
+                    $scope.service = null;
+                });  
+                }
+            });
+        }
+    }
+
+    /**Edit service */
+    $scope.editService = function(idservice){
+        $scope.isEditService = true;  
+        $scope.isClickAddButtonService = true;
+        $http.get(API_ENDPOINT.url + '/api/services/findinfo/' + idservice).success(function(data){
+                $scope.service = data.data;
         }); 
     }
 
+    /**Delete Service */
+    $scope.deleteService = function(idres,idserv){
+         for(var i in $scope.listService){
+            if($scope.listService[i]._id == idserv){
+                $scope.listService.splice(i,1);
+            }
+        }
+        $http.delete(API_ENDPOINT.url + '/api/services/deleteservice/' + idserv).success(function(data){
+            if(data.success){
+                $http.delete(API_ENDPOINT.url + '/api/restaurants/deleteservice/' + idres +'/' + idserv).success(function(data){});  
+            }
+        });    
+    }
+    /** */
     loadCity();
     getRestaurant();
     getCurrentUser();

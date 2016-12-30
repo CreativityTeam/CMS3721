@@ -16,12 +16,12 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         .state('usermanage',{
             url: '/usermanage',
             controller : 'usercontroller',
-            templateUrl: 'user.manage.html'
+            templateUrl: 'user.res.su.html'
         })
         .state('restaurant',{
             url: '/restaurant',
             controller : 'rescontroller',
-            templateUrl: 'resmng.html'
+            templateUrl: 'res.res.normal.html'
         })
         .state('restaurantmanager',{
             url: '/resmanager',
@@ -35,12 +35,12 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         .state('commentres',{
             url: '/commentres',
             controller : 'rescontroller',
-            templateUrl: 'cmtres.manager.html'
+            templateUrl: 'cmt.res.normal.html'
         })
         .state('reservice',{
             url: '/serviceres',
             controller : 'rescontroller',
-            templateUrl: 'res.service.html'
+            templateUrl: 'service.res.normal.html'
         })
         .state('food',{
             url: '/food',

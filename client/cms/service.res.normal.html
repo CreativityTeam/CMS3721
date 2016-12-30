@@ -15,7 +15,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="sel1">Select Your Restaurant</label>
-								<select class="form-control" id="sel1" ng-change="getCommend()" ng-model="restaurant._id" required>
+								<select class="form-control" id="sel1" ng-change="loadService()" ng-model="restaurant._id" required>
     								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
   								</select>
 						</div>
@@ -23,9 +23,8 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-12">
-						 		<a type="button" class="btn btn-sm btn-info" ng-click="showFormService()" ng-hide="isClickAddButtonService">Add Service</a>
+						 		<a type="button" class="btn btn-sm btn-info" ng-click="showFormService()" ng-init="isRestaurantSelected = false" ng-show="isRestaurantSelected">Add Service</a>
 						 		<a type="button" class="btn btn-sm btn-info" ng-click="hideFormService()" ng-show="isClickAddButtonService">Close Form</a>
-						 		<a type="button" class="btn btn-sm btn-danger" ng-click="delete(restaurant.id)" ng-show="isClickEditButton">Delete Service</a>
 								<a type="button" class="btn btn-sm btn-info" ng-click="registerService(restaurant.id)" ng-show="isClickAddButtonService">Submit Service</a>
 							</div>
 						</div>
@@ -57,15 +56,17 @@
 					<thead>
 						<th>ID</th>
 						<th>Service Name</th>
-						<th>Price</th>
+						<th>Service Price</th>
+						<th>Service Description</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="comment in listComment | filter:searchCmt">
-							<td>{{ comment.comments._id }}</td>
-							<td>{{ comment.comments.user_id }}</td>
-							<td>{{ comment.comments.content }}</td>
-							<td><button class="btn btn-warning" ng-click="reportCommend(rcomment.comments._id,comment.comments.is_reported)">Report</button></td>
-							<td><button class="btn btn-warning" ng-click="deleteCommend(restaurant._id,comment.comments._id)">Delete</button></td>
+						<tr ng-repeat="serviceItem in listService | filter:searchCmt">
+							<td>{{ serviceItem._id }}</td>
+							<td>{{ serviceItem.service_name }}</td>
+							<td>{{ serviceItem.service_price }}</td>
+							<td>{{ serviceItem.service_desciption }}</td>
+							<td><button class="btn btn-warning" ng-click="editService(serviceItem._id)">Edit</button></td>
+							<td><button class="btn btn-warning" ng-click="deleteService(restaurant._id,serviceItem._id)">Delete</button></td>
 						</tr>
 					</tbody>
 				</table>
