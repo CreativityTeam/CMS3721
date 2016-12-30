@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/CreativityTeam/CMS3721.git#readme",
   "dependencies": {
-    "angular": "^1.5.8",
-    "angular-ui-router": "^0.3.1",
+    "angular": "1.5.8",
+    "angular-ui-router": "0.3.1",
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
