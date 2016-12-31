@@ -24,20 +24,20 @@
 						<div class="col-md-12">
 						 	<a type="button" class="btn btn-sm btn-info" ng-click="showFormPub()" ng-show="isRestaurantSelected">Add Publicity</a>
 						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormPub()" ng-show="isClickAddButtonPublicity">Close Form</a>
-						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormPub()" ng-show="isClickAddButtonPublicity">Submit Publicity</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="addPublicity()" ng-show="isClickAddButtonPublicity">Submit Publicity</a>
 						</div>
 					</div>
 					<div class="row" ng-show="isClickAddButtonPublicity">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Publicity Name</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.housenumber" required>
+								<input type="text" class="form-control border-input" ng-model="publicity.publicity_name" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Publicity Price</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.street" required>
+								<input type="text" class="form-control border-input" ng-model="publicity.publicity_price" required>
 							</div>
 						</div>
 					</div>
@@ -45,7 +45,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label for="sel1">Publicity Description</label>
-								<textarea class="form-control" rows="5" ng-model="publicity.description"></textarea>
+								<textarea class="form-control" rows="5" ng-model="publicity.publicity_desciption"></textarea>
 							</div>
 						</div>
 					</div>
@@ -118,8 +118,8 @@
 							<td>{{ publicItem.publicity_name }}</td>
 							<td>{{ publicItem.publicity_price }}</td>
 							<td>{{ publicItem.publicity_desciption }}</td>
-							<td><button class="btn btn-warning" ng-click="editService(serviceItem._id)">Edit</button></td>
-							<td><button class="btn btn-warning" ng-click="deleteService(restaurant._id,serviceItem._id)">Delete</button></td>
+							<td><button class="btn btn-warning" ng-click="editPublicity(publicItem._id)">Edit</button></td>
+							<td><button class="btn btn-danger" ng-click="deletePublicity(publicItem._id,restaurant._id)">Delete</button></td>
 						</tr>
 					</tbody>
 				</table>

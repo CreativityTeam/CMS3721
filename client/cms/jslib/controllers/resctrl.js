@@ -294,7 +294,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
 
     /**Delete Service */
     $scope.deleteService = function(idres,idserv){
-         for(var i in $scope.listService){
+        for(var i in $scope.listService){
             if($scope.listService[i]._id == idserv){
                 $scope.listService.splice(i,1);
             }
@@ -310,10 +310,12 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     /**--------------------- */
     $scope.showFormPub = function(){
         $scope.isClickAddButtonPublicity = true;
+        $scope.isClickEditButtonPublicity = false;
         $scope.publicity = null;
     }
     $scope.hideFormPub = function(){
         $scope.isClickAddButtonPublicity = false;
+        $scope.isClickEditButtonPublicity = false;
         $scope.publicity = null;
     }
     $scope.loadPublicity = function(){
@@ -321,6 +323,40 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
          $http.get(API_ENDPOINT.url + '/api/restaurants/findpublicity/' + $scope.restaurant._id).success(function(data){
                 $scope.listPublicity = data.data;
         }); 
+    }
+    $scope.editPublicity = function(idPub){
+        $scope.isClickEditButtonPublicity = true;
+        $http.get(API_ENDPOINT.url + '/api/publicities/findPublicity/' + idPub).success(function(data){
+                $scope.publicity = data.data;
+        }); 
+    }
+    $scope.addPublicity = function(){
+        if($scope.isClickEditButtonPublicity){
+            $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + $scope.publicity._id,$scope.publicity).success(function(data){
+                $scope.loadPublicity();
+            });    
+        }else{
+        $http.post(API_ENDPOINT.url + '/api/publicities/create',$scope.publicity).success(function(data){
+            if(data.success){
+                $http.put(API_ENDPOINT.url + '/api/restaurants/updatepublicities/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
+                    $scope.loadPublicity();
+                    $scope.publicity = null;
+                });  
+                }
+            });
+        }    
+    }
+    $scope.deletePublicity = function(idPub,idRes){
+        for(var i in $scope.listPublicity){
+            if($scope.listPublicity[i]._id == idPub){
+                $scope.listPublicity.splice(i,1);
+            }
+        }
+        $http.delete(API_ENDPOINT.url + '/api/publicities/deletepublicity/' + idPub).success(function(data){
+            if(data.success){
+                $http.delete(API_ENDPOINT.url + '/api/restaurants/deletepublicity/' + idRes + '/' + idPub).success(function(data){});  
+            }
+        });  
     }
     /**--------------------- */
     /**Start Publicities Function */
