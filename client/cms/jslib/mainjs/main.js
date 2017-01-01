@@ -6,6 +6,7 @@ var app = angular.module('cms',[
     'defaultctrl',
     'userctrl',
     'photoctrl',
+    'dashboardctrl',
     'resctrl',
     'toaster',
     'ngMap'

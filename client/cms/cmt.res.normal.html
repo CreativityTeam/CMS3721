@@ -38,7 +38,7 @@
 							<td>{{ comment.content }}</td>
 							<td>{{ comment.date_created }}</td>
 							<td>{{ comment.is_reported }}</td>
-							<td><button class="btn btn-warning" ng-click="reportCommend(comment._id,comment.is_reported)">Report</button></td>
+							<td><button class="btn btn-warning" ng-click="reportCommend(comment._id,comment)">Report</button></td>
 							<td><button class="btn btn-warning" ng-click="deleteCommend(restaurant._id,comment._id)">Delete</button></td>
 						</tr>
 					</tbody>

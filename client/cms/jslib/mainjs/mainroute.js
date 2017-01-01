@@ -6,6 +6,7 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
     $stateProvider
         .state('home',{
             url: '/',
+            controller : 'dashboardcontroller',
             templateUrl: 'dashboard.html'
         })
         .state('user',{

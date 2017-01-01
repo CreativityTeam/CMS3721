@@ -124,11 +124,13 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         if($scope.isClickEditButton){
             $http.put(API_ENDPOINT.url + '/api/restaurants/updateinfo/' + $scope.restaurant.id,$scope.saveRestaurant).success(function(data){
                 getRestaurant();
+                toaster.pop('success',"Status",data.msg);
             });    
         }else{
             $http.post(API_ENDPOINT.url + '/api/restaurants/register',$scope.saveRestaurant).success(function(data){
                 getRestaurant();
                 $scope.restaurant = null;
+                toaster.pop('success',"Status",data.msg);
             });
         }
     }
@@ -182,9 +184,6 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         });
     }
 
-    /**--------------------- */
-    /**Start Comment Controller */
-    /**--------------------- */
     /**Delete Restaurant */
     $scope.delete = function(id) {
         $scope.restaurant = null;
@@ -196,16 +195,18 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }
         $http.delete(API_ENDPOINT.url + '/api/restaurants/deleteRestaurant/' + id).success(function(data){
             getRestaurant();
+            toaster.pop('error',"Status",data.msg);
         });
     }
 
+    /**--------------------- */
+    /**Start Comment Controller */
+    /**--------------------- */
     /**Get commend restaurant */
     $scope.getCommend = function(){
-        for(var i in $scope.restaurantBelongUser){
-            if($scope.restaurantBelongUser[i]._id == $scope.restaurant._id && $scope.restaurantBelongUser[i].comments.length != 0){
-                loadComment();    
-            }
-        }   
+        $http.delete(API_ENDPOINT.url + '/api/restaurants/findcomment/' + $scope.restaurant._id).success(function(data){
+                $scope.listComment = data.data;
+        });   
     }
 
     /**Delete Commend */
@@ -218,27 +219,24 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment' + id).success(function(data){
             if(data.success){
                 $http.delete(API_ENDPOINT.url + '/api/restaurants/deletecomment/' + idres +'/' + idcmt).success(function(data){});  
+                toaster.pop('error',"Status",data.msg);
             }
         });
     }
 
     /**Report Commend */
-     $scope.reportCommend = function(id,isreported){
-        if(isreported){
-            $scope.is_reported = false;
+     $scope.reportCommend = function(id,comment){
+        if(comment.is_reported){
+            comment.is_reported = false;
         }else{
-           $scope.is_reported = true; 
+            comment.is_reported = true; 
         }
-        $http.put(API_ENDPOINT.url + '/api/comments/updateinfo' + id,$scope.is_reported).success(function(data){
-            loadComment();
+        $http.put(API_ENDPOINT.url + '/api/comments/updateinfo' + id,comment).success(function(data){
+            toaster.pop('success',"Status",data.msg);
+            $scope.getCommend();
         });   
     }
 
-    var loadComment = function(){
-        $http.delete(API_ENDPOINT.url + '/api/restaurants/findcomment/' + $scope.restaurant._id).success(function(data){
-                $scope.listComment = data.data;
-        });    
-    }
     /**--------------------- */
     /**End Comment Controller */
     /**--------------------- */
@@ -269,12 +267,14 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     $scope.registerService = function(idres){
         if($scope.isEditService){
             $http.put(API_ENDPOINT.url + '/api/services/updateinfo/' + $scope.service._id,$scope.service).success(function(data){
+                toaster.pop('success',"Status",data.msg);
                 $scope.loadService();
             });    
         }else{
         $http.post(API_ENDPOINT.url + '/api/services/create',$scope.service).success(function(data){
             if(data.success){
                 $http.put(API_ENDPOINT.url + '/api/restaurants/updateservices/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
+                    toaster.pop('success',"Status",data.msg);
                     $scope.loadService();
                     $scope.service = null;
                 });  
@@ -288,6 +288,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $scope.isEditService = true;  
         $scope.isClickAddButtonService = true;
         $http.get(API_ENDPOINT.url + '/api/services/findinfo/' + idservice).success(function(data){
+                toaster.pop('success',"Status",data.msg);
                 $scope.service = data.data;
         }); 
     }
@@ -302,6 +303,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $http.delete(API_ENDPOINT.url + '/api/services/deleteservice/' + idserv).success(function(data){
             if(data.success){
                 $http.delete(API_ENDPOINT.url + '/api/restaurants/deleteservice/' + idres +'/' + idserv).success(function(data){});  
+                toaster.pop('error',"Status",data.msg);
             }
         });    
     }
@@ -327,18 +329,21 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     $scope.editPublicity = function(idPub){
         $scope.isClickEditButtonPublicity = true;
         $http.get(API_ENDPOINT.url + '/api/publicities/findPublicity/' + idPub).success(function(data){
+                toaster.pop('success',"Status",data.msg);
                 $scope.publicity = data.data;
         }); 
     }
     $scope.addPublicity = function(){
         if($scope.isClickEditButtonPublicity){
             $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + $scope.publicity._id,$scope.publicity).success(function(data){
+                toaster.pop('success',"Status",data.msg);
                 $scope.loadPublicity();
             });    
         }else{
         $http.post(API_ENDPOINT.url + '/api/publicities/create',$scope.publicity).success(function(data){
             if(data.success){
                 $http.put(API_ENDPOINT.url + '/api/restaurants/updatepublicities/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
+                    toaster.pop('success',"Status",data.msg);
                     $scope.loadPublicity();
                     $scope.publicity = null;
                 });  
@@ -354,7 +359,8 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }
         $http.delete(API_ENDPOINT.url + '/api/publicities/deletepublicity/' + idPub).success(function(data){
             if(data.success){
-                $http.delete(API_ENDPOINT.url + '/api/restaurants/deletepublicity/' + idRes + '/' + idPub).success(function(data){});  
+                $http.delete(API_ENDPOINT.url + '/api/restaurants/deletepublicity/' + idRes + '/' + idPub).success(function(data){}); 
+                toaster.pop('error',"Status",data.msg); 
             }
         });  
     }
