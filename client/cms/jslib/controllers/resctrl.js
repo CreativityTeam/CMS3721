@@ -207,7 +207,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $http.get(API_ENDPOINT.url + '/api/restaurants/findcomment/' + $scope.restaurant._id).success(function(data){
                 $scope.listComment = data.data;
                 $http.get(API_ENDPOINT.url + '/api/foods/findcommentres/' + $scope.restaurant._id).success(function(data){
-                    $scope.listComment.push(data.data);    
+                    for(var i in data.data){
+                        for(var t in data.data[i].comments){
+                            $scope.listComment.push(data.data[i].comments[t]);    
+                        } 
+                    }  
                 });
         });   
     }

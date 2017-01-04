@@ -406,7 +406,7 @@ router.get('/findcommentres/:id',function(req,res){
         res.json({
                 success:true,
                 msg : "Find done",
-                data : food.comments
+                data : food
         });
     });
 });
