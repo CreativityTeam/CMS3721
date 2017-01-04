@@ -204,8 +204,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     /**--------------------- */
     /**Get commend restaurant */
     $scope.getCommend = function(){
-        $http.delete(API_ENDPOINT.url + '/api/restaurants/findcomment/' + $scope.restaurant._id).success(function(data){
+        $http.get(API_ENDPOINT.url + '/api/restaurants/findcomment/' + $scope.restaurant._id).success(function(data){
                 $scope.listComment = data.data;
+                $http.get(API_ENDPOINT.url + '/api/foods/findcommentres/' + $scope.restaurant._id).success(function(data){
+                    $scope.listComment.push(data.data);    
+                });
         });   
     }
 
@@ -218,7 +221,6 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }
         $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment' + id).success(function(data){
             if(data.success){
-                $http.delete(API_ENDPOINT.url + '/api/restaurants/deletecomment/' + idres +'/' + idcmt).success(function(data){});  
                 toaster.pop('error',"Status",data.msg);
             }
         });
@@ -310,6 +312,10 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     /**--------------------- */
     /**End Service Function */
     /**--------------------- */
+
+    /**--------------------- */
+    /**Start Publicities Function */
+    /**--------------------- */
     $scope.showFormPub = function(){
         $scope.isClickAddButtonPublicity = true;
         $scope.isClickEditButtonPublicity = false;
@@ -365,8 +371,66 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         });  
     }
     /**--------------------- */
-    /**Start Publicities Function */
+    /**End Publicities Function */
     /**--------------------- */
+
+     /**--------------------- */
+    /**Start Food Function */
+    /**--------------------- */
+    $scope.showFormFood = function(){
+        $scope.isClickAddButtonFood = true;
+        $scope.isClickEditButtonFood = false;
+        $scope.food = null;
+    }
+    $scope.hideFormFood = function(){
+        $scope.isClickAddButtonFood = false;
+        $scope.isClickEditButtonFood = false;
+        $scope.food = null;
+    }
+    $scope.loadFood = function(){
+         $scope.isRestaurantSelected = true;
+         $http.get(API_ENDPOINT.url + '/api/foods/findres/' + $scope.restaurant._id).success(function(data){
+                $scope.listFood = data.data;
+        }); 
+    }
+    $scope.editFood = function(idFood){
+        $scope.isClickEditButtonFood = true;
+        $http.get(API_ENDPOINT.url + '/api/foods/findinfo/' + idFood).success(function(data){
+                toaster.pop('success',"Status",data.msg);
+                $scope.food = data.data;
+        }); 
+    }
+    $scope.addFood = function(){
+        if($scope.isClickEditButtonFood){
+            $http.put(API_ENDPOINT.url + '/api/foods/updateinfo/' + $scope.food._id,$scope.food).success(function(data){
+                toaster.pop('success',"Status",data.msg);
+                $scope.loadFood();
+            });    
+        }else{
+        $scope.food.res_belong = $scope.restaurant._id;
+        $http.post(API_ENDPOINT.url + '/api/foods/create',$scope.food).success(function(data){
+                    toaster.pop('success',"Status",data.msg);
+                    $scope.loadFood();
+                    $scope.food = null;
+            });
+        }    
+    }
+    $scope.deleteFood = function(idFood){
+        for(var i in $scope.listFood){
+            if($scope.listFood[i]._id == idFood){
+                $scope.listFood.splice(i,1);
+            }
+        }
+        $http.delete(API_ENDPOINT.url + '/api/foods/deletefood/' + idFood).success(function(data){
+            if(data.success){
+                toaster.pop('error',"Status",data.msg); 
+            }
+        });  
+    }
+    /**--------------------- */
+    /**End Food Function */
+    /**--------------------- */
+
     loadCity();
     getRestaurant();
     getCurrentUser();

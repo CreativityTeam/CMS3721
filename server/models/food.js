@@ -20,10 +20,21 @@ var FoodSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
     }],
-    photos : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Photo' 
-    }],
+    photo1:{
+        type : String
+    },
+    photo2:{
+        type : String
+    },
+    photo3:{
+        type : String
+    },
+    photo4:{
+        type : String
+    },
+    photo5:{
+        type : String
+    },
     ratings : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rating' 
@@ -98,4 +109,8 @@ module.exports.removeFood = function(id,callback){
     Food.findByIdAndRemove(id, callback);
 };
 
-
+/**Find commend food belong to res */
+module.exports.findCommentsBelongRes = function(id,callback){
+    var query = { res_belong : id }
+    Food.find(query).populate('comments').exec(callback);
+};

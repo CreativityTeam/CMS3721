@@ -56,7 +56,6 @@ app.use(expressvalidator({
 /**Route for model */
 //* Its purpose to call api
 var users = require('./routes/users');
-var restaurants = require('./routes/restaurants');
 var ratings = require('./routes/ratings');
 var photos = require('./routes/photos');
 var foods = require('./routes/foods');
@@ -65,11 +64,11 @@ var orders = require('./routes/orders');
 var messages = require('./routes/messages');
 var publicities = require('./routes/publicities');
 var services = require('./routes/services');
+var restaurants = require('./routes/restaurants');
 
 /**URL for model */
 //* Its purpose to call the right api for model
 app.use('/api/users',users);
-app.use('/api/restaurants',restaurants);
 app.use('/api/ratings',ratings);
 app.use('/api/photos',photos);
 app.use('/api/comments',comments);
@@ -78,6 +77,7 @@ app.use('/api/orders',orders);
 app.use('/api/messages',messages);
 app.use('/api/publicities',publicities);
 app.use('/api/services',services);
+app.use('/api/restaurants',restaurants);
 app.use('/checkconnection/',function(req,res){
     res.json({
         status : 200

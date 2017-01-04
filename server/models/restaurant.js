@@ -22,11 +22,11 @@ var RestaurantSchema = mongoose.Schema({
     },
     comments:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'comment'
+        ref: 'Comment'
     }],
     ratings:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'rating'
+        ref: 'Rating'
     }],
     photo1:{
         type : String

@@ -48,6 +48,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'pub.res.normal.html'
         })
+        .state('foodres',{
+            url: '/foodres',
+            controller : 'rescontroller',
+            templateUrl: 'food.res.normal.html'
+        })
         .state('food',{
             url: '/food',
             templateUrl: 'icons.html'

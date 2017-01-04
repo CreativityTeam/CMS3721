@@ -19,11 +19,22 @@ router.post('/create',function(req,res){
     var description = req.body.description;
     var type = req.body.type;
     var price = req.body.price;
+    var photo1 = req.body.photo1;
+    var photo2 = req.body.photo2;
+    var photo3 = req.body.photo3;
+    var photo4 = req.body.photo4;
+    var photo5 = req.body.photo5;
     var newFood = new Food({
         food_name : food_name,
         description : description,
+        res_belong : res_belong,
         type : type,
-        price : price
+        price : price,
+        photo1 : photo1,
+        photo2 : photo2,
+        photo3 : photo3,
+        photo4 : photo4,
+        photo5 : photo5
     });
     
     Food.createFood(newFood,function(err,food){
@@ -73,7 +84,7 @@ router.get('/findinfo/:id',function(req,res){
  *  id: Food ID
  */
 /**Response
- * food.res_belong
+ * food
  */
 router.get('/findres/:id',function(req,res){
     Food.findRestaurant(req.params.id,function(err,food){
@@ -81,7 +92,7 @@ router.get('/findres/:id',function(req,res){
         res.json({
             success: true,
             msg: "Find done",
-            data: food.res_belong
+            data: food
         });
     });
 });
@@ -322,40 +333,17 @@ router.put('/updateinfo/:id',function(req,res){
         food.description = req.body.description;
         food.type = req.body.type;
         food.price = req.body.price;
+        food.photo1 = req.body.photo1;
+        food.photo2 = req.body.photo2;
+        food.photo3 = req.body.photo3;
+        food.photo4 = req.body.photo4;
+        food.photo5 = req.body.photo5;
         Food.createFood(food,function(err,food){
             if(err) throw err;
             res.json({
                 success : true,
                 msg : "Successfully update",
                 data : food
-            });
-        });
-    });
-});
-
-/**Request 
- * param
- *  id: Food ID
- * body
- *  comment_id: Comment ID
- */
-/**Response
- *  data: restaurant.photos
- */
-router.delete('/deletecomment/:id',function(req,res){
-    Food.getFoodById(req.params.id,function(err,food){
-        if(err) throw err;
-        for(var i = 0;i < food.comments.length ; i++){
-            if(food.comments[i] == req.body.comment_id){
-                food.comments.splice(i,1);
-            }
-        }
-        Food.createFood(food,function(err,food){
-                if(err) throw err;
-                    res.json({
-                        success : true,
-                        msg : "Successfully Delete",
-                        data : food.comments
             });
         });
     });
@@ -405,4 +393,21 @@ router.delete('/deletefood/:id',function(req,res){
     });
 });
 
+/**Request 
+ * param
+ *  id: Res ID
+ */
+/**Response
+ * food.comments
+ */
+router.get('/findcommentres/:id',function(req,res){
+    Food.findCommentsBelongRes(req.params.id,function(err,food){
+        if(err) throw err;
+        res.json({
+                success:true,
+                msg : "Find done",
+                data : food.comments
+        });
+    });
+});
 module.exports = router;

@@ -1,0 +1,138 @@
+<div class="row">
+	<toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Food Management</h4>			
+			</div>
+			<div class="content">
+				<form>
+					<div class="form-group">
+      					<div class="input-group">
+        					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchFood">
+      					</div>      
+   					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="sel1">Select Your Restaurant</label>
+								<select class="form-control" id="sel1" ng-change="loadFood()" ng-model="restaurant._id" required>
+    								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
+  								</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="showFormFood()" ng-show="isRestaurantSelected">Add Food</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormFood()" ng-show="isClickAddButtonFood">Close Form</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="addFood()" ng-show="isClickAddButtonFood">Submit Food</a>
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonFood">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Food Name</label>
+								<input type="text" class="form-control border-input" ng-model="food.food_name" required>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Food Type</label>
+								<input type="text" class="form-control border-input" ng-model="food.type" required>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Food Price</label>
+								<input type="number" class="form-control border-input" ng-model="food.price" required>
+							</div>
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonFood">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="sel1">Food Description</label>
+								<textarea class="form-control" rows="5" ng-model="food.description"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonFood">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 1</label>
+								<input type="text" class="form-control border-input" ng-model="food.photo1">							
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{food.photo1}}" border=3 height=100 width=100 ng-show="food.photo1"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonFood">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 2</label>
+								<input type="text" class="form-control border-input" ng-model="food.photo2">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{food.photo2}}" border=3 height=100 width=100 ng-show="food.photo2"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonFood">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 3</label>
+								<input type="text" class="form-control border-input" ng-model="food.photo3">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{food.photo3}}" border=3 height=100 width=100 ng-show="foodphoto3"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonFood">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 4</label>
+								<input type="text" class="form-control border-input" ng-model="food.photo4">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{food.photo4}}" border=3 height=100 width=100 ng-show="food.photo4"></img>	
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonFood">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 5</label>
+								<input type="text" class="form-control border-input" ng-model="food.photo5">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{food.photo5}}" border=3 height=100 width=100 ng-show="food.photo5"></img>	
+						</div>
+					</div>
+				</form>
+				<table class="table">
+					<thead>
+						<th>ID</th>
+						<th>Food Name</th>
+						<th>Food Type</th>
+						<th>Food Price</th>
+						<th>Food Description</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="foodItem in listFood | filter:searchFood">
+							<td>{{ foodItem._id }}</td>
+							<td>{{ foodItem.food_name }}</td>
+							<td>{{ foodItem.type }}</td>
+							<td>{{ foodItem.price }}</td>
+							<td>{{ foodItem.description }}</td>
+							<td><button class="btn btn-warning" ng-click="editFood(foodItem._id)">Edit</button></td>
+							<td><button class="btn btn-danger" ng-click="deleteFood(foodItem._id)">Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
