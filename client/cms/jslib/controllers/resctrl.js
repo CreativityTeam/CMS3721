@@ -237,9 +237,8 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }else{
             comment.is_reported = true; 
         }
-        $http.put(API_ENDPOINT.url + '/api/comments/updateinfo' + id,comment).success(function(data){
+        $http.put(API_ENDPOINT.url + '/api/comments/updateinfo/' + id,comment).success(function(data){
             toaster.pop('success',"Status",data.msg);
-            $scope.getCommend();
         });   
     }
 
