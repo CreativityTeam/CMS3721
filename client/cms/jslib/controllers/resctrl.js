@@ -434,6 +434,30 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     /**End Food Function */
     /**--------------------- */
 
+    /**--------------------- */
+    /**Order Function */
+    /**--------------------- */
+    $scope.loadOrder = function(){
+         $scope.isRestaurantSelectedInOrder = true;
+         $scope.listOrder = [];
+         $http.get(API_ENDPOINT.url + '/api/orders/findOrderRes/' + $scope.restaurant._id).success(function(data){
+             for(var item in data.data){
+                 $scope.listOrder.push({
+                     count : item,
+                     user_order_name : data.data[item].user,
+                     res_belong : data.data[item].res_belong,
+                     status : data.data[item].status,
+                     user_order : data.data[item].user_order,
+                     time_ordered : data.data[item].time_ordered,
+                     total_price : data.data[item].total_price,
+                     foods : data.data[item].foods,
+                     shipper_name : data.data[item].shipper_name,
+                     services : data.data[item].services                   
+                 });
+             }
+             console.log($scope.listOrder);
+        }); 
+    }
     loadCity();
     getRestaurant();
     getCurrentUser();

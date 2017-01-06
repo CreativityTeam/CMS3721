@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Order = require('../models/order');
+var User = require('../models/user');
 
 /**Request 
  * body 
@@ -17,20 +18,18 @@ var Order = require('../models/order');
 
 router.post('/create',function(req,res){
     var user_order = req.body.user_order_id;
-    var foods = req.body.foods;
-    var services = req.body.services;    
+    var res_belong = req.body.req_belong; 
     var time_ordered = req.body.time_ordered;
     var location_ordered = req.body.location_ordered;
     var comment = req.body.comment;
     var price = req.body.price;
     var newOrder = new Order({
         user_order: user_order,
-        foods : foods,
-        services : services,
+        res_belong : res_belong,
         time_ordered: time_ordered,
         location_ordered: location_ordered,
-        total_price : price ,
-        comment: comment        
+        comment: comment,
+        total_price : price        
     });
     
     Order.createOrder(newOrder,function(err,order){
@@ -239,7 +238,7 @@ router.put('/updateshiplocation/:id',function(req,res){
 router.put('/addservice/:id',function(req,res){
     Order.getOrderById(req.params.id,function(err,order){
         if(err) throw err;
-        var serviced_id = req.body.service_id;
+        var service_id = req.body.service_id;
         var quantity = req.body.quantity;
         order.services.push({service_id: service_id, quantity: quantity});
         Order.createOrder(order,function(err,order){
@@ -397,6 +396,88 @@ router.delete('/deleteorder/:id',function(req,res){
             success : true,
             msg : "Successfully Delete"
         });
+    });
+});
+
+var getOrderName = function(id,callback){
+      Order.findAllFoodService(id,function(err,orders){
+        if(err) throw err;
+        var listQuery = [];
+        for(var item in orders){
+            listQuery.push(
+            new Promise(function(resolve,reject){
+                    User.getUserById(orders[item].user_order,function(err,user){
+                        OrderQuery = {
+                            user : user.local.name,
+                            res_belong : orders[item].res_belong,
+                            status : orders[item].status,
+                            user_order : orders[item].user_order,
+                            time_ordered : orders[item].time_ordered,
+                            total_price : orders[item].total_price,
+                            foods : orders[item].foods,
+                            shipper : orders[item].shipper, 
+                            services : orders[item].services                   
+                        };
+                        resolve(OrderQuery);    
+                    });
+                })
+            )  
+        }
+        Promise.all(listQuery)
+        .then(function(listOrder){
+            callback(listOrder);
+        })
+        .catch(function(err){
+            console.log(err);
+        })    
+    });
+}
+
+var getShipperName = function(orderList,callback){
+        var listQuery = [];
+        for(var item in orderList){
+            listQuery.push(
+            new Promise(function(resolve,reject){
+                    User.getUserById(orderList[item].shipper,function(err,user){
+                        OrderQuery = {
+                            user : orderList[item].user,
+                            res_belong : orderList[item].res_belong,
+                            status : orderList[item].status,
+                            user_order : orderList[item].user_order,
+                            time_ordered : orderList[item].time_ordered,
+                            total_price : orderList[item].total_price,
+                            foods : orderList[item].foods,
+                            shipper : orderList[item].shipper, 
+                            shipper_name : user.local.name, 
+                            services : orderList[item].services                   
+                        };
+                        resolve(OrderQuery);    
+                    });
+                })
+            )  
+        }
+        Promise.all(listQuery)
+        .then(function(listOrder){
+            callback(listOrder);
+        })
+        .catch(function(err){
+            console.log(err);
+        })  
+}
+/**Request
+ * restaurant ID
+ * */
+/**Response
+ * 
+ */
+router.get('/findOrderRes/:id',function(req,res){
+    getOrderName(req.params.id,function(orderList){
+        getShipperName(orderList,function(list){
+            res.json({
+                success : true,
+                data : list,
+            })
+        })
     });
 });
 

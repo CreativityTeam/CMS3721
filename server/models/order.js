@@ -8,6 +8,10 @@ var OrderSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    res_belong: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant'
+    },
     foods: [{
         food_id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -17,7 +21,7 @@ var OrderSchema = mongoose.Schema({
     services: [{
         service_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Service'},
+            ref: 'service'},
         quantity: Number
     }],
     time_ordered: {
@@ -90,5 +94,10 @@ module.exports.findServices = function(id,callback){
 module.exports.removeOrder = function(id,callback){
     Order.findByIdAndRemove(id, callback);
 };
+
+/**Find ALl Information */
+module.exports.findAllFoodService = function(id,callback){
+    Order.find({ res_belong : id}).populate('foods.food_id').populate('services.service_id').exec(callback);
+}
 
 

@@ -29,10 +29,6 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'res.manage.html'
         })
-        .state('comment',{
-            url: '/comment',
-            templateUrl: 'cmt.manager.html'
-        })
         .state('commentres',{
             url: '/commentres',
             controller : 'rescontroller',
@@ -52,6 +48,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             url: '/foodres',
             controller : 'rescontroller',
             templateUrl: 'food.res.normal.html'
+        })
+        .state('orderres',{
+            url: '/orderres',
+            controller : 'rescontroller',
+            templateUrl: 'order.res.normal.html'
         })
         .state('food',{
             url: '/food',
