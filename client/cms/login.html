@@ -14,12 +14,12 @@
 	<toaster-container toaster-options="{'position-class': 'toast-bottom-right'}"></toaster-container>
 	<div class="form">
 		<ul class="tab-group">
-			<li class="tab active"><a href="#login">Log In</a></li>
-			<li class="tab"><a href="#signup">Sign Up</a></li>
+			<li class="tab active"><a href="#login">S'identifier</a></li>
+			<li class="tab"><a href="#signup">S'inscrire</a></li>
 		</ul>
 		<div class="tab-content">
 			<div id="login">
-				<h1>Welcome Back!</h1>
+				<h1>Nous saluons le retour!</h1>
 				<form>
 					<div class="field-wrap">
 						<input type="email" required autocomplete="off" ng-model="user.username"/>
@@ -31,40 +31,40 @@
 					<loading></loading></p>
 					<div class="top-row">
 						<div class="field-wrap">
-							<button type="button" class="button button-block" ng-click="login()">Local Log In</button>
+							<button type="button" class="button button-block" ng-click="login()">Connexion</button>
 						</div>
 						<div class="field-wrap">
-							<button type="button" class="button button-block-facebook" ng-click="loginFacebook()">Facebook Login</button>
+							<button type="button" class="button button-block-facebook" ng-click="loginFacebook()">Facebook</button>
 						</div>
 					</div>
 				</form>
 			</div>
 			<div id="signup">
-				<h1>Sign Up for Free</h1>
+				<h1>Inscription gratuite</h1>
 				<form>
 					<div class="top-row">
 						<div class="field-wrap">
-							<label>First Name<span class="req">*</span></label>
+							<label>Prénom<span class="req">*</span></label>
 							<input type="text" required autocomplete="off" ng-model="newUser.firstname"/>
 						</div>
 						<div class="field-wrap">
-							<label>Last Name<span class="req">*</span></label>
+							<label>Nom<span class="req">*</span></label>
 							<input type="text" required autocomplete="off" ng-model="newUser.lastname"/>
 						</div>
 					</div>
 					<div class="field-wrap">
-						<label>Email Address<span class="req">*</span></label>
+						<label>Courriel<span class="req">*</span></label>
 						<input type="email" required autocomplete="off" ng-model="newUser.email"/>
 					</div>
 					<div class="field-wrap">
-						<label>Set A Password<span class="req">*</span></label>
+						<label>Définir un mot de passe<span class="req">*</span></label>
 						<input type="password" required autocomplete="off" ng-model="newUser.password"/>
 					</div>
 					<div class="field-wrap">
-						<label>Confirm Your Password<span class="req">*</span></label>
+						<label>Confirmez votre mot de passe<span class="req">*</span></label>
 						<input type="password" required autocomplete="off" ng-model="newUser.password2"/>
 					</div>
-					<button type="submit" class="button button-block" ng-click="register()"/>Get Started</button>			
+					<button type="submit" class="button button-block" ng-click="register()"/>Commencer</button>			
 				</form>
 			</div>
 		</div>

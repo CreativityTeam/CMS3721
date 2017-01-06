@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Comment Management</h4>		
+				<h4 class="title">Gestion des commentaires</h4>		
 				<loading></loading>
 			</div>
 			<div class="content table-responsive">
@@ -16,7 +16,7 @@
    					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<label for="sel1">Select Your Restaurant</label>
+							<label for="sel1">Sélectionnez votre restaurant</label>
 								<select class="form-control" id="sel1" ng-change="getCommend()" ng-model="restaurant._id" required>
     								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
   								</select>
@@ -27,9 +27,9 @@
 					<thead>
 						<th>ID</th>
 						<th>ID User Cmt</th>
-						<th>Content</th>
-						<th>Date Created</th>
-						<th>Reported</th>
+						<th>Contenu</th>
+						<th>Date de création</th>
+						<th>Signalé</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="comment in listComment | filter:searchCmt">

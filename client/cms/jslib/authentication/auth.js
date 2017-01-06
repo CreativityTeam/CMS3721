@@ -9,7 +9,7 @@ auth.directive('loading',function(){
     return {
         restrict : "E",
         replace : true,
-        template: '<div class="loading"><img src="/assets/img/loading.gif" width="20" height="20" /> Please Wait A Few Minutes...</div>',
+        template: '<div class="loading"><img src="/assets/img/loading.gif" width="20" height="20" /> Chargement...</div>',
         link : function(scope,element,attr){
             scope.$watch('loading',function(val){
                 if(val){

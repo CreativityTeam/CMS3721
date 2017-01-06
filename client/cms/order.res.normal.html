@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Order Management</h4>		
+				<h4 class="title">Gestion des commandes</h4>		
 				<loading></loading>
 			</div>
 			<div class="content">
@@ -15,7 +15,7 @@
       						</div>      
    					</div>
 					<div class="form-group">
-							<label for="sel1">Select Your Restaurant</label>
+							<label for="sel1">Sélectionnez votre restaurant</label>
 								<select class="form-control" id="sel1" ng-change="loadOrder()" ng-model="restaurant._id" required>
     								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
   								</select>
@@ -26,7 +26,7 @@
     					<div class="panel-heading" role="tab" id="heading{{order.count}}">
       						<h4 class="panel-title">
         						<a role="button" data-toggle="collapse" data-parent="#accordion{{order.count}}" href="#collapse{{order.count}}" aria-expanded="false" aria-controls="collapse{{order.count}}">
-									  Order #{{order.count}}
+									  Commande *{{order.count}}
         						</a>
       						</h4>
     					</div>
@@ -34,45 +34,45 @@
      						<div class="panel-body">
 								 <div class="row">
 									 <div class="col-md-12">
-								  		<span class="ti-user" aria-hidden="true"></span> User Order : {{order.user_order_name}}
+								  		<span class="ti-user" aria-hidden="true"></span> Ordre des utilisateurs : {{order.user_order_name}}
 							  		</div>
 								 </div>
 								 <p></p>
 								 <div class="row">
 									 <div class="col-md-12">
-								  		<span class="ti-truck" aria-hidden="true"></span> Shipper : {{order.shipper_name}}
+								  		<span class="ti-truck" aria-hidden="true"></span> Expéditeur : {{order.shipper_name}}
 							  		</div>
 								 </div>
 								 <p></p>
 								 <div class="row">
 									 <div class="col-md-12">
-								  		<span class="ti-alarm-clock" aria-hidden="true"></span> Time Order : {{order.time_ordered}}
+								  		<span class="ti-alarm-clock" aria-hidden="true"></span> Ordre du temps : {{order.time_ordered}}
 							  		</div>
 								 </div>
 								 <p></p>
 								 <div class="row">
 									 <div class="col-md-12">
-								  		<span class="ti-alarm-clock" aria-hidden="true"></span> Status : <span class="label label-success">{{order.status}}</span>
+								  		<span class="ti-alarm-clock" aria-hidden="true"></span> Statut : <span class="label label-success"> {{order.status}}</span>
 							  		</div>
 								 </div>
 								 <p></p>
 								 <div class="row">
 									 <div class="col-md-12">
-								  		<span class="ti-money" aria-hidden="true"></span> Price : {{order.total_price}}
+								  		<span class="ti-money" aria-hidden="true"></span> Prix : {{order.total_price}}
 							  		</div>
 								 </div>
 								 <p></p>
 								 <div class="row">
 									 <div class="col-md-12">
-										  <span class="ti-shopping-cart" aria-hidden="true"></span> <strong>List Food</strong>
+										  <span class="ti-shopping-cart" aria-hidden="true"></span> <strong>Liste aliments</strong>
 							  		</div>
 								 </div>
 								 <div class="content table-responsive">
 									 <table class="table">
 										<thead>
-											<th><strong>Name</strong></th>
-											<th><strong>Quantity</strong></th>
-											<th><strong>Price</strong></th>
+											<th><strong>Num</strong></th>
+											<th><strong>Quantité</strong></th>
+											<th><strong>Prix</strong></th>
 										</thead>
 										<tbody>
 											<tr ng-repeat="food in order.foods | filter:searchOrder">
@@ -86,15 +86,15 @@
 								<p></p>
 								<div class="row">
 									 <div class="col-md-12">
-										  <span class="ti-shopping-cart" aria-hidden="true"></span> <strong>List Services</strong>
+										  <span class="ti-shopping-cart" aria-hidden="true"></span> <strong>Liste services</strong>
 							  		</div>
 								</div>
 								<div class="content table-responsive">
 									 <table class="table">
 										<thead>
-											<th><strong>Name</strong></th>
-											<th><strong>Quantity<strong></th>
-											<th><strong>Price</strong></th>
+											<th><strong>Num</strong></th>
+											<th><strong>Quantité<strong></th>
+											<th><strong>Prix</strong></th>
 										</thead>
 										<tbody>
 											<tr ng-repeat="service in order.services | filter:searchOrder">

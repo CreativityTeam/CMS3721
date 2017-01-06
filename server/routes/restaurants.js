@@ -71,7 +71,7 @@ router.get('/findad/:token',function(req,res){
         if(restaurant.length == 0){
             res.json({
                 success:false,
-                msg : "You dont have any restaurants, Click here to create your restaurant"
+                msg : "Veuillez créer votre premier restaurant"
             });    
         }else{
             res.json({

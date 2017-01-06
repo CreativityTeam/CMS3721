@@ -3,14 +3,14 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Photo Manager</h4>		
+				<h4 class="title">Gestion des photos</h4>		
 				<loading></loading>
 			</div>
 			<form class="content">
 				<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
-								<label for="exampleInputEmail1">User Id</label>
+								<label for="exampleInputEmail1">Id</label>
 								<input type="text" class="form-control border-input" placeholder="User Id" value="{{ user._id }}" disabled>
 							</div>
 						</div>
@@ -30,7 +30,7 @@
 				<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<button class="btn btn-sm btn-info" ng-click="uploadPhoto()"><strong>Upload Photo</strong></button>
+								<button class="btn btn-sm btn-info" ng-click="uploadPhoto()"><strong>Envoyer la photo</strong></button>
 							</div>
 						</div>
 				</div>
@@ -53,7 +53,6 @@
 						<th>UserID</th>
 						<th>URL</th>
 						<th>Decription</th>
-						<th>Tool</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="photo in photoList | filter:searchPhoto">
@@ -62,7 +61,7 @@
 							<td>{{ photo.userid }}</td>
 							<td>{{ photo.url }}</td>
 							<td>{{ photo.description }}</td>
-							<td><button class="btn btn-danger" ng-click="remove(photo._id)">Remove</button></td>
+							<td><button class="btn btn-danger" ng-click="remove(photo._id)">Retier</button></td>
 						</tr>
 					</tbody>
 				</table>

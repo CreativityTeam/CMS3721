@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Food Management</h4>			
+				<h4 class="title">Gestion des aliments</h4>			
 			</div>
 			<div class="content">
 				<form>
@@ -15,7 +15,7 @@
    					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<label for="sel1">Select Your Restaurant</label>
+							<label for="sel1">Sélectionnez votre restaurant</label>
 								<select class="form-control" id="sel1" ng-change="loadFood()" ng-model="restaurant._id" required>
     								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
   								</select>
@@ -23,27 +23,27 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-						 	<a type="button" class="btn btn-sm btn-info" ng-click="showFormFood()" ng-show="isRestaurantSelected">Add Food</a>
-						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormFood()" ng-show="isClickAddButtonFood">Close Form</a>
-						 	<a type="button" class="btn btn-sm btn-info" ng-click="addFood()" ng-show="isClickAddButtonFood">Submit Food</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="showFormFood()" ng-show="isRestaurantSelected">Ajouter des aliments</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormFood()" ng-show="isClickAddButtonFood">Fermer la fiche</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="addFood()" ng-show="isClickAddButtonFood">Soumettre un aliment</a>
 						</div>
 					</div>
 					<div class="row" ng-show="isClickAddButtonFood">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Food Name</label>
+								<label>Num</label>
 								<input type="text" class="form-control border-input" ng-model="food.food_name" required>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<label>Food Type</label>
+								<label>Type</label>
 								<input type="text" class="form-control border-input" ng-model="food.type" required>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
-								<label>Food Price</label>
+								<label>Prix ​​aliments</label>
 								<input type="number" class="form-control border-input" ng-model="food.price" required>
 							</div>
 						</div>
@@ -51,7 +51,7 @@
 					<div class="row" ng-show="isClickAddButtonFood">
 						<div class="col-md-12">
 							<div class="form-group">
-								<label for="sel1">Food Description</label>
+								<label for="sel1">Description aliment</label>
 								<textarea class="form-control" rows="5" ng-model="food.description"></textarea>
 							</div>
 						</div>
@@ -115,10 +115,10 @@
 				<table class="table">
 					<thead>
 						<th>ID</th>
-						<th>Food Name</th>
-						<th>Food Type</th>
-						<th>Food Price</th>
-						<th>Food Description</th>
+						<th>Num</th>
+						<th>Type</th>
+						<th>Prix ​​aliments</th>
+						<th>Description aliment</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="foodItem in listFood | filter:searchFood">
@@ -127,8 +127,8 @@
 							<td>{{ foodItem.type }}</td>
 							<td>{{ foodItem.price }}</td>
 							<td>{{ foodItem.description }}</td>
-							<td><button class="btn btn-warning" ng-click="editFood(foodItem._id)">Edit</button></td>
-							<td><button class="btn btn-danger" ng-click="deleteFood(foodItem._id)">Delete</button></td>
+							<td><button class="btn btn-warning" ng-click="editFood(foodItem._id)">Modifier</button></td>
+							<td><button class="btn btn-danger" ng-click="deleteFood(foodItem._id)">Effacer</button></td>
 						</tr>
 					</tbody>
 				</table>
