@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Publicity Management</h4>		
+				<h4 class="title">Order Management</h4>		
 				<loading></loading>
 			</div>
 			<div class="content table-responsive">
@@ -11,26 +11,33 @@
     				<div class="form-group">
       					<div class="input-group">
         					<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchPub">
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchOrder">
       						</div>      
    						</div>
   				</form>
 				<table class="table">
 					<thead>
 						<th>ID</th>
-						<th>Name</th>
 						<th>Price</th>
 						<th>Restaurant</th>
+						<th>Food</th>
+						<th>Service</th>
+						<th>Status</th>
+						<th>Comment</th>
 					</thead>
-					<tbody ng-repeat="pubItem in listPublicity">
-							<tr ng-repeat="pub in pubItem.publicities | filter:searchPub">
-								<td>{{ pub._id }}</td>
-								<td>{{ pub.publicity_name }}</td>
-								<td>{{ pub.publicity_price }}</td>
-								<td>{{ pubItem.res_name }}</td>	
-							</tr>
+					<tbody>
+						<tr ng-repeat="orderItem in listOrder | filter:searchOrder">
+							<td>{{ orderItem._id }}</td>
+							<td>{{ orderItem.total_price }}</td>
+							<td>{{ orderItem.res_belong.res_name }}</td>
+							<td>{{ orderItem.foods.length }}</td>
+							<td>{{ orderItem.services.length }}</td>
+							<td>{{ orderItem.status }}</td>
+							<td>{{ orderItem.comment }}</td>
+						</tr>
 					</tbody>
 				</table>
+
 			</div>
 		</div>
 	</div>

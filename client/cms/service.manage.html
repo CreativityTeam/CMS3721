@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Publicity Management</h4>		
+				<h4 class="title">Service Management</h4>		
 				<loading></loading>
 			</div>
 			<div class="content table-responsive">
@@ -11,7 +11,7 @@
     				<div class="form-group">
       					<div class="input-group">
         					<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchPub">
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchService">
       						</div>      
    						</div>
   				</form>
@@ -22,12 +22,12 @@
 						<th>Price</th>
 						<th>Restaurant</th>
 					</thead>
-					<tbody ng-repeat="pubItem in listPublicity">
-							<tr ng-repeat="pub in pubItem.publicities | filter:searchPub">
-								<td>{{ pub._id }}</td>
-								<td>{{ pub.publicity_name }}</td>
-								<td>{{ pub.publicity_price }}</td>
-								<td>{{ pubItem.res_name }}</td>	
+					<tbody ng-repeat="serItem in listService">
+							<tr ng-repeat="ser in serItem.services | filter:searchService">
+								<td>{{ ser._id }}</td>
+								<td>{{ ser.service_name }}</td>
+								<td>{{ ser.service_desciption }}</td>
+								<td>{{ serItem.res_name }}</td>	
 							</tr>
 					</tbody>
 				</table>

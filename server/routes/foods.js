@@ -410,4 +410,14 @@ router.get('/findcommentres/:id',function(req,res){
         });
     });
 });
+
+/**Get ResName */
+router.get('/findResBelongName',function(req,res){
+    Food.findResBelongName(function(err,listFood){
+        res.json({
+            success:true,   
+            data : listFood
+        })
+    });
+});
 module.exports = router;

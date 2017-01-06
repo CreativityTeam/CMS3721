@@ -124,6 +124,12 @@
                         <p>Photos</p>
                     </a>
                 </li>
+                <li>
+                    <a ui-sref="message">
+                        <i class="ti-email"></i>
+                        <p>Message</p>
+                    </a>
+                </li>
                 <li ng-hide="isHide.supperUser">
                     <a ui-sref="food">
                         <i class="ti-receipt"></i>
@@ -134,12 +140,6 @@
                     <a ui-sref="order">
                         <i class="ti-bell"></i>
                         <p>Order</p>
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="message">
-                        <i class="ti-email"></i>
-                        <p>Message</p>
                     </a>
                 </li>
                 <li ng-hide="isHide.supperUser">
@@ -255,6 +255,7 @@
     <script src="jslib/mainjs/mainroute.js"></script>
     <script src="jslib/config/constant.js"></script>
     <script src="jslib/config/service.js"></script>
+    <script src="jslib/controllers/suctrl.js"></script>
     <script src="jslib/controllers/defaultctrl.js"></script>
     <script src="jslib/controllers/dashboardctrl.js"></script>
     <script src="jslib/controllers/userctrl.js"></script>

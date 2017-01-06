@@ -100,4 +100,8 @@ module.exports.findAllFoodService = function(id,callback){
     Order.find({ res_belong : id}).populate('foods.food_id').populate('services.service_id').exec(callback);
 }
 
+/**find ResName */
+module.exports.findResBelongName = function(callback){
+    Order.find().populate('res_belong').exec(callback);
+};
 

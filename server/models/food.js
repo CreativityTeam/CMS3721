@@ -104,6 +104,11 @@ module.exports.findRatings = function(id,callback){
     Food.findById(id).populate('ratings').exec(callback);
 };
 
+/**Find all ratings belong to this Food */
+module.exports.findResBelongName = function(callback){
+    Food.find().populate('res_belong').exec(callback);
+};
+
 /**Remove Food */
 module.exports.removeFood = function(id,callback){
     Food.findByIdAndRemove(id, callback);

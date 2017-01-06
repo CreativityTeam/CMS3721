@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Publicity Management</h4>		
+				<h4 class="title">Food Management</h4>		
 				<loading></loading>
 			</div>
 			<div class="content table-responsive">
@@ -11,7 +11,7 @@
     				<div class="form-group">
       					<div class="input-group">
         					<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchPub">
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchFood">
       						</div>      
    						</div>
   				</form>
@@ -21,16 +21,19 @@
 						<th>Name</th>
 						<th>Price</th>
 						<th>Restaurant</th>
+						<th>Comment</th>
 					</thead>
-					<tbody ng-repeat="pubItem in listPublicity">
-							<tr ng-repeat="pub in pubItem.publicities | filter:searchPub">
-								<td>{{ pub._id }}</td>
-								<td>{{ pub.publicity_name }}</td>
-								<td>{{ pub.publicity_price }}</td>
-								<td>{{ pubItem.res_name }}</td>	
-							</tr>
+					<tbody>
+						<tr ng-repeat="foodItem in listFood | filter:searchFood">
+							<td>{{ foodItem._id }}</td>
+							<td>{{ foodItem.food_name }}</td>
+							<td>{{ foodItem.price }}</td>
+							<td>{{ foodItem.res_belong.res_name }}</td>
+							<td>{{ foodItem.comments.length }}</td>
+						</tr>
 					</tbody>
 				</table>
+
 			</div>
 		</div>
 	</div>

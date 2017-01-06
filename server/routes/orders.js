@@ -481,4 +481,13 @@ router.get('/findOrderRes/:id',function(req,res){
     });
 });
 
+/**Get Res Name */
+router.get('/getResName',function(req,res){
+    Order.findResBelongName(function(err,listOrder){
+        res.json({
+            success : true,
+            data : listOrder
+        })
+    });  
+})
 module.exports = router;

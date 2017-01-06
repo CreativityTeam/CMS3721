@@ -98,3 +98,10 @@ module.exports.deleteRestaurant = function(id,callback){
     Restaurant.findOneAndRemove(query,callback);
 };
 
+module.exports.getAllPublicity = function(callback){
+   Restaurant.find().populate('publicities').exec(callback); 
+}
+
+module.exports.getAllService = function(callback){
+   Restaurant.find().populate('services').exec(callback); 
+}

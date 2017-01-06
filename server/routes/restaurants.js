@@ -325,4 +325,21 @@ router.delete('/deleterestaurant/:id',function(req,res){
     });
 });
 
+router.get('/getAllPublicity',function(req,res){
+    Restaurant.getAllPublicity(function(err,listPublicity){
+        res.json({
+            success : true,
+            data : listPublicity
+        })
+    });
+});
+
+router.get('/getAllService',function(req,res){
+    Restaurant.getAllService(function(err,listService){
+        res.json({
+            success : true,
+            data : listService
+        })
+    });
+});
 module.exports = router;

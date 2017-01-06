@@ -56,11 +56,13 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('food',{
             url: '/food',
-            templateUrl: 'icons.html'
+            controller : 'sucontroller',
+            templateUrl: 'food.manage.html'
         })
         .state('order',{
             url: '/order',
-            templateUrl: 'notifications.html'
+            controller : 'sucontroller',
+            templateUrl: 'order.manage.html'
         })
         .state('message',{
             url: '/message',
@@ -68,6 +70,7 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('publicity',{
             url: '/publicity',
+            controller : 'sucontroller',
             templateUrl: 'pub.manage.html'
         })
         .state('photo',{
@@ -77,7 +80,8 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('service',{
             url: '/service',
-            templateUrl: 'notifications.html'
+            controller : 'sucontroller',
+            templateUrl: 'service.manage.html'
         });
     $locationProvider.html5Mode({
         enabled: true,

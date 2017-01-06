@@ -9,7 +9,8 @@ var app = angular.module('cms',[
     'dashboardctrl',
     'resctrl',
     'toaster',
-    'ngMap'
+    'ngMap',
+    'suctrl'
 ]);
 
 app.directive('loading',function(){
