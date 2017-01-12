@@ -13,12 +13,14 @@ router.post('/register',function(req,res){
     var name = req.body.firstname + " " + req.body.lastname;
     var password = req.body.password
     var password2 = req.body.password2;
+    var role = req.body.role;
     var newUser = new User({
         local: {
             email: email,
             name: name,
             password: password
-        }
+        },
+        role : role
     });
     User.getUserByEmail(newUser.local.email, function (err, user) {
         if (err) res.status(500).send();
