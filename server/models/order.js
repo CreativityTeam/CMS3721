@@ -18,32 +18,21 @@ var OrderSchema = mongoose.Schema({
             ref: 'Food'},
         quantity: Number
     }],
-    services: [{
-        service_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'service'},
-        quantity: Number
-    }],
     time_ordered: {
         type: Date
     },
-    location_ordered: {
-        latitude: {
-            type: Number
-        },
-        longitude: {
-            type: Number
+    locationshipping:{
+        address : String,
+        point:{
+            longitude : Number,
+            latitude : Number
         }
     },
-    location_shipping: {
-        latitude: {
-            type: Number
-        },
-        longitude: {
-            type: Number
-        }
+    shippingstatus: {
+        type: String,
+        default: 'pending'        
     },
-    status: {
+    paymentstatus: {
         type: String,
         default: 'created'        
     },
@@ -85,23 +74,19 @@ module.exports.findFoods = function(id,callback){
     Order.findById(id).populate('foods.food_id').exec(callback);
 };
 
-/**Find Service belong */
-module.exports.findServices = function(id,callback){
-    Order.findById(id).populate('services.service_id').exec(callback);
-};
 
 /**Remove Order */
 module.exports.removeOrder = function(id,callback){
     Order.findByIdAndRemove(id, callback);
 };
 
-/**Find ALl Information */
-module.exports.findAllFoodService = function(id,callback){
-    Order.find({ res_belong : id}).populate('foods.food_id').populate('services.service_id').exec(callback);
-}
 
 /**find ResName */
 module.exports.findResBelongName = function(callback){
     Order.find().populate('res_belong').exec(callback);
 };
 
+/**Get All Information */
+module.exports.getAllInforOrder = function(id,callback){
+    Order.findById(id).populate('foods.food_id').populate('user_order').populate('res_belong').populate('shipper').exec(callback);
+};

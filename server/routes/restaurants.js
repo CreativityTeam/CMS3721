@@ -135,18 +135,6 @@ router.get('/findrating/:id',function(req,res){
     });
 });
 
-/**Input : Restaurant ID */
-/**Output : Service of Rrestaurant */
-router.get('/findservice/:id',function(req,res){
-    Restaurant.findServiceBeLong(req.params.id,function(err,restaurant){
-        if(err) throw err;
-            res.json({
-                success:true,
-                msg : "Find done",
-                data : restaurant.services
-            });
-    });
-});
 
 /**Input : Restaurant ID */
 /**Output : Publicities of Rrestaurant */
@@ -184,23 +172,6 @@ router.put('/updaterating/:id/:idrating',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
         if(err) throw err;
         restaurant.ratings.push(req.params.idrating);
-        Restaurant.createRestaurant(restaurant,function(err,restaurant){
-            if(err) throw err;
-            res.json({
-                success : true,
-                data : restaurant,
-                msg : "Successfully update"
-            });
-        });
-    });
-});
-
-/**Input : ID services */
-/**Output : Array Restaurant */
-router.put('/updateservices/:id/:idservice',function(req,res){
-    Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
-        restaurant.services.push(req.params.idservice);
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
             if(err) throw err;
             res.json({
@@ -277,25 +248,6 @@ router.delete('/deletecomment/:id/:idcomment',function(req,res){
     });
 });
 
-router.delete('/deleteservice/:id/:idservice',function(req,res){
-    Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
-        for(var i = 0;i < restaurant.services.length ; i++){
-            if(restaurant.services[i] == req.params.idservice){
-                restaurant.services.splice(i,1);
-            }
-        }
-        Restaurant.createRestaurant(restaurant,function(err,restaurant){
-                if(err) throw err;
-                res.json({
-                    success : true,
-                    msg : "Successfully Delete",
-                    data : restaurant.services
-            });
-        });
-    });
-});
-
 router.delete('/deletepublicity/:id/:idpublicity',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
         if(err) throw err;
@@ -334,12 +286,4 @@ router.get('/getAllPublicity',function(req,res){
     });
 });
 
-router.get('/getAllService',function(req,res){
-    Restaurant.getAllService(function(err,listService){
-        res.json({
-            success : true,
-            data : listService
-        })
-    });
-});
 module.exports = router;
