@@ -34,7 +34,7 @@ var OrderSchema = mongoose.Schema({
     },
     paymentstatus: {
         type: String,
-        default: 'created'        
+        default: 'Not Paid'        
     },
     comment: {
         type: String
