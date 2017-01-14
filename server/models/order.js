@@ -27,7 +27,7 @@ var OrderSchema = mongoose.Schema({
             latitude : Number
         }
     },
-    location_ordered{
+    location_ordered:{
         address : String,
         point:{
             longitude : Number,
@@ -96,6 +96,11 @@ module.exports.findResBelongName = function(callback){
 };
 
 /**Get All Information */
-module.exports.getAllInforOrder = function(id,callback){
+module.exports.getAllInforOrderBelongID = function(id,callback){
     Order.findById(id).populate('foods.food_id').populate('user_order').populate('res_belong').populate('shipper').exec(callback);
+};
+
+/**Get All Information */
+module.exports.getAllOrderList = function(callback){
+    Order.find().populate('foods.food_id').populate('user_order').populate('res_belong').populate('shipper').exec(callback);
 };

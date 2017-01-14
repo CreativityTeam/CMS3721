@@ -172,7 +172,7 @@ router.delete('/deleteorder/:id',function(req,res){
 });
 
 router.get('/findOrder/:id',function(req,res){
-    Order.getAllInforOrder(req.params.id,function(err,order){
+    Order.getAllInforOrderBelongID(req.params.id,function(err,order){
         res.json({
             success : true,
             data : order
@@ -233,4 +233,14 @@ router.post('/updatefee/:id',function(req,res){
         });
     });
 });
+
+router.get('/findAllOrder',function(req,res){
+    Order.getAllOrderList(function(err,order){
+        res.json({
+            success : true,
+            data : order
+        });    
+    })
+});
+
 module.exports = router;
