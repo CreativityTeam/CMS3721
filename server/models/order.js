@@ -36,6 +36,9 @@ var OrderSchema = mongoose.Schema({
         type: String,
         default: 'Not Paid'        
     },
+    feeshipping : {
+        type: Number
+    },
     comment: {
         type: String
     },

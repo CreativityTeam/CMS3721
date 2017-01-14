@@ -189,4 +189,21 @@ router.get('/getResName',function(req,res){
         })
     });  
 })
+
+/**Router Update Fee and total_price */
+router.post('/updatefee/:id',function(req,res){
+    Order.getOrderById(req.params.id,function(err,order){
+        if(err) throw err; 
+        var feeShipping = req.body.feeShipping;
+        order.total_price = order.total_price + feeShipping;               
+        Order.createOrder(order,function(err,order){
+            if(err) throw err;
+            res.json({
+                success : true,
+                msg : "Successfully update",
+                data : order
+            });
+        });
+    });
+});
 module.exports = router;
