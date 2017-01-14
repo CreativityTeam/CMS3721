@@ -190,6 +190,33 @@ router.get('/getResName',function(req,res){
     });  
 })
 
+/**Request
+ - * param
+ - *  id: Order ID
+ - * body
+ - *  location_shipping*/
+ /**Response
+ - * data: order
+ - */
+ router.put('/updateshiplocation/:id',function(req,res){
+     Order.getOrderById(req.params.id,function(err,order){
+         if(err) throw err;
+         order.locationshipping = {
+                point : {
+                    longitude : req.body.location_shipping.long,
+                    latitude : req.body.location_shipping.lat
+                }  
+         };
+         Order.createOrder(order,function(err,order){
+             if(err) throw err;
+             res.json({
+                success : true,
+                data: order
+             });
+         });
+     });
+ });
+
 /**Router Update Fee and total_price */
 router.post('/updatefee/:id',function(req,res){
     Order.getOrderById(req.params.id,function(err,order){
