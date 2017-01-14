@@ -31,7 +31,7 @@ router.post('/create',function(req,res){
         user_order: user_order,
         res_belong : res_belong,
         time_ordered: time_ordered,
-        locationshipping: {
+        location_ordered: {
             address : address,
             point : {
                 longitude : point.lon,

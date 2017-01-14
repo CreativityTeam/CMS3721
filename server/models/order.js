@@ -22,6 +22,12 @@ var OrderSchema = mongoose.Schema({
         type: Date
     },
     locationshipping:{
+        point:{
+            longitude : Number,
+            latitude : Number
+        }
+    },
+    location_ordered{
         address : String,
         point:{
             longitude : Number,
