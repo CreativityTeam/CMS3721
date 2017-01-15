@@ -27,7 +27,7 @@ var OrderSchema = mongoose.Schema({
             latitude : Number
         }
     },
-    location_ordered{
+    location_ordered:{
         address : String,
         point:{
             longitude : Number,

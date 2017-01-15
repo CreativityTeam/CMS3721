@@ -15,6 +15,7 @@ mongoose.connect('mongodb://admin:admin@ds048319.mlab.com:48319/mobileapp',funct
     if(err) throw ('Please check your connection');
     console.log('Connect Successfully');
 });
+
 /**Upload Folder */
 app.use(express.static(__dirname + '/uploads'));
 app.use(function(req,res,next){
@@ -23,6 +24,7 @@ app.use(function(req,res,next){
     res.header('Access-Control-Allow-Headers','Content-Type');
     next();    
 });
+
 /**Body parser */
 //* Its purpose to get value from client
 app.use(bodyParser.json());

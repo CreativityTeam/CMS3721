@@ -38,6 +38,8 @@
     "multer": "^1.2.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "socket.io": "^1.7.2",
+    "url": "^0.11.0"
   }
 }

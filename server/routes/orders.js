@@ -200,11 +200,15 @@ router.get('/getResName',function(req,res){
  - */
  router.put('/updateshiplocation/:id',function(req,res){
      Order.getOrderById(req.params.id,function(err,order){
-         if(err) throw err;
+        if(err) throw err;        
+        console.log('Res IO: ' + req.io);             
+        var io = req.io;  
+        var ns = 'server/api/orders/updateshiplocation/';                                   
+        io.of(ns + req.params.id).emit('location', req.body);             
          order.locationshipping = {
                 point : {
-                    longitude : req.body.location_shipping.long,
-                    latitude : req.body.location_shipping.lat
+                    longitude : req.body.longitude,
+                    latitude : req.body.latitude
                 }  
          };
          Order.createOrder(order,function(err,order){
