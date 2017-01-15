@@ -141,8 +141,8 @@ router.get('/findfoods/:id',function(req,res){
  */
 router.put('/updatestatus/:id',function(req,res){    
     Order.getOrderById(req.params.id,function(err,order){
-        if(err) throw err; 
-        order.status = req.body.status;               
+        if(err) throw err;         
+        order.shippingstatus = req.body.status;               
         Order.createOrder(order,function(err,order){
             if(err) throw err;
             res.json({
