@@ -132,24 +132,23 @@ router.get('/findfoods/:id',function(req,res){
 
 
 /**Request
- * param
+ * body
  *  id: Order ID
  * body
  *  status */
 /**Response
  * data: order
  */
-router.put('/updatestatus/:id',function(req,res){    
-    Order.getOrderById(req.params.id,function(err,order){
+router.put('/updatestatus',function(req,res){    
+    Order.getOrderById(req.body.id,function(err,order){
         if(err) throw err;    
-        console.log('Enter update status API');             
-        var io = req.io;  
-        var ns = 'server/api/orders/updatestatus';
+        // console.log('Enter update status API');             
+        var io = req.io;          
         var msg = {
             'status': req.body.status,
-            'order_id': req.params.id
+            'order_id': req.body.id
         };                                   
-        io.of(ns).emit('status', msg);     
+        io.emit('status', msg);     
         order.shippingstatus = req.body.status;               
         Order.createOrder(order,function(err,order){
             if(err) throw err;
@@ -199,32 +198,31 @@ router.get('/getResName',function(req,res){
 })
 
 /**Request
- - * param
- - *  id: Order ID
  - * body
+ - *  id: Order ID
  - *  location_shipping*/
  /**Response
  - * data: order
  - */
- router.put('/updateshiplocation/:id',function(req,res){
-     Order.getOrderById(req.params.id,function(err,order){
-        if(err) throw err;                            
-        var io = req.io;  
-        var ns = 'server/api/orders/updateshiplocation/';                                   
-        io.of(ns + req.params.id).emit('location', req.body);             
-         order.locationshipping = {
-                point : {
-                    longitude : req.body.longitude,
-                    latitude : req.body.latitude
-                }  
-         };
-         Order.createOrder(order,function(err,order){
-             if(err) throw err;
-             res.json({
-                success : true,
-                data: order
-             });
+ router.put('/updateshiplocation',function(req,res){
+     Order.getOrderById(req.body.id,function(err,order){
+        if(err) throw err;     
+        // console.log('Enter update location API')                       
+        var io = req.io;                                          
+        io.emit('location', req.body);             
+        order.locationshipping = {
+            point : {
+                longitude : req.body.longitude,
+                latitude : req.body.latitude
+            }  
+        };
+        Order.createOrder(order,function(err,order){
+         if(err) throw err;
+         res.json({
+            success : true,
+            data: order
          });
+        });
      });
  });
 

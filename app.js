@@ -4,42 +4,19 @@ var url = require('url');
 
 /**Socket IO for real time location data exchange */
 var server = require('http').Server(app);
-var ioServer = require('socket.io')(server);
-var ioApi = {};
+var io = require('socket.io')(server);
 
-ioServer.on('connection', function(socket){				
-    console.log('Client connected to io server   id:' + socket.id); 	                                
-
-	var ns = url.parse(socket.handshake.url, true).query.ns;
-	console.log('Connected URL: '+ ns);
-
-	var count = 0;
-	var newNs = '';
-	for (var i = 0; i < ns.length; i++){
-		if (ns[i]==="/"){
-			count++;
-		}
-		if (count==3){
-			newNs = ns.substring(i+1);
-			break;
-		}
-	}	
-
-	ioApi = require('socket.io')(server);
-	ioApi.of(newNs).on('connection', function (apiSocket) {		
-		console.log('Client connected to a socket io API   id: ' + apiSocket.id);
-		apiSocket.on("disconnect", function () {
-	        console.log('Client disconnected to a server API    id: ' + apiSocket.id); 	        	                   
-	    }); 	                                	
-	})
+io.on('connection', function(socket){			
+	var socketId = socket.id;
+    console.log('Client id: ' + socketId + ' connected to io server'); 	                                	
 
     socket.on("disconnect", function () {
-        console.log('Client disconnected to io server');         
+        console.log('Client id: ' + socketId + ' disconnected to io server');         
     });
 });
 
 app.use(function(req, res, next){	
-	req.io = ioApi;	
+	req.io = io;		
 	next();
 });
 

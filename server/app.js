@@ -13,7 +13,7 @@ var cors = require('cors');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://admin:admin@ds048319.mlab.com:48319/mobileapp',function(err){
     if(err) throw ('Please check your connection');
-    console.log('Connect Successfully');
+    console.log('Connect DB Successfully');
 });
 
 /**Upload Folder */
