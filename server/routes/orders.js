@@ -141,7 +141,15 @@ router.get('/findfoods/:id',function(req,res){
  */
 router.put('/updatestatus/:id',function(req,res){    
     Order.getOrderById(req.params.id,function(err,order){
-        if(err) throw err;         
+        if(err) throw err;    
+        console.log('Enter update status API');             
+        var io = req.io;  
+        var ns = 'server/api/orders/updatestatus';
+        var msg = {
+            'status': req.body.status,
+            'order_id': req.params.id
+        };                                   
+        io.of(ns).emit('status', msg);     
         order.shippingstatus = req.body.status;               
         Order.createOrder(order,function(err,order){
             if(err) throw err;
@@ -200,8 +208,7 @@ router.get('/getResName',function(req,res){
  - */
  router.put('/updateshiplocation/:id',function(req,res){
      Order.getOrderById(req.params.id,function(err,order){
-        if(err) throw err;        
-        console.log('Res IO: ' + req.io);             
+        if(err) throw err;                            
         var io = req.io;  
         var ns = 'server/api/orders/updateshiplocation/';                                   
         io.of(ns + req.params.id).emit('location', req.body);             

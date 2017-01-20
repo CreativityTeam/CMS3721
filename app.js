@@ -4,10 +4,11 @@ var url = require('url');
 
 /**Socket IO for real time location data exchange */
 var server = require('http').Server(app);
-var io = require('socket.io')(server)
+var ioServer = require('socket.io')(server);
+var ioApi = {};
 
-io.on('connection', function(socket){				
-    console.log('Client connected to io server'); 	                                
+ioServer.on('connection', function(socket){				
+    console.log('Client connected to io server   id:' + socket.id); 	                                
 
 	var ns = url.parse(socket.handshake.url, true).query.ns;
 	console.log('Connected URL: '+ ns);
@@ -22,20 +23,23 @@ io.on('connection', function(socket){
 			newNs = ns.substring(i+1);
 			break;
 		}
-	}
-	console.log('New NS ' + newNs);
+	}	
 
-	io.of(newNs).on('connection', function (socket) {
-		console.log('Client connected to updateshiplocation API'); 	                                	
+	ioApi = require('socket.io')(server);
+	ioApi.of(newNs).on('connection', function (apiSocket) {		
+		console.log('Client connected to a socket io API   id: ' + apiSocket.id);
+		apiSocket.on("disconnect", function () {
+	        console.log('Client disconnected to a server API    id: ' + apiSocket.id); 	        	                   
+	    }); 	                                	
 	})
 
     socket.on("disconnect", function () {
-        console.log('Client disconnected to io server');            
+        console.log('Client disconnected to io server');         
     });
 });
 
 app.use(function(req, res, next){	
-	req.io = io;	
+	req.io = ioApi;	
 	next();
 });
 
