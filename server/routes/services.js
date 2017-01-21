@@ -23,7 +23,6 @@ router.post('/create', function (req, res) {
     var street = req.body.street;
     var district = req.body.district;
     var city = req.body.city;
-    var description = req.body.description;
     var longitude = req.body.longitude;
     var latitude = req.body.latitude;
     var photo1 = req.body.photo1;
@@ -33,7 +32,6 @@ router.post('/create', function (req, res) {
     var photo5 = req.body.photo5;
     var newService = new Service({
         service_name: service_name,
-        service_price: service_price,
         service_desciption : service_desciption,
         category : category,
         location:{
@@ -52,7 +50,6 @@ router.post('/create', function (req, res) {
         photo4 : photo4,
         photo5 : photo5
     });
-
     Service.createService(newService, function (err, service) {
         if (err) throw err;
         res.json({
@@ -151,7 +148,7 @@ router.put('/updateinfo/:id', function (req, res) {
  */
 
 router.get('/findall', function (req, res) {
-    Service.findAll(err,function(err,service){
+    Service.findAll(function(err,service){
         if(err) throw err;
         res.json({
             success : true,
@@ -184,6 +181,40 @@ router.get('/findcategory/:id', function (req, res) {
         res.json({
             success: true,
             data: service
+        });
+    });
+});
+
+/**Input : ID comments */
+/**Output : Array Restaurant */
+router.put('/updatecomment/:id/:idcomment',function(req,res){
+    Service.getServiceById(req.params.id,function(err,service){
+        if(err) throw err;
+        service.comments.push(req.params.idcomment);
+        Service.createService(service,function(err,service){
+            if(err) throw err;
+            res.json({
+                success : true,
+                data : service,
+                msg : "Successfully update"
+            });
+        });
+    });
+});
+
+/**Input : ID ratings */
+/**Output : Array Restaurant */
+router.put('/updaterating/:id/:idrating',function(req,res){
+    Service.getServiceById(req.params.id,function(err,service){
+        if(err) throw err;
+        service.ratings.push(req.params.idrating);
+        Service.createService(service,function(err,service){
+            if(err) throw err;
+            res.json({
+                success : true,
+                data : service,
+                msg : "Successfully update"
+            });
         });
     });
 });

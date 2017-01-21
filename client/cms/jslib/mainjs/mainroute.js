@@ -77,7 +77,7 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         .state('service',{
             url: '/service',
             controller : 'sucontroller',
-            templateUrl: 'service.manage.html'
+            templateUrl: 'service.res.su.html'
         });
     $locationProvider.html5Mode({
         enabled: true,

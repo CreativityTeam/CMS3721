@@ -1,0 +1,173 @@
+<div class="row">
+	<toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Gestion des emplacements</h4>			
+			</div>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-12">
+						<a type="button" class="btn btn-sm btn-info" ng-click="showFormService()">Ajouter un emplacement</a>
+						<a type="button" class="btn btn-sm btn-info" ng-click="hideFormService()" ng-show="isClickAddButtonService">Fermer la fiche</a>
+					</div>
+				</div>
+				<form ng-show="isClickAddButtonService">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Prénom</label>
+								<input type="text" class="form-control border-input" ng-model="service.service_name" required>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="sel1">Catégorie</label>
+								<select class="form-control" id="sel1" ng-model="service.category" required>
+    								<option value="{{category.id}}" ng-repeat="category in listCategoryService">{{ category.name }}</option>
+  								</select>
+							</div>
+						</div>				
+					</div>
+					<div class="row">
+						<div class="col-md-2">
+							<div class="form-group">
+								<label>Numéro de la maison</label>
+								<input type="text" class="form-control border-input" ng-model="service.housenumber" required>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label>Rue</label>
+								<input type="text" class="form-control border-input" ng-model="service.street" required>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="sel2">District</label>
+								<select class="form-control" id="sel2" ng-model="service.district.id" ng-disabled="!service.city.id" required>
+    								<option ng-repeat="district in districts" value="{{district.id}}">{{ district.name }}</option>
+  								</select>
+							</div>
+						</div>	
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="sel1">Ville</label>
+								<select class="form-control" id="sel1" ng-change="loadDistrict()" ng-model="service.city.id" required>
+    								<option value="{{city.id}}" ng-repeat="city in cities">{{ city.name }}</option>
+  								</select>
+							</div>
+						</div>					
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="sel1">La description</label>
+								<textarea class="form-control" rows="5" ng-model="service.description"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 1</label>
+								<input type="text" class="form-control border-input" ng-model="service.photo1">							
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo1}}" border=3 height=100 width=100 ng-show="service.photo1"></img>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 2</label>
+								<input type="text" class="form-control border-input" ng-model="service.photo2">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo2}}" border=3 height=100 width=100 ng-show="service.photo2"></img>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 3</label>
+								<input type="text" class="form-control border-input" ng-model="service.photo3">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo3}}" border=3 height=100 width=100 ng-show="service.photo3"></img>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 4</label>
+								<input type="text" class="form-control border-input" ng-model="service.photo4">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo4}}" border=3 height=100 width=100 ng-show="service.photo4"></img>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label for="sel1">Url Image 5</label>
+								<input type="text" class="form-control border-input" ng-model="service.photo5">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<img ng-src="{{restaurant.photo5}}" border=3 height=100 width=100 ng-show="service.photo5"></img>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<button class="btn btn-sm btn-info" ng-click="validateadd()"><strong>Vérifier L'adresse</strong></button>
+								<button class="btn btn-sm btn-info" ng-click="submitres()" ng-disabled="isvalidateadd"><strong>Soumettre</strong></button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row" ng-show="isfilledAdd">
+					<div class="col-md-12">
+						 <div id="map"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12" ng-repeat="serviceItem in listService">
+		<div class="panel panel-info">
+  				<div class="panel-heading">
+    					<h3 class="panel-title">{{ serviceItem.service_name }}</h3>
+ 		 		</div>
+  				<div class="panel-body">
+					  	<div class="row">
+							  <div class="col-md-12">
+								  <span class="ti-direction-alt" aria-hidden="true"></span> Location : {{ serviceItem.location.housenumber }}, {{ restaurantItem.location.street }}, {{ restaurantItem.location.district }}, {{ restaurantItem.location.city }}
+							  </div>
+					  	</div>
+						<div class="row">
+							  <div class="col-md-12">
+								  <span class="ti-bookmark" aria-hidden="true"></span> Comment : {{ serviceItem.comments.length }}
+							  </div>
+					  	</div>
+						<div class="row">
+							  <div class="col-md-12">
+								  <span class="ti-bookmark" aria-hidden="true"></span> Description : {{ serviceItem.service_desciption }}
+							  </div>
+					  	</div>
+						<div class="row">				
+							<div class="col-md-12">
+								<a ng-click="editService(serviceItem._id)"><i class="ti-pencil-alt"></i> Modifier</a>
+							</div>
+						</div>
+  				</div>
+		</div>
+	</div>
+</div>

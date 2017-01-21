@@ -247,76 +247,6 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     /**--------------------- */
 
     /**--------------------- */
-    /**Start Service Function */
-    /**--------------------- */
-    $scope.showFormService = function(){
-        $scope.isClickAddButtonService = true;
-        $scope.isEditService = false;
-        $scope.service = null
-    }
-
-    $scope.hideFormService = function(){
-        $scope.isClickAddButtonService = false;
-        $scope.isEditService = false;
-        $scope.service = null;
-    }
-
-    $scope.loadService = function(){
-         $scope.isRestaurantSelected = true;
-         $http.get(API_ENDPOINT.url + '/api/restaurants/findservice/' + $scope.restaurant._id).success(function(data){
-                $scope.listService = data.data;
-        }); 
-    }
-
-    /**Submit service */
-    $scope.registerService = function(idres){
-        if($scope.isEditService){
-            $http.put(API_ENDPOINT.url + '/api/services/updateinfo/' + $scope.service._id,$scope.service).success(function(data){
-                toaster.pop('success',"Status",data.msg);
-                $scope.loadService();
-            });    
-        }else{
-        $http.post(API_ENDPOINT.url + '/api/services/create',$scope.service).success(function(data){
-            if(data.success){
-                $http.put(API_ENDPOINT.url + '/api/restaurants/updateservices/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
-                    toaster.pop('success',"Status",data.msg);
-                    $scope.loadService();
-                    $scope.service = null;
-                });  
-                }
-            });
-        }
-    }
-
-    /**Edit service */
-    $scope.editService = function(idservice){
-        $scope.isEditService = true;  
-        $scope.isClickAddButtonService = true;
-        $http.get(API_ENDPOINT.url + '/api/services/findinfo/' + idservice).success(function(data){
-                toaster.pop('success',"Status",data.msg);
-                $scope.service = data.data;
-        }); 
-    }
-
-    /**Delete Service */
-    $scope.deleteService = function(idres,idserv){
-        for(var i in $scope.listService){
-            if($scope.listService[i]._id == idserv){
-                $scope.listService.splice(i,1);
-            }
-        }
-        $http.delete(API_ENDPOINT.url + '/api/services/deleteservice/' + idserv).success(function(data){
-            if(data.success){
-                $http.delete(API_ENDPOINT.url + '/api/restaurants/deleteservice/' + idres +'/' + idserv).success(function(data){});  
-                toaster.pop('error',"Status",data.msg);
-            }
-        });    
-    }
-    /**--------------------- */
-    /**End Service Function */
-    /**--------------------- */
-
-    /**--------------------- */
     /**Start Publicities Function */
     /**--------------------- */
     $scope.showFormPub = function(){
@@ -460,6 +390,19 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
              }
         }); 
     }
+
+    var getListCategoryFood = function(){
+         $scope.listCategoryFood = [];
+         $http.get(API_ENDPOINT.url + '/api/categories/getList').success(function(response){
+            for(var item in response.data){
+                if(response.data[item].mainCategory == "Restaurant"){
+                    $scope.listCategoryFood.push(response.data[item]);
+                }
+            }
+        });
+    };
+
+    getListCategoryFood()
     loadCity();
     getRestaurant();
     getCurrentUser();
