@@ -1,7 +1,16 @@
 var suctrl = angular.module("suctrl",[]);
 
 suctrl.controller("sucontroller", function($scope,$http,AuthService,API_ENDPOINT,toaster){
-    $scope.mainCategory = ['Restaurant','Salon de thé, patisserie','Bar, KTV'];
+    $scope.mainListCategory = [
+        {
+            name : 'Restaurant'
+        },{
+            name : 'Salon de thé, patisserie'
+        },{
+            name : 'Bar, KTV'
+        },{
+            name : 'Loisir'
+    }];
     var getListFood = function(){
         $http.get(API_ENDPOINT.url + '/api/foods/findResBelongName').success(function(response){
             $scope.listFood = response.data;
@@ -57,6 +66,7 @@ suctrl.controller("sucontroller", function($scope,$http,AuthService,API_ENDPOINT
     }   
 
     $scope.updateCategory = function(){
+        $scope.isClickEdit = false;
         $http.put(API_ENDPOINT.url + '/api/categories/update/' + $scope.category._id,$scope.category).success(function(response){
             if(response.success == true){
                 getListCategory();
@@ -65,8 +75,9 @@ suctrl.controller("sucontroller", function($scope,$http,AuthService,API_ENDPOINT
         });
     }   
 
-    $scope.getCategory = function(){
-        $http.get(API_ENDPOINT.url + '/api/categories/get/' + $scope.category._id).success(function(response){
+    $scope.getCategory = function(id){
+        $scope.isClickEdit = true;
+        $http.get(API_ENDPOINT.url + '/api/categories/get/' + id).success(function(response){
             if(response.success == true){
                 $scope.category = response.data;
             }

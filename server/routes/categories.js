@@ -4,7 +4,7 @@ var Category = require('../models/category');
 
 router.post('/create',function(req,res){
     var mainCategory = req.body.mainCategory;
-    var name = req.body.user_order_id;
+    var name = req.body.name;
     var newCategory = new Category({
         mainCategory: mainCategory,
         name : name,  

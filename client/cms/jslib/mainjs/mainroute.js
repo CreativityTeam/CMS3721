@@ -34,11 +34,6 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'cmt.res.normal.html'
         })
-        .state('reservice',{
-            url: '/serviceres',
-            controller : 'rescontroller',
-            templateUrl: 'service.res.normal.html'
-        })
         .state('pubres',{
             url: '/publicityres',
             controller : 'rescontroller',
@@ -66,6 +61,7 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('category',{
             url: '/category',
+            controller : 'sucontroller',
             templateUrl: 'category.html'
         })
         .state('publicity',{
