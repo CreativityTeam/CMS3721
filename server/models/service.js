@@ -53,7 +53,7 @@ module.exports.createService = function (newService, callback) {
 };
 
 module.exports.getServiceById = function (id, callback) {
-    Service.findById(id).populate('comments').populate('ratings').exec(callback)
+    Service.findById(id).populate('comments').populate('ratings').populate('category').exec(callback)
 };
 
 module.exports.getServiceByName = function (name, callback) {
@@ -67,7 +67,7 @@ module.exports.findAll = function(callback){
 
 module.exports.findCategory = function(id,callback){
     var query = {category: id};
-    Service.find(query,callback); 
+    Service.find(query).populate('comments').populate('ratings').populate('category').exec(callback);
 }
 
 /*Remove Service*/

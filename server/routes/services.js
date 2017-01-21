@@ -170,5 +170,22 @@ router.delete('/deleteservice/:id', function (req, res) {
     });
 });
 
+/**Request
+ * param
+ *  service_id
+ * */
+/**Response
+ * service
+ */
+
+router.get('/findcategory/:id', function (req, res) {
+    Service.findCategory(req.params.id, function (err, service) {
+        if (err) throw err;
+        res.json({
+            success: true,
+            data: service
+        });
+    });
+});
 
 module.exports = router;
