@@ -46,13 +46,31 @@
 								 <p></p>
 								 <div class="row">
 									 <div class="col-md-12">
+								  		<span class="ti-truck" aria-hidden="true"></span> Expéditeur : {{order.locationorder}}
+							  		</div>
+								 </div>
+								 <p></p>
+								 <div class="row">
+									 <div class="col-md-12">
 								  		<span class="ti-alarm-clock" aria-hidden="true"></span> Ordre du temps : {{order.time_ordered}}
 							  		</div>
 								 </div>
 								 <p></p>
 								 <div class="row">
 									 <div class="col-md-12">
-								  		<span class="ti-alarm-clock" aria-hidden="true"></span> Statut : <span class="label label-success"> {{order.status}}</span>
+								  		<span class="ti-alarm-clock" aria-hidden="true"></span> État la livraisonStatut : <span class="label label-success"> {{order.shippingstatus}}</span>
+							  		</div>
+								 </div>
+								 <p></p>
+								  <div class="row">
+									 <div class="col-md-12">
+								  		<span class="ti-alarm-clock" aria-hidden="true"></span> Statut paiement : <span class="label label-success"> {{order.paymentstatus}}</span>
+							  		</div>
+								 </div>
+								 <p></p>
+								 <div class="row">
+									 <div class="col-md-12">
+								  		<span class="ti-money" aria-hidden="true"></span> Livraison gratuite : {{order.feeshipping}}
 							  		</div>
 								 </div>
 								 <p></p>
@@ -79,28 +97,6 @@
 												<td>{{ food.food_id.food_name }}</td>
 												<td>{{ food.quantity }}</td>
 												<td>{{ food.food_id.price }}</td>
-											</tr>
-										</tbody>
-									</table>
-      							</div>
-								<p></p>
-								<div class="row">
-									 <div class="col-md-12">
-										  <span class="ti-shopping-cart" aria-hidden="true"></span> <strong>Liste services</strong>
-							  		</div>
-								</div>
-								<div class="content table-responsive">
-									 <table class="table">
-										<thead>
-											<th><strong>Num</strong></th>
-											<th><strong>Quantité<strong></th>
-											<th><strong>Prix</strong></th>
-										</thead>
-										<tbody>
-											<tr ng-repeat="service in order.services | filter:searchOrder">
-												<td>{{ service.service_id.service_name }}</td>
-												<td>{{ service.quantity }}</td>
-												<td>{{ service.service_id.service_price }}</td>
 											</tr>
 										</tbody>
 									</table>
