@@ -67,3 +67,5 @@ router.get('/getList',function(req,res){
         })
     })
 });
+
+module.exports = router;
