@@ -1,6 +1,7 @@
 var suctrl = angular.module("suctrl",[]);
 
 suctrl.controller("sucontroller", function($scope,$http,AuthService,API_ENDPOINT,toaster){
+    $scope.mainCategory = ['Restaurant','Salon de thé, patisserie','Bar, KTV'];
     var getListFood = function(){
         $http.get(API_ENDPOINT.url + '/api/foods/findResBelongName').success(function(response){
             $scope.listFood = response.data;
@@ -37,9 +38,45 @@ suctrl.controller("sucontroller", function($scope,$http,AuthService,API_ENDPOINT
             }
         });
     }
+    /**Category ctrl */
+    var getListCategory = function(){
+         $http.get(API_ENDPOINT.url + '/api/categories/getList').success(function(response){
+            if(response.success == true){
+                $scope.listCategory = response.data
+            }
+        });
+    };
+
+    $scope.createCategory = function(){
+        $http.post(API_ENDPOINT.url + '/api/categories/create',$scope.category).success(function(response){
+            if(response.success == true){
+                getListCategory();
+                $scope.category = "";
+            }
+        });
+    }   
+
+    $scope.updateCategory = function(){
+        $http.put(API_ENDPOINT.url + '/api/categories/update/' + $scope.category._id,$scope.category).success(function(response){
+            if(response.success == true){
+                getListCategory();
+                $scope.category = "";
+            }
+        });
+    }   
+
+    $scope.getCategory = function(){
+        $http.get(API_ENDPOINT.url + '/api/categories/get/' + $scope.category._id).success(function(response){
+            if(response.success == true){
+                $scope.category = response.data;
+            }
+        });
+    }   
+
     getListPublicity();
     getListService();
     getListOder();
     getListFood();
+    getListCategory();
 
 })

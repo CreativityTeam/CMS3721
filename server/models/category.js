@@ -19,3 +19,8 @@ module.exports.createCategory = function(newCategory,callback){
 module.exports.getCategory = function(id,callback){
     Category.findById(id,callback)
 };
+
+/**Get List category */
+module.exports.getListCategory = function(callback){
+    Category.find(callback)
+};

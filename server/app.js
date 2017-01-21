@@ -67,6 +67,7 @@ var messages = require('./routes/messages');
 var publicities = require('./routes/publicities');
 var services = require('./routes/services');
 var restaurants = require('./routes/restaurants');
+var categories = require('./routes/categories');
 
 /**URL for model */
 //* Its purpose to call the right api for model
@@ -80,6 +81,7 @@ app.use('/api/messages',messages);
 app.use('/api/publicities',publicities);
 app.use('/api/services',services);
 app.use('/api/restaurants',restaurants);
+app.use('/api/categories',categories);
 app.use('/checkconnection/',function(req,res){
     res.json({
         status : 200

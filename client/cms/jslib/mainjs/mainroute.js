@@ -64,9 +64,9 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'sucontroller',
             templateUrl: 'order.manage.html'
         })
-        .state('message',{
-            url: '/message',
-            templateUrl: 'notifications.html'
+        .state('category',{
+            url: '/category',
+            templateUrl: 'category.html'
         })
         .state('publicity',{
             url: '/publicity',
