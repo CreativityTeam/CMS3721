@@ -1,7 +1,3 @@
-/**
- * Created by K on 11/1/2016.
- */
-
 var mongoose = require('mongoose');
 var ServiceSchema = mongoose.Schema({
     service_name: {
@@ -10,8 +6,42 @@ var ServiceSchema = mongoose.Schema({
     service_desciption: {
         type: String
     },
-    service_price: {
-        type: Number
+    category : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    },
+    location:{
+        housenumber : String,
+        street : String,
+        district : String,
+        city : String,
+        point:{
+            longitude : Number,
+            latitude : Number
+        }
+    },
+    comments:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
+    ratings:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Rating'
+    }],
+    photo1:{
+        type : String
+    },
+    photo2:{
+        type : String
+    },
+    photo3:{
+        type : String
+    },
+    photo4:{
+        type : String
+    },
+    photo5:{
+        type : String
     }
 });
 
@@ -23,7 +53,7 @@ module.exports.createService = function (newService, callback) {
 };
 
 module.exports.getServiceById = function (id, callback) {
-    Service.findById(id, callback);
+    Service.findById(id).populate('comments').populate('ratings').exec(callback)
 };
 
 module.exports.getServiceByName = function (name, callback) {
@@ -31,13 +61,13 @@ module.exports.getServiceByName = function (name, callback) {
     Service.find(query, callback);
 };
 
-module.exports.getServiceByPrice = function (price, callback) {
-    var query = {service_price: price};
-    Service.find(query, callback);
-};
-
 module.exports.findAll = function(callback){
     Service.find(callback);
+}
+
+module.exports.findCategory = function(id,callback){
+    var query = {category: id};
+    Service.find(query,callback); 
 }
 
 /*Remove Service*/

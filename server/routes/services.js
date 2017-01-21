@@ -17,12 +17,40 @@ var Service = require('../models/service');
 
 router.post('/create', function (req, res) {
     var service_name = req.body.service_name;
-    var service_price = req.body.service_price;
     var service_desciption = req.body.service_desciption;
+    var category = req.body.category;
+    var housenumber = req.body.housenumber;
+    var street = req.body.street;
+    var district = req.body.district;
+    var city = req.body.city;
+    var description = req.body.description;
+    var longitude = req.body.longitude;
+    var latitude = req.body.latitude;
+    var photo1 = req.body.photo1;
+    var photo2 = req.body.photo2;
+    var photo3 = req.body.photo3;
+    var photo4 = req.body.photo4;
+    var photo5 = req.body.photo5;
     var newService = new Service({
         service_name: service_name,
         service_price: service_price,
-        service_desciption : service_desciption
+        service_desciption : service_desciption,
+        category : category,
+        location:{
+            housenumber : housenumber,
+            street : street,
+            district : district,
+            city : city,
+            point: {
+                longitude : longitude,
+                latitude : latitude
+            }
+        },
+        photo1 : photo1,
+        photo2 : photo2,
+        photo3 : photo3,
+        photo4 : photo4,
+        photo5 : photo5
     });
 
     Service.createService(newService, function (err, service) {
@@ -73,25 +101,6 @@ router.get('/findname/:name', function (req, res) {
 
 /**Request
  * param
- *  service_price
- * */
-/**Response
- * services
- */
-
-router.get('/findprice/:price', function (req, res) {
-    Service.getServiceByPrice(req.params.price, function (err, services) {
-        if (err) throw err;
-            res.json({
-                success: true,
-                msg: 'Service was found!',
-                data: services
-            });
-    });
-});
-
-/**Request
- * param
  *  service_id
  *  body
  *  service_name
@@ -106,7 +115,22 @@ router.put('/updateinfo/:id', function (req, res) {
         if (err) throw err;
         service.service_name = req.body.service_name;
         service.service_desciption = req.body.service_desciption;
-        service.service_price = req.body.service_price;
+        service.category = req.body.category;
+        service.location = {
+            housenumber : req.body.housenumber,
+            street : req.body.street,
+            district : req.body.district,
+            city : req.body.city,
+            point: {
+                longitude : req.body.longitude,
+                latitude : req.body.latitude
+            }
+        };
+        service.photo1 = req.body.photo1;
+        service.photo2 = req.body.photo2;
+        service.photo3 = req.body.photo3;
+        service.photo4 = req.body.photo4;
+        service.photo5 = req.body.photo5;
         Service.createService(service, function (err, service) {
             if (err) throw err;
             res.json({

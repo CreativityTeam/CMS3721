@@ -11,7 +11,8 @@ var FoodSchema = mongoose.Schema({
         ref: 'Restaurant'
     },
     type : {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
     },
     price : {
         type: Number
@@ -65,7 +66,7 @@ module.exports.findFoodByName = function(name,callback){
 /**Find Food by type */
 module.exports.findFoodByType = function(type,callback){
     var query = { type : type };
-    Food.find(query, callback);
+    Food.find(query).populate('type').exec(callback);
 };
 
 /**Find Food with price equals to an amount */
