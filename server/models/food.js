@@ -50,7 +50,7 @@ module.exports.createFood = function(newFood,callback){
 };
 
 module.exports.getFoodById = function(id,callback){    
-    Food.findById(id,callback);
+    Food.findById(id).populate('type').populate('comments').populate('res_belong').populate('ratings').exec(callback);
 };
 
 module.exports.getAllFood = function(callback){    
@@ -87,7 +87,7 @@ module.exports.findFoodByPrice = function(price,operator,callback){
 /**Find the Restaurant that Food belongs to */
 module.exports.findRestaurant = function(id,callback){
     var query = { res_belong : id }
-    Food.find(query,callback);
+    Food.find(query).populate('type').exec(callback);
 };
 
 /**Find all comments belong to this Food */

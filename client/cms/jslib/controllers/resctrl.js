@@ -327,9 +327,9 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }); 
     }
     $scope.editFood = function(idFood){
+        $scope.isClickAddButtonFood = true;
         $scope.isClickEditButtonFood = true;
         $http.get(API_ENDPOINT.url + '/api/foods/findinfo/' + idFood).success(function(data){
-                toaster.pop('success',"Status",data.msg);
                 $scope.food = data.data;
         }); 
     }

@@ -88,7 +88,7 @@ router.get('/findinfo/:id',function(req,res){
  */
 router.get('/findres/:id',function(req,res){
     Food.findRestaurant(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             msg: "Find done",

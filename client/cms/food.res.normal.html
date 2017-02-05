@@ -39,7 +39,7 @@
 							<div class="form-group">
 								<label for="sel1">Catégorie</label>
 								<select class="form-control" id="sel1" ng-model="food.type" required>
-    								<option value="{{category.id}}" ng-repeat="category in listCategoryFood">{{ category.name }}</option>
+    								<option value="{{category._id}}" ng-repeat="category in listCategoryFood">{{ category.name }}</option>
   								</select>
 							</div>
 						</div>				
@@ -126,7 +126,7 @@
 						<tr ng-repeat="foodItem in listFood | filter:searchFood">
 							<td>{{ foodItem._id }}</td>
 							<td>{{ foodItem.food_name }}</td>
-							<td>{{ foodItem.type }}</td>
+							<td>{{ foodItem.type.name }}</td>
 							<td>{{ foodItem.price }}</td>
 							<td>{{ foodItem.description }}</td>
 							<td><button class="btn btn-warning" ng-click="editFood(foodItem._id)">Modifier</button></td>
