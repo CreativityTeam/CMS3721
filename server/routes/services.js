@@ -51,7 +51,7 @@ router.post('/create', function (req, res) {
         photo5 : photo5
     });
     Service.createService(newService, function (err, service) {
-        if (err) throw err;
+        if (err) console.log(err);
         res.json({
             success: true,
             msg: "Successfully Create Service",
@@ -70,7 +70,7 @@ router.post('/create', function (req, res) {
 
 router.get('/findinfo/:id', function (req, res) {
     Service.getServiceById(req.params.id, function (err, service) {
-        if (err) throw err;
+        if (err) console.log(err);
         res.json({
             success: true,
             data: service
@@ -88,7 +88,7 @@ router.get('/findinfo/:id', function (req, res) {
 
 router.get('/findname/:name', function (req, res) {
     Service.getServiceByName(req.params.name, function (err, service) {
-        if (err) throw err;
+        if (err) console.log(err);
         res.json({
             success: true,
             data: service
@@ -109,7 +109,7 @@ router.get('/findname/:name', function (req, res) {
  */
 router.put('/updateinfo/:id', function (req, res) {
     Service.getServiceById(req.params.id, function (err, service) {
-        if (err) throw err;
+        if (err) console.log(err);
         service.service_name = req.body.service_name;
         service.service_desciption = req.body.service_desciption;
         service.category = req.body.category;
@@ -129,7 +129,7 @@ router.put('/updateinfo/:id', function (req, res) {
         service.photo4 = req.body.photo4;
         service.photo5 = req.body.photo5;
         Service.createService(service, function (err, service) {
-            if (err) throw err;
+            if (err) console.log(err);
             res.json({
                 success: true,
                 msg: "Update Successfully!",
@@ -149,7 +149,7 @@ router.put('/updateinfo/:id', function (req, res) {
 
 router.get('/findall', function (req, res) {
     Service.findAll(function(err,service){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             data : service
@@ -159,7 +159,7 @@ router.get('/findall', function (req, res) {
 
 router.delete('/deleteservice/:id', function (req, res) {
     Service.removeService(req.params.id, function (err) {
-        if (err) throw err;
+        if (err) console.log(err);
         res.json({
             success: true,
             msg: "Delete successfully!"
@@ -177,7 +177,7 @@ router.delete('/deleteservice/:id', function (req, res) {
 
 router.get('/findcategory/:id', function (req, res) {
     Service.findCategory(req.params.id, function (err, service) {
-        if (err) throw err;
+        if (err) console.log(err);
         res.json({
             success: true,
             data: service
@@ -189,10 +189,10 @@ router.get('/findcategory/:id', function (req, res) {
 /**Output : Array Restaurant */
 router.put('/updatecomment/:id/:idcomment',function(req,res){
     Service.getServiceById(req.params.id,function(err,service){
-        if(err) throw err;
+        if(err) console.log(err);
         service.comments.push(req.params.idcomment);
         Service.createService(service,function(err,service){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 data : service,
@@ -206,10 +206,10 @@ router.put('/updatecomment/:id/:idcomment',function(req,res){
 /**Output : Array Restaurant */
 router.put('/updaterating/:id/:idrating',function(req,res){
     Service.getServiceById(req.params.id,function(err,service){
-        if(err) throw err;
+        if(err) console.log(err);
         service.ratings.push(req.params.idrating);
         Service.createService(service,function(err,service){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 data : service,

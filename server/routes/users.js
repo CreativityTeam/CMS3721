@@ -50,7 +50,7 @@ router.post('/register',function(req,res){
 passport.use(new LocalStrategy(
     function (username, password, done) {
         User.getUserByEmail(username, function (err, user) {
-            if (err) throw err;
+            if (err) console.log(err);
             if (!user) {
                 return done(null, false);
             }
@@ -74,7 +74,7 @@ router.post('/login',function(req,res,next){
             });   
        }else{
            User.getUserById(user._id,function(err,newuser){
-               if(err) throw err;
+               if(err) console.log(err);
                var currentDate = new Date();
                var newDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset()*60000));
                newuser.last_login = newDate;
@@ -96,7 +96,7 @@ router.post('/createFace',function(req,res){
     User.getUserByFacebookId(req.body.id,function(err,user){
         var currentDate = new Date();
         var newDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset()*60000));
-        if(err) throw err;
+        if(err) console.log(err);
         if(user){
             user.last_login = newDate;
             User.updateUser(user,function(err,newuser){
@@ -144,7 +144,7 @@ router.post('/createFace',function(req,res){
 
 router.put('/changeRole/:id',function(req,res){
     User.getUserById(req.params.id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         user.role = req.body.role;
         User.updateUser(user,function(err,user){
             res.json({
@@ -159,7 +159,7 @@ router.put('/changeRole/:id',function(req,res){
 /**Get all user */
 router.get('/findUserAll',function(req,res){
     User.getAllUser(function(err,users){
-        if(err) throw err;
+        if(err) console.log(err);
         if(users){
             res.json({
                 success : true,
@@ -172,7 +172,7 @@ router.get('/findUserAll',function(req,res){
 /**Get user id */
 router.get('/findUserID/:id',function(req,res){
     User.getUserById(req.params.id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
                 success : true,
                 data : user
@@ -183,7 +183,7 @@ router.get('/findUserID/:id',function(req,res){
 /**Search Name */
 router.get('/find/:name',function(req,res){
     User.findUserByName(req.params.name,function(err,users){
-        if(err) throw err;
+        if(err) console.log(err);
         if(users){
             res.json({
                 success : true,
@@ -203,7 +203,7 @@ router.get('/findone/:token',function(req,res){
     if(token){
         var decoded = jwt.decode(token,configAuth.secret);
         User.getUserById(decoded._id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
                 success : true,
                 data : user
@@ -214,7 +214,7 @@ router.get('/findone/:token',function(req,res){
 
 router.put('/update/:id',function(req,res){
         User.getUserById(req.params.id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         user.avatar = req.body.avatar;
         user.gender = req.body.gender;
         user.birthday = req.body.birthday;
@@ -223,7 +223,7 @@ router.put('/update/:id',function(req,res){
         user.about = req.body.about;
         user.other = req.body.other;
         User.updateUser(user,function(err,user){
-                if(err) throw err;
+                if(err) console.log(err);
                 res.json({
                     success : true,
                     data : user,
@@ -238,10 +238,10 @@ router.put('/addresfav/:token',function(req,res){
     if(token){
         var decoded = jwt.decode(token,configAuth.secret);
         User.getUserById(decoded._id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         user.res_favorite.push(req.body._id);
         User.updateUser(user,function(err,user){
-                if(err) throw err;
+                if(err) console.log(err);
                 res.json({
                     success : true,
                     data : user,
@@ -257,10 +257,10 @@ router.put('/addfoodfav/:token',function(req,res){
     if(token){
         var decoded = jwt.decode(token,configAuth.secret);
         User.getUserById(decoded._id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         user.foods_favorite.push(req.body._id);
         User.updateUser(user,function(err,user){
-                if(err) throw err;
+                if(err) console.log(err);
                 res.json({
                     success : true,
                     data : user,
@@ -276,7 +276,7 @@ router.get('/findresfav/:token',function(req,res){
     if(token){
         var decoded = jwt.decode(token,configAuth.secret);
         User.findResFav(decoded._id,function(err,user){
-            if(err) throw err;
+            if(err) console.log(err);
             if(user.res_favorite.length == 0){
                 res.json({
                     success : false,
@@ -297,7 +297,7 @@ router.get('/findfoodfav/:token',function(req,res){
     if(token){
         var decoded = jwt.decode(token,configAuth.secret);
         User.findFoodFav(decoded._id,function(err,user){
-            if(err) throw err;
+            if(err) console.log(err);
             if(user.foods_favorite.length == 0){
                 res.json({
                     success : false,
@@ -317,14 +317,14 @@ router.delete('/deleteFoodFav/:token',function(req,res){
     var token = req.params.token;
     var decoded = jwt.decode(token,configAuth.secret);
     User.getUserById(decoded._id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         for(var i = 0;i < user.foods_favorite.length ; i++){
             if(user.foods_favorite[i] == req.body._id){
                 user.foods_favorite.splice(i,1);
             }
         }
         User.updateUser(user,function(err,user){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Delete Successfully",
@@ -338,14 +338,14 @@ router.delete('/deleteResFav/:token',function(req,res){
     var token = req.params.token;
     var decoded = jwt.decode(token,configAuth.secret);
     User.getUserById(decoded._id,function(err,user){
-        if(err) throw err;
+        if(err) console.log(err);
         for(var i = 0;i < user.res_favorite.length ; i++){
             if(user.res_favorite[i] == req.body._id){
                 user.res_favorite.splice(i,1);
             }
         }
         User.updateUser(user,function(err,user){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Delete Successfully",

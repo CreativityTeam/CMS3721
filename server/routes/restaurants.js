@@ -40,7 +40,7 @@ router.post('/register',function(req,res){
         photo5 : photo5
     });
     Restaurant.createRestaurant(newRestaurant,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully Create Restaurant",
@@ -53,7 +53,7 @@ router.post('/register',function(req,res){
 /**Output : restaurant information */
 router.get('/findinfo/:id',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : restaurant
@@ -67,7 +67,7 @@ router.get('/findad/:token',function(req,res){
     var token = req.params.token;
     var decoded = jwt.decode(token,configAuth.secret);
     Restaurant.findAdmin(decoded._id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         if(restaurant.length == 0){
             res.json({
                 success:false,
@@ -87,7 +87,7 @@ router.get('/findad/:token',function(req,res){
 /**Output : User of Rrestaurant */
 router.get('/finduser/:id',function(req,res){
     Restaurant.findUserBelong(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             msg: "Find done",
@@ -100,7 +100,7 @@ router.get('/finduser/:id',function(req,res){
 /**Output : List Restaurants */
 router.get('/findres',function(req,res){
     Restaurant.findRes(function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
             res.json({
                 success:true,
                 msg : "Find done",
@@ -113,7 +113,7 @@ router.get('/findres',function(req,res){
 /**Output : commend of Rrestaurant */
 router.get('/findcomment/:id',function(req,res){
     Restaurant.findCommentOfRestaurant(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
                 success:true,
                 msg : "Find done",
@@ -126,7 +126,7 @@ router.get('/findcomment/:id',function(req,res){
 /**Output : Rating of Rrestaurant */
 router.get('/findrating/:id',function(req,res){
     Restaurant.findRating(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
                 success:true,
                 msg : "Find done",
@@ -140,7 +140,7 @@ router.get('/findrating/:id',function(req,res){
 /**Output : Publicities of Rrestaurant */
 router.get('/findpublicity/:id',function(req,res){
     Restaurant.findPublicitiesBeLong(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
             res.json({
                 success:true,
                 msg : "Find done",
@@ -153,10 +153,10 @@ router.get('/findpublicity/:id',function(req,res){
 /**Output : Array Restaurant */
 router.put('/updatecomment/:id/:idcomment',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         restaurant.comments.push(req.params.idcomment);
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 data : restaurant,
@@ -170,10 +170,10 @@ router.put('/updatecomment/:id/:idcomment',function(req,res){
 /**Output : Array Restaurant */
 router.put('/updaterating/:id/:idrating',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         restaurant.ratings.push(req.params.idrating);
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 data : restaurant,
@@ -187,10 +187,10 @@ router.put('/updaterating/:id/:idrating',function(req,res){
 /**Output : Array Restaurant */
 router.put('/updatepublicities/:id/:idpublicity',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         restaurant.publicities.push(req.params.idpublicity);
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 data : restaurant,
@@ -204,7 +204,7 @@ router.put('/updatepublicities/:id/:idpublicity',function(req,res){
 /**Output : Restaurant */
 router.put('/updateinfo/:id',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         restaurant.res_name = req.body.name;
         restaurant.description = req.body.description;
         restaurant.photo1 = req.body.photo1;
@@ -219,7 +219,7 @@ router.put('/updateinfo/:id',function(req,res){
         restaurant.location.point.longitude = req.body.longitude;
         restaurant.location.point.latitude = req.body.latitude;
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",
@@ -231,14 +231,14 @@ router.put('/updateinfo/:id',function(req,res){
 
 router.delete('/deletecomment/:id/:idcomment',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         for(var i = 0;i < restaurant.comments.length ; i++){
             if(restaurant.comments[i] == req.params.idcomment){
                 restaurant.comments.splice(i,1);
             }
         }
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
-                if(err) throw err;
+                if(err) console.log(err);
                     res.json({
                         success : true,
                         msg : "Successfully Delete",
@@ -250,14 +250,14 @@ router.delete('/deletecomment/:id/:idcomment',function(req,res){
 
 router.delete('/deletepublicity/:id/:idpublicity',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
-        if(err) throw err;
+        if(err) console.log(err);
         for(var i = 0;i < restaurant.publicities.length ; i++){
             if(restaurant.publicities[i] == req.params.idpublicity){
                 restaurant.publicities.splice(i,1);
             }
         }
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
-                if(err) throw err;
+                if(err) console.log(err);
                 res.json({
                     success : true,
                     msg : "Successfully Delete",
@@ -269,7 +269,7 @@ router.delete('/deletepublicity/:id/:idpublicity',function(req,res){
 
 router.delete('/deleterestaurant/:id',function(req,res){
     Restaurant.deleteRestaurant(req.params.id,function(err){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Delete"

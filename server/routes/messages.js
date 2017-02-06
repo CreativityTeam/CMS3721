@@ -15,7 +15,7 @@ function getMesSender(id, callback) {
         date: Date
     }];
     Message.getMessageSender(id, function (err, messageList) {
-        if (err) throw err;
+        if (err) console.log(err);
         var listQuery = [];
         for (var i in messageList) {
             listQuery.push(
@@ -55,7 +55,7 @@ function getMesReceiver(id, callback) {
         date: Date
     }];
     Message.getMessageReceiver(id, function (err, messageList) {
-        if (err) throw err;
+        if (err) console.log(err);
         var listQuery = [];
         for (var i in messageList) {
             listQuery.push(
@@ -131,7 +131,7 @@ router.post('/insertMess',function(req,res){
         time_created : newDate
     });
     Message.addMessage(newMessage,function(err,message){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Send Mail",
@@ -142,7 +142,7 @@ router.post('/insertMess',function(req,res){
 
 router.delete('/deleteMess/:id',function(req,res){
     Message.deleteMessage(req.params.id,function(err){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Delete"

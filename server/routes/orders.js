@@ -88,7 +88,7 @@ router.get('/findinfo/all',function(req,res){
  */
 router.get('/findinfobyshipper/:shipper_id',function(req,res){
     Order.getOrderByShipper(req.params.shipper_id,function(err,order){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : order
@@ -105,7 +105,7 @@ router.get('/findinfobyshipper/:shipper_id',function(req,res){
  */
 router.get('/findinfobyuser/:user_id',function(req,res){
     Order.getOrderByUserOrder(req.params.user_id,function(err,order){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : order
@@ -121,7 +121,7 @@ router.get('/findinfobyuser/:user_id',function(req,res){
  * data: foods Foods belong to Order */
 router.get('/findfoods/:id',function(req,res){
     Order.findFoods(req.params.id,function(err,order){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             msg: "Find done",
@@ -141,7 +141,7 @@ router.get('/findfoods/:id',function(req,res){
  */
 router.put('/updatestatus',function(req,res){    
     Order.getOrderById(req.body.id,function(err,order){
-        if(err) throw err;    
+        if(err) console.log(err);    
         // console.log('Enter update status API');             
         var io = req.io;          
         var msg = {
@@ -151,7 +151,7 @@ router.put('/updatestatus',function(req,res){
         io.emit('status', msg);     
         order.shippingstatus = req.body.status;               
         Order.createOrder(order,function(err,order){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",
@@ -170,7 +170,7 @@ router.put('/updatestatus',function(req,res){
  */
 router.delete('/deleteorder/:id',function(req,res){
     Order.removeOrder(req.params.id,function(err){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Delete"
@@ -206,7 +206,7 @@ router.get('/getResName',function(req,res){
  - */
  router.put('/updateshiplocation',function(req,res){
      Order.getOrderById(req.body.id,function(err,order){
-        if(err) throw err;     
+        if(err) console.log(err);     
         // console.log('Enter update location API')                       
         var io = req.io;                                          
         io.emit('location', req.body);             
@@ -217,7 +217,7 @@ router.get('/getResName',function(req,res){
             }  
         };
         Order.createOrder(order,function(err,order){
-         if(err) throw err;
+         if(err) console.log(err);
          res.json({
             success : true,
             data: order
@@ -229,12 +229,12 @@ router.get('/getResName',function(req,res){
 /**Router Update Fee and total_price */
 router.post('/updatefee/:id',function(req,res){
     Order.getOrderById(req.params.id,function(err,order){
-        if(err) throw err; 
+        if(err) console.log(err); 
         var feeShipping = req.body.feeShipping;
         order.feeshipping = feeShipping;
         order.total_price = order.total_price + feeShipping;               
         Order.createOrder(order,function(err,order){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",

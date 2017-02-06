@@ -38,7 +38,7 @@ router.post('/create',function(req,res){
     });
     
     Food.createFood(newFood,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Create Food",
@@ -54,7 +54,7 @@ router.post('/create',function(req,res){
  */
 router.get('/findinfo/all',function(req,res){
     Food.getAllFood(function(err,foods){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : foods
@@ -71,7 +71,7 @@ router.get('/findinfo/all',function(req,res){
  */
 router.get('/findinfo/:id',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : food
@@ -106,7 +106,7 @@ router.get('/findres/:id',function(req,res){
  */
 router.get('/findfoodbyname/:name',function(req,res){
     Food.findFoodByName(req.params.name,function(err,foods){
-        if(err) throw err;
+        if(err) console.log(err);
         if(!foods){
             res.json({
                 success:false,
@@ -131,7 +131,7 @@ router.get('/findfoodbyname/:name',function(req,res){
  */
 router.get('/findfoodbytype/:type',function(req,res){
     Food.findFoodByType(req.params.type,function(err,foods){
-        if(err) throw err;
+        if(err) console.log(err);
         if(!foods){
             res.json({
                 success:false,
@@ -157,7 +157,7 @@ router.get('/findfoodbytype/:type',function(req,res){
  */
 router.get('/findfoodbyprice/:price/:operator',function(req,res){
     Food.findFoodByPrice(req.params.price,req.params.operator,function(err,foods){
-        if(err) throw err;
+        if(err) console.log(err);
         if(!foods){
             res.json({
                 success:false,
@@ -182,7 +182,7 @@ router.get('/findfoodbyprice/:price/:operator',function(req,res){
  */
 router.get('/findcomment/:id',function(req,res){
     Food.findCommentsBelong(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         if(food.comments == null){
             res.json({
                 success:false,
@@ -207,7 +207,7 @@ router.get('/findcomment/:id',function(req,res){
  */
 router.get('/findrating/:id',function(req,res){
     Food.findRating(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         if(food.ratings == null){
             res.json({
                 success:false,
@@ -232,7 +232,7 @@ router.get('/findrating/:id',function(req,res){
  */
 router.get('/findphoto/:id',function(req,res){
     Food.findPhotosBelong(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         if(food.photos == null){
             res.json({
                 success:false,
@@ -258,10 +258,10 @@ router.get('/findphoto/:id',function(req,res){
  */
 router.put('/addphoto/:id/:idphoto',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         food.photos.push(req.params.idphoto);
         Food.createFood(food,function(err,food){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",
@@ -280,10 +280,10 @@ router.put('/addphoto/:id/:idphoto',function(req,res){
  */
 router.put('/addcomment/:id/:idcomment',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         food.comments.push(req.params.idcomment);
         Food.createFood(food,function(err,food){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",
@@ -302,10 +302,10 @@ router.put('/addcomment/:id/:idcomment',function(req,res){
  */
 router.put('/addrating/:id/:idrating',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         food.ratings.push(req.params.idrating);
         Food.createFood(food,function(err,food){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",
@@ -328,7 +328,7 @@ router.put('/addrating/:id/:idrating',function(req,res){
  */
 router.put('/updateinfo/:id',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         food.food_name = req.body.food_name;
         food.description = req.body.description;
         food.type = req.body.type;
@@ -339,7 +339,7 @@ router.put('/updateinfo/:id',function(req,res){
         food.photo4 = req.body.photo4;
         food.photo5 = req.body.photo5;
         Food.createFood(food,function(err,food){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",
@@ -360,14 +360,14 @@ router.put('/updateinfo/:id',function(req,res){
  */
 router.delete('/deletephoto/:id',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         for(var i = 0;i < food.photos.length ; i++){
             if(food.photos[i] == req.body.photo_id){
                 food.photos.splice(i,1);
             }
         }
         Food.createFood(food,function(err,food){
-                if(err) throw err;
+                if(err) console.log(err);
                 res.json({
                     success : true,
                     msg : "Successfully Delete",
@@ -385,7 +385,7 @@ router.delete('/deletephoto/:id',function(req,res){
  */
 router.delete('/deletefood/:id',function(req,res){
     Food.removeFood(req.params.id,function(err){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Delete"
@@ -402,7 +402,7 @@ router.delete('/deletefood/:id',function(req,res){
  */
 router.get('/findcommentres/:id',function(req,res){
     Food.findCommentsBelongRes(req.params.id,function(err,food){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
                 success:true,
                 msg : "Find done",

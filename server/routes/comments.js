@@ -22,7 +22,7 @@ router.post('/create',function(req,res){
     });
     
     Comment.createComment(newComment,function(err,comment){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Create Comment",
@@ -38,7 +38,7 @@ router.post('/create',function(req,res){
 */
 router.get('/findcomments/all',function(req,res){
     Comment.getAllComment(function(err,comments){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : comments
@@ -55,7 +55,7 @@ router.get('/findcomments/all',function(req,res){
 */
 router.get('/findcomments/:user_id',function(req,res){
     Comment.getCommentByUserId(req.params.user_id,function(err,comments){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : comments
@@ -72,7 +72,7 @@ router.get('/findcomments/:user_id',function(req,res){
 */
 router.get('/findcomment/:id',function(req,res){
     Comment.getCommentById(req.params.id,function(err,comment){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : comment
@@ -90,7 +90,7 @@ router.get('/findcomment/:id',function(req,res){
 */
 router.get('/finduser/:id',function(req,res){
     Comment.findUser(req.params.id,function(err,comment){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             msg: "Find done",
@@ -111,12 +111,12 @@ router.put('/updateinfo/:id',function(req,res){
     var currentDate = new Date();
     var newDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset()*60000));
     Comment.getCommentById(req.params.id,function(err,comment){
-        if(err) throw err;        
+        if(err) console.log(err);        
         comment.content = req.body.content;
         comment.is_reported = req.body.is_reported;
         comment.date_modified = newDate;
         Comment.createComment(comment,function(err,comment){
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Successfully update",
@@ -134,7 +134,7 @@ router.put('/updateinfo/:id',function(req,res){
 */
 router.delete('/deletecomment/:id',function(req,res){
     Comment.removeComment(req.params.id,function(err){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully Delete"

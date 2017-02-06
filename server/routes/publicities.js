@@ -33,7 +33,7 @@ router.post('/create', function (req, res) {
     });
 
     Publicity.createPublicity(newPublicity, function (err, publicity) {
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             msg: "Successfully Create Publicity",
@@ -49,7 +49,7 @@ router.post('/create', function (req, res) {
  */
 router.get('/findAllPublicity', function (req, res) {
     Publicity.getAllPublicity(function (err, publicity){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             data: publicity
@@ -66,7 +66,7 @@ router.get('/findAllPublicity', function (req, res) {
  */
 router.get('/findPublicity/:id', function (req, res) {
     Publicity.getPublicityById(req.params.id, function (err, publicity){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             data: publicity
@@ -83,7 +83,7 @@ router.get('/findPublicity/:id', function (req, res) {
  */
 router.get('/findName/:name', function (req, res) {
     Publicity.getPublicityByName(req.params.name, function (err, publicity) {
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             msg: "Publicity was found!",
@@ -103,7 +103,7 @@ router.get('/findName/:name', function (req, res) {
  */
 router.put('/updateinfo/:id', function (req, res) {
     Publicity.getPublicityById(req.params.id, function (err, publicity) {
-        if(err) throw err;
+        if(err) console.log(err);
         publicity.publicity_name = req.body.publicity_name;
         publicity.publicity_desciption = req.body.publicity_desciption;
         publicity.publicity_price = req.body.publicity_price;
@@ -113,7 +113,7 @@ router.put('/updateinfo/:id', function (req, res) {
         publicity.photo4 = req.body.photo4;
         publicity.photo5 = req.body.photo5;
         Publicity.createPublicity(publicity, function (err, publicity) {
-            if(err) throw err;
+            if(err) console.log(err);
             res.json({
                 success : true,
                 msg : "Update Successfully!",
@@ -125,7 +125,7 @@ router.put('/updateinfo/:id', function (req, res) {
 
 router.delete('/deletepublicity/:id', function (req, res) {
     Publicity.removePublicity(req.params.id, function (err) {
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success: true,
             msg: "Delete successfully!"

@@ -24,7 +24,7 @@ router.post('/addphoto',upload.any(),function(req,res){
                 photo.description = req.body.decription;
                 photo.userid = req.body.userid;
                 Photo.addPhoto(photo,function(err,photo){
-                if(err) throw err;
+                if(err) console.log(err);
                 res.json({
                     success : true,
                     msg : "Successfully Added"
@@ -47,7 +47,7 @@ router.get('/findPhotoUser/:token',function(req,res){
 
 router.delete('/removephoto/:id',function(req,res){
     Photo.remove(req.params.id,function(err){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success : true,
             msg : "Successfully remove",
