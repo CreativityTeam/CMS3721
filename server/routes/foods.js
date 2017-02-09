@@ -17,7 +17,7 @@ router.post('/create',function(req,res){
     var food_name = req.body.food_name;
     var res_belong = req.body.res_belong;
     var description = req.body.description;
-    var type = req.body.type;
+    var menu = req.body.menu;
     var price = req.body.price;
     var photo1 = req.body.photo1;
     var photo2 = req.body.photo2;
@@ -28,7 +28,7 @@ router.post('/create',function(req,res){
         food_name : food_name,
         description : description,
         res_belong : res_belong,
-        type : type,
+        menu : menu,
         price : price,
         photo1 : photo1,
         photo2 : photo2,
@@ -129,8 +129,8 @@ router.get('/findfoodbyname/:name',function(req,res){
 /**Response
  * foods
  */
-router.get('/findfoodbytype/:type',function(req,res){
-    Food.findFoodByType(req.params.type,function(err,foods){
+router.get('/findfoodbymenu/:menu',function(req,res){
+    Food.findFoodByMenu(req.params.menu,function(err,foods){
         if(err) console.log(err);
         if(!foods){
             res.json({
@@ -331,7 +331,7 @@ router.put('/updateinfo/:id',function(req,res){
         if(err) console.log(err);
         food.food_name = req.body.food_name;
         food.description = req.body.description;
-        food.type = req.body.type;
+        food.menu = req.body.menu;
         food.price = req.body.price;
         food.photo1 = req.body.photo1;
         food.photo2 = req.body.photo2;

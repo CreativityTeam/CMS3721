@@ -20,6 +20,14 @@ var RestaurantSchema = mongoose.Schema({
             latitude : Number
         }
     },
+    type : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    },
+    menus:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Menu'
+    }],
     comments:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
@@ -93,4 +101,10 @@ module.exports.deleteRestaurant = function(id,callback){
 module.exports.getAllPublicity = function(callback){
    Restaurant.find().populate('publicities').exec(callback); 
 }
+
+/**Find Restaurant by type */
+module.exports.findResByType = function(type,callback){
+    var query = { type : type };
+    Restaurant.find(query).populate('type').exec(callback);
+};
 
