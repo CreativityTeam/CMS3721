@@ -230,7 +230,7 @@ router.get('/findrating/:id',function(req,res){
 /**Response
  * food.photos
  */
-router.get('/findphoto/:id',function(req,res){
+/*router.get('/findphoto/:id',function(req,res){
     Food.findPhotosBelong(req.params.id,function(err,food){
         if(err) console.log(err);
         if(food.photos == null){
@@ -246,7 +246,7 @@ router.get('/findphoto/:id',function(req,res){
             });
         }
     });
-});
+});*/
 
 
 /**Request 
@@ -256,7 +256,7 @@ router.get('/findphoto/:id',function(req,res){
  */
 /**Response
  */
-router.put('/addphoto/:id/:idphoto',function(req,res){
+/*router.put('/addphoto/:id/:idphoto',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
         if(err) console.log(err);
         food.photos.push(req.params.idphoto);
@@ -358,7 +358,7 @@ router.put('/updateinfo/:id',function(req,res){
 /**Response
  *  data: food.photos
  */
-router.delete('/deletephoto/:id',function(req,res){
+/*router.delete('/deletephoto/:id',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
         if(err) console.log(err);
         for(var i = 0;i < food.photos.length ; i++){
@@ -420,4 +420,19 @@ router.get('/findResBelongName',function(req,res){
         })
     });
 });
+
+/**remove food in menu */
+router.put('/removeFoodFromMenu/:id',function(req,res){
+    Food.getFoodById(req.params.id,function(err,food){
+        food.menu = undefined;
+        Food.createFood(food,function(err,food){
+                if(err) console.log(err);
+                res.json({
+                    success : true,
+                    msg : "Successfully Delete",
+                    data : food.photos
+            });
+        });
+    });    
+})
 module.exports = router;
