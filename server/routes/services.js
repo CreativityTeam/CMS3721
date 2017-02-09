@@ -204,10 +204,22 @@ router.put('/updatecomment/:id/:idcomment',function(req,res){
 
 /**Input : ID ratings */
 /**Output : Array Restaurant */
-router.put('/updaterating/:id/:idrating',function(req,res){
+router.put('/updaterating/:id',function(req,res){    
     Service.getServiceById(req.params.id,function(err,service){
         if(err) console.log(err);
-        service.ratings.push(req.params.idrating);
+        var exist = false; 
+        for (var i = 0;  i < service.ratings.length; ++i){
+            if (service.ratings[i].userId == req.body.userId){                   
+                service.totalRating = service.totalRating - service.ratings[i].score + req.body.score;                
+                service.ratings[i].score = req.body.score;                
+                exist = true;
+                break;
+            }
+        }
+        if (!exist){
+            service.ratings.push({'userId': req.body.userId, 'score': req.body.score});
+            service.totalRating += req.body.score;            
+        }                  
         Service.createService(service,function(err,service){
             if(err) console.log(err);
             res.json({
