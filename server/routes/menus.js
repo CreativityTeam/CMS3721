@@ -20,6 +20,15 @@ router.post('/create',function(req,res){
     })
 });
 
+router.get('/getListMenu',function(req,res){
+    Menu.getMenu(function(err,listMenu){
+        res.json({
+           success : true,
+           data : listMenu 
+        })
+    })
+});
+
 router.delete('/delete/:id',function(req,res){
     Menu.deleteMenu(req.params.id,function(err,newMenu){
         if(err) {

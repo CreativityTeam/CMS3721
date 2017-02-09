@@ -12,6 +12,11 @@ module.exports.createMenu = function(newMenu,callback){
     newMenu.save(callback);
 };
 
+/**Get List Menu */
+module.exports.getMenu = function(callback){
+    Menu.find(callback);
+};
+
 /**Delete Menu */
 module.exports.deleteMenu = function(id,callback){
     var query = { _id : id};

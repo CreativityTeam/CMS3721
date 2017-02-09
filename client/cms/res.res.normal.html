@@ -22,18 +22,26 @@
 				</div>
 				<form id="resform">
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label>Id Admin</label>
 								<input type="text" class="form-control border-input" value="{{ user._id }}" disabled>
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label for="exampleInputEmail1">Nom de restaurant</label>
 								<input type="text" class="form-control border-input" placeholder="Restaurant Name" ng-model="restaurant.res_name" required>
 							</div>
 						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="sel1">Catégorie</label>
+								<select class="form-control" id="sel1" ng-model="restaurant.type" required>
+    								<option value="{{category._id}}" ng-repeat="category in listCategoryRestaurant">{{ category.name }}</option>
+  								</select>
+							</div>
+						</div>		
 					</div>
 					<div class="row">
 						<div class="col-md-2">
