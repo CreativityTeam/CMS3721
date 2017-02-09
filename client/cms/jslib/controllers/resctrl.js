@@ -110,6 +110,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             name : $scope.restaurant.res_name,
             description : $scope.restaurant.description,
             housenumber : $scope.restaurant.housenumber,
+            type : $scope.restaurant.type,
             street : $scope.restaurant.street,
             district : $scope.oldAddress.district,
             city :  $scope.oldAddress.city,
@@ -223,7 +224,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 $scope.listComment.splice(i,1);
             }
         }
-        $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment' + id).success(function(data){
+        $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment/' + idcmt).success(function(data){
             if(data.success){
                 toaster.pop('error',"Status",data.msg);
             }
@@ -391,18 +392,25 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }); 
     }
 
-    var getListCategoryFood = function(){
-         $scope.listCategoryFood = [];
-         $http.get(API_ENDPOINT.url + '/api/categories/getList').success(function(response){
-            for(var item in response.data){
-                if(response.data[item].mainCategory == "Restaurant"){
-                    $scope.listCategoryFood.push(response.data[item]);
-                }
-            }
+    var getListMenuFood = function(){
+         $http.get(API_ENDPOINT.url + '/api/menus/getListMenu').success(function(response){
+            $scope.listMenuFood = response.data;
         });
     };
 
-    getListCategoryFood()
+    var getCategoryRestaurant = function(){
+        $scope.listCategoryRestaurant = [];
+         $http.get(API_ENDPOINT.url + '/api/categories/getList').success(function(response){
+            for(var item in response.data){
+                if(response.data[item].mainCategory == "Restaurant"){
+                    $scope.listCategoryRestaurant.push(response.data[item]);
+                }
+            }
+        });
+    }
+
+    getCategoryRestaurant()
+    getListMenuFood()
     loadCity();
     getRestaurant();
     getCurrentUser();

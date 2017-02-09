@@ -17,7 +17,7 @@ router.post('/create',function(req,res){
     var food_name = req.body.food_name;
     var res_belong = req.body.res_belong;
     var description = req.body.description;
-    var type = req.body.type;
+    var menu = req.body.menu;
     var price = req.body.price;
     var photo1 = req.body.photo1;
     var photo2 = req.body.photo2;
@@ -28,7 +28,7 @@ router.post('/create',function(req,res){
         food_name : food_name,
         description : description,
         res_belong : res_belong,
-        type : type,
+        menu : menu,
         price : price,
         photo1 : photo1,
         photo2 : photo2,
@@ -129,8 +129,8 @@ router.get('/findfoodbyname/:name',function(req,res){
 /**Response
  * foods
  */
-router.get('/findfoodbytype/:type',function(req,res){
-    Food.findFoodByType(req.params.type,function(err,foods){
+router.get('/findfoodbymenu/:menu',function(req,res){
+    Food.findFoodByMenu(req.params.menu,function(err,foods){
         if(err) console.log(err);
         if(!foods){
             res.json({
@@ -230,7 +230,7 @@ router.get('/findrating/:id',function(req,res){
 /**Response
  * food.photos
  */
-router.get('/findphoto/:id',function(req,res){
+/*router.get('/findphoto/:id',function(req,res){
     Food.findPhotosBelong(req.params.id,function(err,food){
         if(err) console.log(err);
         if(food.photos == null){
@@ -246,7 +246,7 @@ router.get('/findphoto/:id',function(req,res){
             });
         }
     });
-});
+});*/
 
 
 /**Request 
@@ -256,7 +256,7 @@ router.get('/findphoto/:id',function(req,res){
  */
 /**Response
  */
-router.put('/addphoto/:id/:idphoto',function(req,res){
+/*router.put('/addphoto/:id/:idphoto',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
         if(err) console.log(err);
         food.photos.push(req.params.idphoto);
@@ -331,7 +331,7 @@ router.put('/updateinfo/:id',function(req,res){
         if(err) console.log(err);
         food.food_name = req.body.food_name;
         food.description = req.body.description;
-        food.type = req.body.type;
+        food.menu = req.body.menu;
         food.price = req.body.price;
         food.photo1 = req.body.photo1;
         food.photo2 = req.body.photo2;
@@ -358,7 +358,7 @@ router.put('/updateinfo/:id',function(req,res){
 /**Response
  *  data: food.photos
  */
-router.delete('/deletephoto/:id',function(req,res){
+/*router.delete('/deletephoto/:id',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
         if(err) console.log(err);
         for(var i = 0;i < food.photos.length ; i++){
@@ -420,4 +420,19 @@ router.get('/findResBelongName',function(req,res){
         })
     });
 });
+
+/**remove food in menu */
+router.put('/removeFoodFromMenu/:id',function(req,res){
+    Food.getFoodById(req.params.id,function(err,food){
+        food.menu = undefined;
+        Food.createFood(food,function(err,food){
+                if(err) console.log(err);
+                res.json({
+                    success : true,
+                    msg : "Successfully Delete",
+                    data : food.photos
+            });
+        });
+    });    
+})
 module.exports = router;

@@ -10,9 +10,9 @@ var FoodSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Restaurant'
     },
-    type : {
+    menu : {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category'
+        ref: 'Menu'
     },
     price : {
         type: Number
@@ -50,7 +50,7 @@ module.exports.createFood = function(newFood,callback){
 };
 
 module.exports.getFoodById = function(id,callback){    
-    Food.findById(id).populate('type').populate('comments').populate('res_belong').populate('ratings').exec(callback);
+    Food.findById(id).populate('menu').populate('comments').populate('res_belong').populate('ratings').exec(callback);
 };
 
 module.exports.getAllFood = function(callback){    
@@ -63,10 +63,10 @@ module.exports.findFoodByName = function(name,callback){
     Food.find(query, callback);
 };
 
-/**Find Food by type */
-module.exports.findFoodByType = function(type,callback){
-    var query = { type : type };
-    Food.find(query).populate('type').exec(callback);
+/**Find Food by menu */
+module.exports.findFoodByMenu = function(menu,callback){
+    var query = { menu : menu };
+    Food.find(query).populate('menu').exec(callback);
 };
 
 /**Find Food with price equals to an amount */
@@ -87,7 +87,7 @@ module.exports.findFoodByPrice = function(price,operator,callback){
 /**Find the Restaurant that Food belongs to */
 module.exports.findRestaurant = function(id,callback){
     var query = { res_belong : id }
-    Food.find(query).populate('type').exec(callback);
+    Food.find(query).populate('menu').exec(callback);
 };
 
 /**Find all comments belong to this Food */

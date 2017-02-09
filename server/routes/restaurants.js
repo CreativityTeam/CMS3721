@@ -11,6 +11,7 @@ router.post('/register',function(req,res){
     var street = req.body.street;
     var district = req.body.district;
     var city = req.body.city;
+    var type = req.body.type;
     var description = req.body.description;
     var longitude = req.body.longitude;
     var latitude = req.body.latitude;
@@ -33,6 +34,7 @@ router.post('/register',function(req,res){
                 latitude : latitude
             }
         },
+        type : type,
         photo1 : photo1,
         photo2 : photo2,
         photo3 : photo3,
@@ -45,6 +47,19 @@ router.post('/register',function(req,res){
                 success : true,
                 msg : "Successfully Create Restaurant",
                 data : restaurant 
+            });
+    });
+});
+
+/**Input : Type ID */
+/**Output : restaurant belong type */
+router.get('/findresbytype/:type',function(req,res){
+    Food.findResByType(req.params.type,function(err,res){
+        if(err) console.log(err);
+            res.json({
+                success:true,
+                msg : "Find done",
+                data : res
             });
     });
 });
@@ -283,6 +298,42 @@ router.get('/getAllPublicity',function(req,res){
             success : true,
             data : listPublicity
         })
+    });
+});
+
+/**Input : ID menu */
+/**Output : Array menu */
+router.put('/updatemenu/:id/:idmenu',function(req,res){
+    Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
+        if(err) console.log(err);
+        restaurant.menus.push(req.params.idmenu);
+        Restaurant.createRestaurant(restaurant,function(err,restaurant){
+            if(err) console.log(err);
+            res.json({
+                success : true,
+                data : restaurant,
+                msg : "Successfully update"
+            });
+        });
+    });
+});
+
+router.delete('/deletemenu/:id/:idmenu',function(req,res){
+    Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
+        if(err) console.log(err);
+        for(var i = 0;i < restaurant.menus.length ; i++){
+            if(restaurant.menus[i] == req.params.idmenu){
+                restaurant.menus.splice(i,1);
+            }
+        }
+        Restaurant.createRestaurant(restaurant,function(err,restaurant){
+                if(err) console.log(err);
+                    res.json({
+                        success : true,
+                        msg : "Successfully Delete",
+                        data : restaurant.comments
+            });
+        });
     });
 });
 
