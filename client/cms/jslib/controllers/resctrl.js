@@ -270,7 +270,6 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $scope.isClickEditButtonPublicity = true;
         $scope.isClickAddButtonPublicity = true;
         $http.get(API_ENDPOINT.url + '/api/publicities/findPublicity/' + idPub).success(function(data){
-                toaster.pop('success',"Status",data.msg);
                 $scope.publicity = data.data;
         }); 
     }
