@@ -108,3 +108,8 @@ module.exports.findResByType = function(type,callback){
     Restaurant.find(query).populate('type').exec(callback);
 };
 
+/**Find Menu restaurant */
+module.exports.findResMenu = function(id,callback){
+    Restaurant.findById(id).populate('menus').exec(callback);
+};
+

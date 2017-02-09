@@ -34,6 +34,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'cmt.res.normal.html'
         })
+        .state('menures',{
+            url: '/menures',
+            controller : 'rescontroller',
+            templateUrl: 'menu.res.normal.html'
+        })
         .state('pubres',{
             url: '/publicityres',
             controller : 'rescontroller',

@@ -337,4 +337,14 @@ router.delete('/deletemenu/:id/:idmenu',function(req,res){
     });
 });
 
+router.get('/getListMenu/:id',function(req,res){
+    Restaurant.findResMenu(req.params.id,function(err,restaurant){
+        if(err) console.log(err);
+            res.json({
+                success : true,
+                data : restaurant,
+            });
+    });
+});
+
 module.exports = router;

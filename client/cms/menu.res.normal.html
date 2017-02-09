@@ -1,0 +1,72 @@
+<div class="row">
+	<toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="header">
+				<h4 class="title">Gestion de la publicité</h4>			
+			</div>
+			<div class="content">
+				<form>
+					<div class="form-group">
+      					<div class="input-group">
+        					<div class="input-group-addon"><i class="fa fa-search"></i></div>
+        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchPublicity">
+      					</div>      
+   					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="sel1">Sélectionnez votre restaurant</label>
+								<select class="form-control" id="sel1" ng-change="loadMenu()" ng-model="restaurant._id" required>
+    								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
+  								</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="showFormMenu()" ng-show="isRestaurantSelected">Ajouter publicité</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormMenu()" ng-show="isClickAddButtonMenu">Fermer la fiche</a>
+						 	<a type="button" class="btn btn-sm btn-info" ng-click="addMenu()" ng-show="isClickAddButtonMenu">Soumettre un publicité</a>
+						</div>
+					</div>
+					<div class="row" ng-show="isClickAddButtonMenu">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Num</label>
+								<input type="text" class="form-control border-input" ng-model="menu.name" required>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="panel-group" id="accordion{{menu.count}}" role="tablist" aria-multiselectable="true" ng-show="isRestaurantSelected" ng-repeat="menu in listMenuFood">
+  					<div class="panel panel-default">
+    					<div class="panel-heading" role="tab" id="heading{{menu.count}}">
+      						<h4 class="panel-title">
+        						<a role="button" data-toggle="collapse" data-parent="#accordion{{menu.count}}" href="#collapse{{menu.count}}" aria-expanded="false" aria-controls="collapse{{menu.count}}">
+									  Menu *{{menu.count}}, {{menu.menuInfor}}
+        						</a>
+      						</h4>
+    					</div>
+    					<div id="collapse{{menu.count}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+     						<div class="panel-body">
+								 <div class="content table-responsive">
+									 <table class="table">
+										<thead>
+											<th><strong>Num</strong></th>
+											<th><strong>Prix</strong></th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="food in order.foods">
+												<td>{{ food.food_id.food_name }}</td>
+												<td>{{ food.food_id.price }}</td>
+											</tr>
+										</tbody>
+									</table>
+      							</div>
+    						</div>
+  						</div>
+					</div>	
+				</div>			
+			</div>
+		</div>
+	</div>
+</div>

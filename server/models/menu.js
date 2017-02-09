@@ -17,6 +17,11 @@ module.exports.getMenu = function(callback){
     Menu.find(callback);
 };
 
+/**Find Id Menu */
+module.exports.findIdMenu = function(id,callback){
+    Menu.findById(id,callback);
+};
+
 /**Delete Menu */
 module.exports.deleteMenu = function(id,callback){
     var query = { _id : id};

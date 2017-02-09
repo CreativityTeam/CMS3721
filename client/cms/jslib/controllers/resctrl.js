@@ -268,6 +268,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     }
     $scope.editPublicity = function(idPub){
         $scope.isClickEditButtonPublicity = true;
+        $scope.isClickAddButtonPublicity = true;
         $http.get(API_ENDPOINT.url + '/api/publicities/findPublicity/' + idPub).success(function(data){
                 toaster.pop('success',"Status",data.msg);
                 $scope.publicity = data.data;
@@ -363,6 +364,79 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     }
     /**--------------------- */
     /**End Food Function */
+    /**--------------------- */
+
+    /**--------------------- */
+    /**Start Menu Function */
+    /**--------------------- */
+    $scope.showFormMenu = function(){
+        $scope.isClickAddButtonMenu= true;
+        $scope.menu = null;
+    }
+    $scope.hideFormMenu = function(){
+        $scope.isClickAddButtonMenu = false;
+        $scope.menu = null;
+    }
+    $scope.loadMenu = function(){
+         $scope.isRestaurantSelected = true;
+         $scope.listMenuFood = [];
+         $http.get(API_ENDPOINT.url + '/api/restaurants/getListMenu/' + $scope.restaurant._id).success(function(data){
+                $scope.listMenu = data.data;
+                console.log(data.data.menus)
+                for(var menuItem in $scope.listMenu.menus){
+                    console.log($scope.listMenu.menus[menuItem]._id)
+                    $http.get(API_ENDPOINT.url + '/api/foods/findfoodbymenu/' + $scope.listMenu.menus[menuItem]._id).success(function(data){
+                        console.log(data.data)
+                        /*$scope.listMenuFood.push({
+                            count : menuItem,
+                            foodArray : data.data,
+                            menuInfor : $scope.listMenu.menus[menuItem].name
+                        })*/
+                    })   
+                }
+        }); 
+    }
+    $scope.editMenu = function(idMenu){
+        $scope.isClickEditButtonPublicity = true;
+        $scope.isClickAddButtonMenu= true;
+        $http.get(API_ENDPOINT.url + '/api/menus/getMenuID/' + idMenu).success(function(data){
+                toaster.pop('success',"Status",data.msg);
+                $scope.menu = data.data;
+        }); 
+    }
+    $scope.addMenu = function(){
+        if($scope.isClickEditButtonMenu){
+            $http.put(API_ENDPOINT.url + '/api/menus/updateMenu/' + $scope.menu._id,$scope.menu).success(function(data){
+                toaster.pop('success',"Status",data.msg);
+                $scope.loadPublicity();
+            });    
+        }else{
+        $http.post(API_ENDPOINT.url + '/api/menus/create',$scope.menu).success(function(data){
+            if(data.success){
+                $http.put(API_ENDPOINT.url + '/api/restaurants/updatemenu/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
+                    toaster.pop('success',"Status",data.msg);
+                    $scope.loadMenu();
+                    $scope.menu = null;
+                });  
+                }
+            });
+        }    
+    }
+    $scope.deleteMenu = function(idMenu,idRes){
+        for(var i in $scope.listMenu){
+            if($scope.listMenu[i]._id == idMenu){
+                $scope.listMenu.splice(i,1);
+            }
+        }
+        $http.delete(API_ENDPOINT.url + '/api/menus/delete/' + idMenu).success(function(data){
+            if(data.success){
+                $http.delete(API_ENDPOINT.url + '/api/restaurants/deletemenu/' + idRes + '/' + idMenu).success(function(data){}); 
+                toaster.pop('error',"Status",data.msg); 
+            }
+        });  
+    }
+    /**--------------------- */
+    /**End Menu Function */
     /**--------------------- */
 
     /**--------------------- */
