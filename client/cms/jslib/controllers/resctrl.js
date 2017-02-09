@@ -223,7 +223,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 $scope.listComment.splice(i,1);
             }
         }
-        $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment' + id).success(function(data){
+        $http.delete(API_ENDPOINT.url + '/api/comments/deletecomment/' + idcmt).success(function(data){
             if(data.success){
                 toaster.pop('error',"Status",data.msg);
             }
