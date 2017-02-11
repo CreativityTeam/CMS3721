@@ -50,7 +50,7 @@ module.exports.createFood = function(newFood,callback){
 };
 
 module.exports.getFoodById = function(id,callback){    
-    Food.findById(id).populate('menu').populate('comments').populate('res_belong').populate('ratings').exec(callback);
+    Food.findById(id).populate('menu').populate('comments').populate('res_belong').exec(callback);
 };
 
 module.exports.getAllFood = function(callback){    

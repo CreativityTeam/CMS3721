@@ -65,7 +65,7 @@ module.exports.createRestaurant = function(newRestaurant,callback){
 };
 
 module.exports.getRestaurantById = function(id,callback){
-    Restaurant.findById(id,callback);
+    Restaurant.findById(id).populate('user_id').populate('comments').populate('publicities').populate('type').populate('menus').exec(callback);
 };
 
 module.exports.findRes = function(callback){
