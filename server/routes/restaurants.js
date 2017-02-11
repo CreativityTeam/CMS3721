@@ -54,12 +54,12 @@ router.post('/register',function(req,res){
 /**Input : Type ID */
 /**Output : restaurant belong type */
 router.get('/findresbytype/:type',function(req,res){
-    Food.findResByType(req.params.type,function(err,res){
+    Restaurant.findResByType(req.params.type,function(err,restaurantList){
         if(err) console.log(err);
             res.json({
                 success:true,
                 msg : "Find done",
-                data : res
+                data : restaurantList
             });
     });
 });
@@ -227,6 +227,7 @@ router.put('/updateinfo/:id',function(req,res){
         restaurant.photo3 = req.body.photo3;
         restaurant.photo4 = req.body.photo4;
         restaurant.photo5 = req.body.photo5;
+        restaurant.type = req.body.type;
         restaurant.location.housenumber = req.body.housenumber;
         restaurant.location.street = req.body.street;
         restaurant.location.district = req.body.district;
