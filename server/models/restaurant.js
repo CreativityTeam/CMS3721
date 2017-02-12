@@ -33,9 +33,16 @@ var RestaurantSchema = mongoose.Schema({
         ref: 'Comment'
     }],
     ratings:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rating'
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        score: Number
     }],
+    totalRating: {
+        type: Number,
+        default: 0
+    },
     photo1:{
         type : String
     },

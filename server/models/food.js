@@ -36,10 +36,17 @@ var FoodSchema = mongoose.Schema({
     photo5:{
         type : String
     },
-    ratings : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rating' 
-    }]
+    ratings:[{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        score: Number
+    }],
+    totalRating: {
+        type: Number,
+        default: 0
+    }
 });
 
 var Food = module.exports = mongoose.model('Food',FoodSchema);

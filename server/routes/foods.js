@@ -300,16 +300,28 @@ router.put('/addcomment/:id/:idcomment',function(req,res){
  */
 /**Response
  */
-router.put('/addrating/:id/:idrating',function(req,res){
+router.put('/updaterating/:id',function(req,res){    
     Food.getFoodById(req.params.id,function(err,food){
         if(err) console.log(err);
-        food.ratings.push(req.params.idrating);
+        var exist = false; 
+        for (var i = 0;  i < food.ratings.length; ++i){
+            if (food.ratings[i].userId == req.body.userId){                   
+                food.totalRating = food.totalRating - food.ratings[i].score + req.body.score;                
+                food.ratings[i].score = req.body.score;                
+                exist = true;
+                break;
+            }
+        }
+        if (!exist){
+            food.ratings.push({'userId': req.body.userId, 'score': req.body.score});
+            food.totalRating += req.body.score;            
+        }                  
         Food.createFood(food,function(err,food){
             if(err) console.log(err);
             res.json({
                 success : true,
-                msg : "Successfully update",
-                data : food
+                data : food,
+                msg : "Successfully update"
             });
         });
     });

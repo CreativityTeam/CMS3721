@@ -183,10 +183,22 @@ router.put('/updatecomment/:id/:idcomment',function(req,res){
 
 /**Input : ID ratings */
 /**Output : Array Restaurant */
-router.put('/updaterating/:id/:idrating',function(req,res){
+router.put('/updaterating/:id',function(req,res){    
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
         if(err) console.log(err);
-        restaurant.ratings.push(req.params.idrating);
+        var exist = false; 
+        for (var i = 0;  i < restaurant.ratings.length; ++i){
+            if (restaurant.ratings[i].userId == req.body.userId){                   
+                restaurant.totalRating = restaurant.totalRating - restaurant.ratings[i].score + req.body.score;                
+                restaurant.ratings[i].score = req.body.score;                
+                exist = true;
+                break;
+            }
+        }
+        if (!exist){
+            restaurant.ratings.push({'userId': req.body.userId, 'score': req.body.score});
+            restaurant.totalRating += req.body.score;            
+        }                  
         Restaurant.createRestaurant(restaurant,function(err,restaurant){
             if(err) console.log(err);
             res.json({
