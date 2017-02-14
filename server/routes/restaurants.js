@@ -334,8 +334,8 @@ router.put('/updatemenu/:id/:idmenu',function(req,res){
 router.delete('/deletemenu/:id/:idmenu',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
         if(err) console.log(err);
-        for(var i = 0;i < restaurant.menus.length ; i++){
-            if(restaurant.menus[i] == req.params.idmenu){
+        for(var i = 0; i < restaurant.menus.length; i++){
+            if(restaurant.menus[i]._id == req.params.idmenu){
                 restaurant.menus.splice(i,1);
             }
         }
@@ -344,7 +344,7 @@ router.delete('/deletemenu/:id/:idmenu',function(req,res){
                     res.json({
                         success : true,
                         msg : "Successfully Delete",
-                        data : restaurant.comments
+                        data : restaurant.menus
             });
         });
     });

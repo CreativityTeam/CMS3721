@@ -41,27 +41,22 @@ router.post('/create',function(req,res){
         comment: comment,
         total_price : price        
     });
+    
+    for(var food in req.body.foods){
+        newOrder.foods.push({
+            food_id : req.body.foods[food].id,
+            quantity : req.body.foods[food].quantity
+        })
+    }
 
-    var orderPromise = new Promise(function(resolve,reject){
-        for(var food in req.body.food){
-            newOrder.foods.push({
-                food_id : req.body.food[food].id,
-                quantity : req.body.food[food].quantity
-            })
-        }
-        resolve(newOrder)
-    });
-
-    orderPromise.then(function(order){
-         Order.createOrder(order,function(err,order){
-            if(err) throw err;
-            res.json({
-                success : true,
-                msg : "Successfully Create Order",
-                data : order 
-            });
+    Order.createOrder(newOrder,function(err,order){
+        if(err) console.log(err);
+        res.json({
+            success : true,
+            msg : "Successfully Create Order",
+            data : order 
         });
-    })
+    });    
 });
 
 /**Request 
@@ -71,7 +66,7 @@ router.post('/create',function(req,res){
  */
 router.get('/findinfo/all',function(req,res){
     Order.getAllOrder(function(err,orders){
-        if(err) throw err;
+        if(err) console.log(err);
         res.json({
             success:true,
             data : orders
