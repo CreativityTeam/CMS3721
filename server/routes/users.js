@@ -313,13 +313,13 @@ router.get('/findfoodfav/:token',function(req,res){
     }
 });
 
-router.delete('/deleteFoodFav/:token',function(req,res){
+router.delete('/deleteFoodFav/:token/:idfood',function(req,res){
     var token = req.params.token;
     var decoded = jwt.decode(token,configAuth.secret);
     User.getUserById(decoded._id,function(err,user){
         if(err) console.log(err);
-        for(var i = 0;i < user.foods_favorite.length ; i++){
-            if(user.foods_favorite[i] == req.body._id){
+        for(var i in user.foods_favorite){
+            if(user.foods_favorite[i] == req.params.idfood){
                 user.foods_favorite.splice(i,1);
             }
         }
@@ -328,19 +328,18 @@ router.delete('/deleteFoodFav/:token',function(req,res){
             res.json({
                 success : true,
                 msg : "Delete Successfully",
-                data : user.foods_favorite
             });
         });
     });
 });
 
-router.delete('/deleteResFav/:token',function(req,res){
+router.delete('/deleteResFav/:token/:idres',function(req,res){
     var token = req.params.token;
     var decoded = jwt.decode(token,configAuth.secret);
     User.getUserById(decoded._id,function(err,user){
         if(err) console.log(err);
-        for(var i = 0;i < user.res_favorite.length ; i++){
-            if(user.res_favorite[i] == req.body._id){
+        for(var i in user.res_favorite){
+            if(user.res_favorite[i] == req.params.idres){
                 user.res_favorite.splice(i,1);
             }
         }
@@ -349,7 +348,6 @@ router.delete('/deleteResFav/:token',function(req,res){
             res.json({
                 success : true,
                 msg : "Delete Successfully",
-                data : user.res_favorite
             });
         });
     });

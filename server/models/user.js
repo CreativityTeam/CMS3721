@@ -20,11 +20,11 @@ var UserSchema = mongoose.Schema({
     },
     foods_favorite:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'food'
+        ref: 'Food'
     }],
     res_favorite:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'restaurant'
+        ref: 'Restaurant'
     }],
     avatar:{
         type: String,
