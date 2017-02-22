@@ -18,12 +18,12 @@ var User = require('../models/user');
 
 router.post('/create',function(req,res){
     var user_order = req.body.user_order_id;
-    var res_belong = req.body.req_belong; 
+    var res_belong = req.body.foods[0].foodDetail.res_belong; 
     var time_ordered = req.body.time_ordered;
     var address = req.body.address;
     var point = {
-        lon : req.body.lon,
-        lat : req.body.lat
+        lon : req.body.point.lon,
+        lat : req.body.point.lat
     };
     var comment = req.body.comment;
     var price = req.body.price;
