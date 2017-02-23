@@ -248,4 +248,14 @@ router.get('/findAllOrder',function(req,res){
     })
 });
 
+router.get('/getLatestLocation/:id',function(req,res){
+    Order.getOrderById(req.params.id,function(err,order){
+        if(err) console.log(err);         
+        res.json({
+            success : true,            
+            data : order.locationshipping.point
+        });        
+    });
+});
+
 module.exports = router;
