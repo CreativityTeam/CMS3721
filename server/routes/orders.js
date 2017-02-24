@@ -144,7 +144,8 @@ router.put('/updatestatus',function(req,res){
             'order_id': req.body.id
         };                                   
         io.emit('status', msg);     
-        order.shippingstatus = req.body.status;               
+        order.shippingstatus = req.body.status;
+        order.shipper = req.body.shipperId;               
         Order.createOrder(order,function(err,order){
             if(err) console.log(err);
             res.json({
