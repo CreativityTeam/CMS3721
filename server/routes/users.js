@@ -353,4 +353,15 @@ router.delete('/deleteResFav/:token/:idres',function(req,res){
     });
 });
 
+router.get('/isshipping/:shipperId',function(req,res){    
+    User.getUserById(req.params.shipperId,function(err,shipper){
+        if(err) console.log(err);
+        console.log(shipper.shipping);
+        res.json({
+            success : true,
+            data : shipper.shipping,
+        });
+    });
+});
+
 module.exports = router;

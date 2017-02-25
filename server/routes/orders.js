@@ -141,11 +141,30 @@ router.put('/updatestatus',function(req,res){
         var io = req.io;          
         var msg = {
             'status': req.body.status,
-            'order_id': req.body.id
+            'order_id': req.body.id,
+            'shipperId' : req.body.shipperId
         };                                   
         io.emit('status', msg);     
         order.shippingstatus = req.body.status;
-        order.shipper = req.body.shipperId;               
+        order.shipper = req.body.shipperId;    
+        if (req.body.status == 'shipping'){
+            User.getUserById(req.body.shipperId,function(err,shipper){
+                if(err) console.log(err);                
+                shipper.shipping = 'Yes';
+                User.createUserOther(shipper,function(err,shipper){
+                    if(err) console.log(err);
+                });
+            });
+        }  
+        else if (req.body.status == 'shipped'){
+            User.getUserById(req.body.shipperId,function(err,shipper){
+                if(err) console.log(err);                
+                shipper.shipping = 'No';
+                User.createUserOther(shipper,function(err,shipper){
+                    if(err) console.log(err);
+                });
+            });
+        };                   
         Order.createOrder(order,function(err,order){
             if(err) console.log(err);
             res.json({

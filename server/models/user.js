@@ -49,6 +49,10 @@ var UserSchema = mongoose.Schema({
     },
     other:{
         type:String,
+    },
+    shipping:{
+        type:String,
+        default:'No'
     }
 });
 
