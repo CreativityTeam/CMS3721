@@ -6,7 +6,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var configAuth = require('../config/auth');
 var cors = require('cors');
 var jwt = require('jwt-simple');
-
+const generator = require('generate-password');
+const nodemailer = require('nodemailer');
 
 router.post('/register',function(req,res){
     var email = req.body.email;
@@ -364,4 +365,47 @@ router.get('/isshipping/:shipperId',function(req,res){
     });
 });
 
+router.post('/resetpassword',function(req,res){
+    User.getUserByEmail(req.body.username,(err,user) => {
+        if(err) console.log(err)
+        if(!user){
+            res.json({
+                success: false,
+                msg : "Your email is not registered"
+            })
+        }else{
+                var password = generator.generate({
+                    length: 11,
+                    numbers: true
+                });
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'nhatndm1193@gmail.com',
+                        pass: 'Nhatnguyen0408'
+                    }
+                });
+                let mailOptions = {
+                    from: '"Admin" <nhatndm1193@gmail.com>', // sender address
+                    to: req.body.username, // list of receivers
+                    subject: 'Reset Password ✔', // Subject line
+                    html: '<b>Please use this password to reset password: ' + password + '</b>' // html body
+                };
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log('Message %s sent: %s', info.messageId, info.response);
+                });
+                user.local.password = password;
+                User.resetPassword(user, (err,user) => {
+                    if(err) console.log(err)
+                    res.json({
+                        success : true,
+                        msg : "Please use password in your email to reset your password!!"
+                    })
+                }) 
+        }
+    })
+})
 module.exports = router;
