@@ -22,9 +22,11 @@
 				<h1>Nous saluons le retour!</h1>
 				<form>
 					<div class="field-wrap">
-						<input type="email" required autocomplete="off" ng-model="user.username"/>
+						<label>Email<span class="req">*</span></label>
+						<input type="email" required ng-model="user.username"/>
 					</div>
 					<div class="field-wrap" ng-if="!isResetPassword">
+						<label>Mot de passe<span class="req">*</span></label>
 						<input type="password" required autocomplete="off" ng-model="user.password"/>
 					</div>
 					<p class="forgot" style="color: white;cursor: pointer" ng-click="forgetPassword()">Forgot Password?</p>
