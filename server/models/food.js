@@ -57,7 +57,8 @@ module.exports.createFood = function(newFood,callback){
 };
 
 module.exports.getFoodById = function(id,callback){    
-    Food.findById(id).populate('menu').populate('comments').populate('res_belong').exec(callback);
+    Food.findById(id).populate('menu').populate({path: 'comments', populate: {path: 'user_id'}})
+    .populate('res_belong').exec(callback);
 };
 
 module.exports.getAllFood = function(callback){    

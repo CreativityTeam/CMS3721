@@ -285,7 +285,7 @@ router.get('/findresfav/:token',function(req,res){
             }else{
                 res.json({
                     success : true,
-                    data : user
+                    data : user.res_favorite
                 });
             }
         });
@@ -306,7 +306,7 @@ router.get('/findfoodfav/:token',function(req,res){
             }else{
                 res.json({
                     success : true,
-                    data : user
+                    data : user.foods_favorite
                 });
             }
         });
