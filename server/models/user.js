@@ -67,6 +67,15 @@ module.exports.createUser = function(newUser,callback){
     });
 };
 
+module.exports.resetPassword = function(user,callback){
+    bcrypt.genSalt(10,function(err,salt){
+        bcrypt.hash(user.local.password,salt,function(err,hash){
+            user.local.password = hash;
+            user.save(callback);
+        });
+    });   
+}
+
 module.exports.createUserOther = function(newUser,callback){    
     newUser.save(callback);
 };

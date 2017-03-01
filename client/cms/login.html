@@ -22,20 +22,20 @@
 				<h1>Nous saluons le retour!</h1>
 				<form>
 					<div class="field-wrap">
-						<input type="email" required autocomplete="off" ng-model="user.username"/>
+						<label>Email<span class="req">*</span></label>
+						<input type="email" required ng-model="user.username"/>
 					</div>
-					<div class="field-wrap">
+					<div class="field-wrap" ng-if="!isResetPassword">
+						<label>Mot de passe<span class="req">*</span></label>
 						<input type="password" required autocomplete="off" ng-model="user.password"/>
 					</div>
-					<p class="forgot"><a href="#">Forgot Password?</a>
+					<p class="forgot" style="color: white;cursor: pointer" ng-click="forgetPassword()">Forgot Password?</p>
 					<loading></loading></p>
-					<div class="top-row">
-						<div class="field-wrap">
-							<button type="button" class="button button-block" ng-click="login()">Connexion</button>
-						</div>
-						<div class="field-wrap">
-							<button type="button" class="button button-block-facebook" ng-click="loginFacebook()">Facebook</button>
-						</div>
+					<div class="top-row" ng-if="!isResetPassword">
+						<button type="button" class="button button-block" ng-click="login()">Connexion</button>
+					</div>
+					<div class="top-row" ng-if="isResetPassword">
+						<button type="button" class="button button-block" ng-click="resetPassword()">Confirmer</button>
 					</div>
 				</form>
 			</div>
@@ -73,6 +73,7 @@
 	<!-- /form -->
 </body>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
 	<script src="assets/js/index.js"></script>
 	<!--  Angular Plugin -->
 	<script src="node_modules/angular/angular.min.js"></script>

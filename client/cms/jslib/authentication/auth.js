@@ -57,6 +57,19 @@ auth.controller('logincontroller',function($scope,$http,$window,AuthService,API_
             }
         });
     };
+    $scope.forgetPassword = function(){
+        $scope.isResetPassword = true;
+    }
+    $scope.resetPassword = function(){
+        $http.post(API_ENDPOINT.url + '/api/users/resetpassword',$scope.user).success(function(res){
+            if(res.success){
+                toaster.pop('success',"Login Information",res.msg)
+                $scope.isResetPassword = false   
+            }else{
+                toaster.pop('error',"Login Exception",res.msg) 
+            }
+        })
+    }
 });
 
 window.fbAsyncInit = function() {
