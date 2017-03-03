@@ -17,6 +17,7 @@ var UserSchema = mongoose.Schema({
     }, 
     role:{
         type:String,
+        default : "User"
     },
     foods_favorite:[{
         type: mongoose.Schema.Types.ObjectId,

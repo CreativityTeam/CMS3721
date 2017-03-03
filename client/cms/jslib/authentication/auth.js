@@ -26,7 +26,12 @@ auth.controller('logincontroller',function($scope,$http,$window,AuthService,API_
     $scope.login = function(){
         $scope.loading = true;
         AuthService.login($scope.user).then(function(msg){
-            $window.location.href = "/";   
+            if(AuthService.getCurrentUser().role === "User"){
+                $scope.loading = false;
+                toaster.pop('error',"System Exception","You dont have any permissions to use this page!! Please try contact Administrator")   
+            }else{
+                $window.location.href = "/";   
+            }
         },function(errMsg){
             $scope.loading = false;
             toaster.pop('error',"Login Exception",errMsg)
@@ -35,28 +40,29 @@ auth.controller('logincontroller',function($scope,$http,$window,AuthService,API_
     $scope.register = function(){
         $scope.loading = true;
         AuthService.register($scope.newUser).then(function(msg){
-            $window.location.href = "/";   
+            $scope.loading = false;
+            toaster.pop('success',"System Notification",msg)   
         },function(errMsg){
             $scope.loading = false;
             toaster.pop('error',"Register Exception",errMsg)
         });
     };
-    $scope.loginFacebook = function(){
-        FB.login(function (response) {
-            if (response.authResponse) {
-                FB.api('/me?fields=id,name,gender,email,picture', function (response) {
-                    $http.post(API_ENDPOINT.url + '/api/users/createFace', response).success(function(response){
-                        if(response.success){
-                            AuthService.setToken(response.token);
-                            $window.location.href = "/";
-                        }
-                    });
-                });
-            } else {
-                console.log('User cancelled login or did not fully authorize.');
-            }
-        });
-    };
+    // $scope.loginFacebook = function(){
+    //     FB.login(function (response) {
+    //         if (response.authResponse) {
+    //             FB.api('/me?fields=id,name,gender,email,picture', function (response) {
+    //                 $http.post(API_ENDPOINT.url + '/api/users/createFace', response).success(function(response){
+    //                     if(response.success){
+    //                         AuthService.setToken(response.token);
+    //                         $window.location.href = "/";
+    //                     }
+    //                 });
+    //             });
+    //         } else {
+    //             console.log('User cancelled login or did not fully authorize.');
+    //         }
+    //     });
+    // };
     $scope.forgetPassword = function(){
         $scope.isResetPassword = true;
     }
