@@ -1,0 +1,282 @@
+[
+  {
+    "Country": "Andorra",
+    "Code": "AD"
+  },
+  {
+    "Country": "Argentina",
+    "Code": "AR"
+  },
+  {
+    "Country": "American Samoa",
+    "Code": "AS"
+  },
+  {
+    "Country": "Austria",
+    "Code": "AT"
+  },
+  {
+    "Country": "Australia",
+    "Code": "AU"
+  },
+  {
+    "Country": "Bangladesh",
+    "Code": "BD"
+  },
+  {
+    "Country": "Belgium",
+    "Code": "BE"
+  },
+  {
+    "Country": "Bulgaria",
+    "Code": "BG"
+  },
+  {
+    "Country": "Brazil",
+    "Code": "BR"
+  },
+  {
+    "Country": "Canada",
+    "Code": "CA"
+  },
+  {
+    "Country": "Switzerland",
+    "Code": "CH"
+  },
+  {
+    "Country": "Czech Republic",
+    "Code": "CZ"
+  },
+  {
+    "Country": "Germany",
+    "Code": "DE"
+  },
+  {
+    "Country": "Denmark",
+    "Code": "DK"
+  },
+  {
+    "Country": "Dominican Republic",
+    "Code": "DO"
+  },
+  {
+    "Country": "Spain",
+    "Code": "ES"
+  },
+  {
+    "Country": "Finland",
+    "Code": "FI"
+  },
+  {
+    "Country": "Faroe Islands",
+    "Code": "FO"
+  },
+  {
+    "Country": "France",
+    "Code": "FR"
+  },
+  {
+    "Country": "Great Britain",
+    "Code": "GB"
+  },
+  {
+    "Country": "French Guyana",
+    "Code": "GF"
+  },
+  {
+    "Country": "Guernsey",
+    "Code": "GG"
+  },
+  {
+    "Country": "Greenland",
+    "Code": "GL"
+  },
+  {
+    "Country": "Guadeloupe",
+    "Code": "GP"
+  },
+  {
+    "Country": "Guatemala",
+    "Code": "GT"
+  },
+  {
+    "Country": "Guam",
+    "Code": "GU"
+  },
+  {
+    "Country": "Guyana",
+    "Code": "GY"
+  },
+  {
+    "Country": "Croatia",
+    "Code": "HR"
+  },
+  {
+    "Country": "Hungary",
+    "Code": "HU"
+  },
+  {
+    "Country": "Isle of Man",
+    "Code": "IM"
+  },
+  {
+    "Country": "India",
+    "Code": "IN"
+  },
+  {
+    "Country": "Iceland",
+    "Code": "IS"
+  },
+  {
+    "Country": "Italy",
+    "Code": "IT"
+  },
+  {
+    "Country": "Jersey",
+    "Code": "JE"
+  },
+  {
+    "Country": "Japan",
+    "Code": "JP"
+  },
+  {
+    "Country": "Liechtenstein",
+    "Code": "LI"
+  },
+  {
+    "Country": "Sri Lanka",
+    "Code": "LK"
+  },
+  {
+    "Country": "Lithuania",
+    "Code": "LT"
+  },
+  {
+    "Country": "Luxembourg",
+    "Code": "LU"
+  },
+  {
+    "Country": "Monaco",
+    "Code": "MC"
+  },
+  {
+    "Country": "Moldavia",
+    "Code": "MD"
+  },
+  {
+    "Country": "Marshall Islands",
+    "Code": "MH"
+  },
+  {
+    "Country": "Macedonia",
+    "Code": "MK"
+  },
+  {
+    "Country": "Northern Mariana Islands",
+    "Code": "MP"
+  },
+  {
+    "Country": "Martinique",
+    "Code": "MQ"
+  },
+  {
+    "Country": "Mexico",
+    "Code": "MX"
+  },
+  {
+    "Country": "Malaysia",
+    "Code": "MY"
+  },
+  {
+    "Country": "Holland",
+    "Code": "NL"
+  },
+  {
+    "Country": "Norway",
+    "Code": "NO"
+  },
+  {
+    "Country": "New Zealand",
+    "Code": "NZ"
+  },
+  {
+    "Country": "Phillippines",
+    "Code": "PH"
+  },
+  {
+    "Country": "Pakistan",
+    "Code": "PK"
+  },
+  {
+    "Country": "Poland",
+    "Code": "PL"
+  },
+  {
+    "Country": "Saint Pierre and Miquelon",
+    "Code": "PM"
+  },
+  {
+    "Country": "Puerto Rico",
+    "Code": "PR"
+  },
+  {
+    "Country": "Portugal",
+    "Code": "PT"
+  },
+  {
+    "Country": "French Reunion",
+    "Code": "RE"
+  },
+  {
+    "Country": "Russia",
+    "Code": "RU"
+  },
+  {
+    "Country": "Sweden",
+    "Code": "SE"
+  },
+  {
+    "Country": "Slovenia",
+    "Code": "SI"
+  },
+  {
+    "Country": "Svalbard & Jan Mayen Islands",
+    "Code": "SJ"
+  },
+  {
+    "Country": "Slovak Republic",
+    "Code": "SK"
+  },
+  {
+    "Country": "San Marino",
+    "Code": "SM"
+  },
+  {
+    "Country": "Thailand",
+    "Code": "TH"
+  },
+  {
+    "Country": "Turkey",
+    "Code": "TR"
+  },
+  {
+    "Country": "United States",
+    "Code": "US"
+  },
+  {
+    "Country": "Vatican",
+    "Code": "VA"
+  },
+  {
+    "Country": "Virgin Islands",
+    "Code": "VI"
+  },
+  {
+    "Country": "Mayotte",
+    "Code": "YT"
+  },
+  {
+    "Country": "South Africa",
+    "Code": "ZA"
+  }
+]

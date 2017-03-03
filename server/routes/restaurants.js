@@ -20,20 +20,28 @@ router.post('/register',function(req,res){
     var photo3 = req.body.photo3;
     var photo4 = req.body.photo4;
     var photo5 = req.body.photo5;
+    var delievery = req.body.delievery;
+    var codesiret = req.body.codesiret;
+    var postalcode = req.body.postalcode;
+    var timeopen = req.body.timeopen;
     var newRestaurant = new Restaurant({
         user_id : userid,
         res_name : res_name,
         description : description,
+        codesiret : codesiret,
+        timeopen : timeopen,
         location:{
             housenumber : housenumber,
             street : street,
             district : district,
             city : city,
+            postalcode : postalcode,
             point: {
                 longitude : longitude,
                 latitude : latitude
             }
         },
+        delievery : delievery,
         type : type,
         photo1 : photo1,
         photo2 : photo2,
@@ -239,11 +247,15 @@ router.put('/updateinfo/:id',function(req,res){
         restaurant.photo3 = req.body.photo3;
         restaurant.photo4 = req.body.photo4;
         restaurant.photo5 = req.body.photo5;
+        restaurant.delievery = req.body.delievery;
         restaurant.type = req.body.type;
+        restaurant.timeopen = req.body.timeopen;
+        restaurant.codesiret = req.body.codesiret;
         restaurant.location.housenumber = req.body.housenumber;
         restaurant.location.street = req.body.street;
         restaurant.location.district = req.body.district;
         restaurant.location.city = req.body.city;
+        restaurant.location.postalcode = req.body.postalcode;
         restaurant.location.point.longitude = req.body.longitude;
         restaurant.location.point.latitude = req.body.latitude;
         Restaurant.createRestaurant(restaurant,function(err,restaurant){

@@ -10,15 +10,26 @@ var RestaurantSchema = mongoose.Schema({
     description:{
         type : String
     },
+    codesiret:{
+        type : String
+    },
+    timeopen:{
+        type : Date
+    },
     location:{
         housenumber : String,
         street : String,
         district : String,
         city : String,
+        postalcode : String,
         point:{
             longitude : Number,
             latitude : Number
         }
+    },
+    delievery: {
+        type : Boolean,
+        default : false
     },
     type : {
         type: mongoose.Schema.Types.ObjectId,

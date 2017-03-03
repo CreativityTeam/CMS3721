@@ -30,7 +30,13 @@
 							<td><input class="form-control" ng-model="newUser.local.name" disabled></td>
 							<td><input class="form-control" ng-model="newUser.local.email" disabled></td>
 							<td><input class="form-control" ng-model="newUser.gender" disabled></td>
-							<td><input class="form-control" ng-model="newUser.role"></td>
+							<td>
+								<select class="form-control" ng-model="newUser.role">
+									<option value="SuperUser">Super User</option>
+									<option value="Restaurant">Restaurant</option>
+									<option value="User">User</option>
+								</select>
+							</td>
 							<td><input class="form-control" ng-model="newUser.address" disabled></td>
 							<td><button class="btn btn-info" ng-click="updateRole()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></td>
 						</tr>

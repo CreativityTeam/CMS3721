@@ -8,13 +8,19 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     $scope.isfilledAdd = false;       
     /**Get restaurant that belong to current user */
     var getRestaurant = function(){
-        $http.get(API_ENDPOINT.url + '/api/restaurants/findad/' + AuthService.tokensave()).success(function(response){
-            if(response.success){
-                $scope.restaurantBelongUser = response.data;
-            }else{
-                $scope.errormsg = response.msg; 
-            }
-        });
+        if(AuthService.getCurrentUser().role === "SuperUser"){
+            $http.get(API_ENDPOINT.url + '/api/restaurants/findres').success(function(data){
+                $scope.restaurantBelongUser = data.data;
+            });   
+        }else{
+            $http.get(API_ENDPOINT.url + '/api/restaurants/findad/' + AuthService.tokensave()).success(function(response){
+                if(response.success){
+                    $scope.restaurantBelongUser = response.data;
+                }else{
+                    $scope.errormsg = response.msg; 
+                }
+            });
+        }
     }
 
     var getCurrentUser = function(){

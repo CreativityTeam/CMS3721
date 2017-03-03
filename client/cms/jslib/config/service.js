@@ -4,21 +4,37 @@ appservice.service('AuthService',function($q, $http,API_ENDPOINT){
     var token_local = "Create Toke Pls";
     var isAuthenticated = false;
     var authToken;
+    var userKey = "NN";
+    var isSaveUser = false;
+    var currentUser;
 
     var useToken = function(token){
         isAuthenticated = true;
         authToken = token;
     };
 
+    var userInfo = function(user){
+        isSaveUser = true;
+        currentUser = user;
+    }
+
     var storeToken = function(token){
         window.localStorage.setItem(token_local,token);
         useToken(token);
     };
 
+    var storeUser = function(user){
+        window.localStorage.setItem(userKey,angular.toJson(user))
+        userInfo(user)
+    }
+
     var destroyToken = function(){
         authToken = undefined;
         isAuthenticated = false;
+        isSaveUser = false;
+        currentUser = undefined;
         window.localStorage.removeItem(token_local);
+        window.localStorage.removeItem(userKey);
     };
 
     var register = function(user){
@@ -26,6 +42,11 @@ appservice.service('AuthService',function($q, $http,API_ENDPOINT){
             $http.post(API_ENDPOINT.url + '/api/users/register' , user).then(function(response){
                 if(response.data.success){
                     storeToken(response.data.token);
+                    $http.get(API_ENDPOINT.url + '/api/users/findone/' + response.data.token).success(function(response){
+                        if(response.success){
+                            storeUser(response.data);
+                        }
+                    });
                     resolve(response.data.msg);
                 }else{
                     reject(response.data.msg);
@@ -39,6 +60,11 @@ appservice.service('AuthService',function($q, $http,API_ENDPOINT){
             $http.post(API_ENDPOINT.url + '/api/users/login' , user).then(function(response){
                 if(response.data.success){
                     storeToken(response.data.token);
+                    $http.get(API_ENDPOINT.url + '/api/users/findone/' + response.data.token).success(function(response){
+                        if(response.success){
+                            storeUser(response.data);
+                        }
+                    });
                     resolve(response.data.msg);
                 }else{
                     reject(response.data.msg);
@@ -49,8 +75,12 @@ appservice.service('AuthService',function($q, $http,API_ENDPOINT){
 
     var checkToken = function(){
         var token = window.localStorage.getItem(token_local);
+        var user = angular.fromJson(window.localStorage.getItem(userKey));
         if(token){
             useToken(token);
+        }
+        if(user){
+            userInfo(user);
         }
     };
 
@@ -65,6 +95,7 @@ appservice.service('AuthService',function($q, $http,API_ENDPOINT){
     register: register,
     logout: logout,
     setToken : function(token) { return storeToken(token);},
+    getCurrentUser : function() { return currentUser;},
     tokensave : function() {return authToken;},
     isAuthenticated: function() {return isAuthenticated;}
   };
