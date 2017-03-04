@@ -20,7 +20,7 @@ router.post('/register',function(req,res){
     var photo3 = req.body.photo3;
     var photo4 = req.body.photo4;
     var photo5 = req.body.photo5;
-    var delievery = req.body.delievery;
+    var delivery = req.body.delivery;
     var codesiret = req.body.codesiret;
     var postalcode = req.body.postalcode;
     var timeopen = req.body.timeopen;
@@ -41,7 +41,7 @@ router.post('/register',function(req,res){
                 latitude : latitude
             }
         },
-        delievery : delievery,
+        delivery : delivery,
         type : type,
         photo1 : photo1,
         photo2 : photo2,
@@ -247,7 +247,7 @@ router.put('/updateinfo/:id',function(req,res){
         restaurant.photo3 = req.body.photo3;
         restaurant.photo4 = req.body.photo4;
         restaurant.photo5 = req.body.photo5;
-        restaurant.delievery = req.body.delievery;
+        restaurant.delivery = req.body.delivery;
         restaurant.type = req.body.type;
         restaurant.timeopen = req.body.timeopen;
         restaurant.codesiret = req.body.codesiret;

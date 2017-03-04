@@ -74,7 +74,7 @@ module.exports.findFoodByName = function(name,callback){
 /**Find Food by menu */
 module.exports.findFoodByMenu = function(menu,callback){
     var query = { menu : menu };
-    Food.find(query).populate('menu').exec(callback);
+    Food.find(query).populate('menu').populate('res_belong').exec(callback);
 };
 
 /**Find Food with price equals to an amount */
