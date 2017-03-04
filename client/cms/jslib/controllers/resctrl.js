@@ -1,6 +1,6 @@
 var resctrl = angular.module("resctrl",[]);
 
-resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window){
+resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window,Upload){
     var map;
     $('#resform').hide();
     /**Set Register Form to Hide */
@@ -256,61 +256,92 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     /**--------------------- */
     /**Start Publicities Function */
     /**--------------------- */
-    $scope.showFormPub = function(){
-        $scope.isClickAddButtonPublicity = true;
-        $scope.isClickEditButtonPublicity = false;
-        $scope.publicity = null;
-    }
-    $scope.hideFormPub = function(){
-        $scope.isClickAddButtonPublicity = false;
-        $scope.isClickEditButtonPublicity = false;
-        $scope.publicity = null;
-    }
-    $scope.loadPublicity = function(){
-         $scope.isRestaurantSelected = true;
-         $http.get(API_ENDPOINT.url + '/api/restaurants/findpublicity/' + $scope.restaurant._id).success(function(data){
-                $scope.listPublicity = data.data;
-        }); 
-    }
-    $scope.editPublicity = function(idPub){
-        $scope.isClickEditButtonPublicity = true;
-        $scope.isClickAddButtonPublicity = true;
-        $http.get(API_ENDPOINT.url + '/api/publicities/findPublicity/' + idPub).success(function(data){
-                $scope.publicity = data.data;
-        }); 
-    }
-    $scope.addPublicity = function(){
-        if($scope.isClickEditButtonPublicity){
-            $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + $scope.publicity._id,$scope.publicity).success(function(data){
-                toaster.pop('success',"Status",data.msg);
-                $scope.loadPublicity();
-                $scope.hideFormPub();
-            });    
-        }else{
-        $http.post(API_ENDPOINT.url + '/api/publicities/create',$scope.publicity).success(function(data){
-            if(data.success){
-                $http.put(API_ENDPOINT.url + '/api/restaurants/updatepublicities/' + $scope.restaurant._id + '/' + data.data._id).success(function(data){
-                    toaster.pop('success',"Status",data.msg);
-                    $scope.loadPublicity();
-                    $scope.publicity = null;
-                });  
-                }
-            });
-        }    
-    }
-    $scope.deletePublicity = function(idPub,idRes){
-        for(var i in $scope.listPublicity){
-            if($scope.listPublicity[i]._id == idPub){
-                $scope.listPublicity.splice(i,1);
+    $scope.listNumPub = [{num : 1},{num : 2},{num : 3},{num : 4},{num : 5},{num : 6}]
+    $scope.savePub = function(file,publicity){
+
+        if(publicity != undefined){
+            if(publicity.publicity_name == ""
+            || publicity.publicity_price == ""
+            || publicity.publicity_desciption == "")
+            {
+                toaster.pop('error',"System Status","Some fields is missing"); 
+
+            } else if(!publicity.hasOwnProperty('_id') && file == undefined){
+
+                 toaster.pop('error',"System Status","You have to upload at lease one photo"); 
+
+            }else if(!publicity.hasOwnProperty('_id') && file != undefined){
+                $http.post(API_ENDPOINT.url + '/api/publicities/create/' , publicity).success(function(responseCreate){
+                    
+                    if(responseCreate.success){
+
+                        file.upload = Upload.upload({
+                                url: API_ENDPOINT.url + '/api/photos/addphoto',
+                                data: {file: file},
+                        });
+                        file.upload.then(function (responsePhoto) {
+                            responseCreate.data.photo = API_ENDPOINT.urlHost + responsePhoto.data.data.url;
+                            console.log(responseCreate.data)
+                            $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + responseCreate.data._id, responseCreate.data).success(function(responseUpdate){
+                                if(responseUpdate.success){
+                                        getPubLicities();
+                                        toaster.pop('success',"Update Status",responseUpdate.msg);
+                                    }    
+                                });    
+                            }, function (response) {
+                            if (response.status > 0)
+                                $scope.errorMsg = response.status + ': ' + response.data;
+                        }); 
+                    }    
+                }); 
+
+            } else if(publicity.hasOwnProperty('_id') && publicity.hasOwnProperty('photo') && file == undefined){
+                
+                    $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + publicity._id, publicity).success(function(responseUpdate){
+                    if(responseUpdate.success){
+                            getPubLicities();
+                            toaster.pop('success',"Update Status",responseUpdate.msg);
+                        }    
+                    });  
+              
+            }else if(publicity.hasOwnProperty('_id') && publicity.hasOwnProperty('photo') && file != undefined){
+
+                  file.upload = Upload.upload({
+                            url: API_ENDPOINT.url + '/api/photos/addphoto',
+                            data: {file: file},
+                    });
+                    file.upload.then(function (responsePhoto) {
+                        publicity.photo = API_ENDPOINT.urlHost + responsePhoto.data.data.url;
+                        $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + publicity._id, publicity).success(function(responseUpdate){
+                            if(responseUpdate.success){
+                                    getPubLicities();
+                                    toaster.pop('success',"Update Status",responseUpdate.msg);
+                                }    
+                            });    
+                        }, function (response) {
+                        if (response.status > 0)
+                            $scope.errorMsg = response.status + ': ' + response.data;
+                    }); 
+
             }
+
         }
-        $http.delete(API_ENDPOINT.url + '/api/publicities/deletepublicity/' + idPub).success(function(data){
-            if(data.success){
-                $http.delete(API_ENDPOINT.url + '/api/restaurants/deletepublicity/' + idRes + '/' + idPub).success(function(data){}); 
-                toaster.pop('error',"Status",data.msg); 
-            }
-        });  
+        
     }
+
+    var getPubLicities = function(){
+        $http.get(API_ENDPOINT.url + '/api/publicities/findAllPublicity').success(function(responseGet){
+            $scope.publicity1 = responseGet.data[0]
+            $scope.publicity2 = responseGet.data[1]
+            $scope.publicity3 = responseGet.data[2]
+            $scope.publicity4 = responseGet.data[3]
+            $scope.publicity5 = responseGet.data[4]
+            $scope.publicity6 = responseGet.data[5]
+        })
+    }
+
+    getPubLicities()
+
     /**--------------------- */
     /**End Publicities Function */
     /**--------------------- */

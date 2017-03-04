@@ -16,20 +16,12 @@ router.post('/create', function (req, res) {
     var publicity_name = req.body.publicity_name;
     var publicity_price = req.body.publicity_price;
     var publicity_desciption = req.body.publicity_desciption;
-    var photo1 = req.body.photo1;
-    var photo2 = req.body.photo2;
-    var photo3 = req.body.photo3;
-    var photo4 = req.body.photo4;
-    var photo5 = req.body.photo5;
+    var photo = req.body.photo;
     var newPublicity = new Publicity({
         publicity_name: publicity_name,
         publicity_price: publicity_price,
         publicity_desciption : publicity_desciption,
-        photo1 : photo1,
-        photo2 : photo2,
-        photo3 : photo3,
-        photo4 : photo4,
-        photo5 : photo5
+        photo : photo,
     });
 
     Publicity.createPublicity(newPublicity, function (err, publicity) {
@@ -107,11 +99,7 @@ router.put('/updateinfo/:id', function (req, res) {
         publicity.publicity_name = req.body.publicity_name;
         publicity.publicity_desciption = req.body.publicity_desciption;
         publicity.publicity_price = req.body.publicity_price;
-        publicity.photo1 = req.body.photo1;
-        publicity.photo2 = req.body.photo2;
-        publicity.photo3 = req.body.photo3;
-        publicity.photo4 = req.body.photo4;
-        publicity.photo5 = req.body.photo5;
+        publicity.photo = req.body.photo;
         Publicity.createPublicity(publicity, function (err, publicity) {
             if(err) console.log(err);
             res.json({

@@ -7,24 +7,10 @@ var PublicitySchema = mongoose.Schema({
     publicity_name: {
         type: String
     },
-
     publicity_desciption: {
         type: String
     },
-
-    photo1:{
-        type : String
-    },
-    photo2:{
-        type : String
-    },
-    photo3:{
-        type : String
-    },
-    photo4:{
-        type : String
-    },
-    photo5:{
+    photo:{
         type : String
     },
 
