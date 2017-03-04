@@ -17,7 +17,9 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="inputype">Photo</label>
-								<input id = "file" type="file" class="form-control border-input" placeholder="File">
+								      <input type="file" ngf-select ng-model="picFile" name="file"    
+										accept="image/*" ngf-max-size="2MB" required
+										ngf-model-invalid="errorFile">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -30,7 +32,7 @@
 				<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<button class="btn btn-sm btn-info" ng-click="uploadPhoto()"><strong>Envoyer la photo</strong></button>
+								<button class="btn btn-sm btn-info" ng-click="uploadPhoto(picFile)"><strong>Envoyer la photo</strong></button>
 							</div>
 						</div>
 				</div>

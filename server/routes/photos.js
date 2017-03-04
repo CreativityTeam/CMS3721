@@ -27,7 +27,8 @@ router.post('/addphoto',upload.any(),function(req,res){
                 if(err) console.log(err);
                 res.json({
                     success : true,
-                    msg : "Successfully Added"
+                    msg : "Successfully Added",
+                    data : photo
                     });
                 });
         });
