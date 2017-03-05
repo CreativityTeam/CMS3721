@@ -116,19 +116,10 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $scope.files = files;
         $scope.errFiles = errFiles;
         angular.forEach(files, function(file) {
-            file.upload = Upload.upload({
-                url:  API_ENDPOINT.url + '/api/photos/addphoto',
-                data: {file: file}
-            });
-
-            file.upload.then(function (response) {
-                listPhoto.push(API_ENDPOINT.urlHost + response.data.data.url)
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            }, function (evt) {
-                file.progress = Math.min(100, parseInt(100.0 * 
-                                         evt.loaded / evt.total));
+            $http.post('https://api.imgur.com/3/image',file, {
+                headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).then(function(response){
+                    toaster.pop('success',"Status","Upload Successfully");
+                    listPhoto.push(response.data.link)
             });
         });
     }
@@ -295,24 +286,17 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 $http.post(API_ENDPOINT.url + '/api/publicities/create/' , publicity).success(function(responseCreate){
                     
                     if(responseCreate.success){
-
-                        file.upload = Upload.upload({
-                                url: API_ENDPOINT.url + '/api/photos/addphoto',
-                                data: {file: file},
-                        });
-                        file.upload.then(function (responsePhoto) {
-                            responseCreate.data.photo = API_ENDPOINT.urlHost + responsePhoto.data.data.url;
-                            console.log(responseCreate.data)
-                            $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + responseCreate.data._id, responseCreate.data).success(function(responseUpdate){
-                                if(responseUpdate.success){
+                        $http.post('https://api.imgur.com/3/image',file, {
+                            headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).success(function(responsePhoto){
+                                responseCreate.data.photo = responsePhoto.data.link;
+                                console.log(responseCreate.data)
+                                $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + responseCreate.data._id, responseCreate.data).success(function(responseUpdate){
+                                    if(responseUpdate.success){
                                         getPubLicities();
                                         toaster.pop('success',"Update Status",responseUpdate.msg);
                                     }    
                                 });    
-                            }, function (response) {
-                            if (response.status > 0)
-                                $scope.errorMsg = response.status + ': ' + response.data;
-                        }); 
+                        })
                     }    
                 }); 
 
@@ -327,23 +311,16 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
               
             }else if(publicity.hasOwnProperty('_id') && publicity.hasOwnProperty('photo') && file != undefined){
 
-                  file.upload = Upload.upload({
-                            url: API_ENDPOINT.url + '/api/photos/addphoto',
-                            data: {file: file},
-                    });
-                    file.upload.then(function (responsePhoto) {
-                        publicity.photo = API_ENDPOINT.urlHost + responsePhoto.data.data.url;
-                        $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + publicity._id, publicity).success(function(responseUpdate){
-                            if(responseUpdate.success){
+                    $http.post('https://api.imgur.com/3/image',file, {
+                        headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).success(function(responsePhoto){
+                            publicity.photo = responsePhoto.data.link;
+                            $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + publicity._id, publicity).success(function(responseUpdate){
+                                if(responseUpdate.success){
                                     getPubLicities();
                                     toaster.pop('success',"Update Status",responseUpdate.msg);
                                 }    
                             });    
-                        }, function (response) {
-                        if (response.status > 0)
-                            $scope.errorMsg = response.status + ': ' + response.data;
-                    }); 
-
+                    }) 
             }
 
         }

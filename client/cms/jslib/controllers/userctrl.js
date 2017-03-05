@@ -61,12 +61,9 @@ userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPO
                 }    
              });     
         }else{
-            file.upload = Upload.upload({
-                url: API_ENDPOINT.url + '/api/photos/addphoto',
-                data: {file: file},
-            });
-            file.upload.then(function (response) {
-                    $scope.user.avatar = API_ENDPOINT.urlHost + response.data.data.url;
+            $http.post('https://api.imgur.com/3/image',file, {
+                headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).success(function(response){
+                    $scope.user.avatar = response.data.link;
                     $http.put(API_ENDPOINT.url + '/api/users/update/' + id, $scope.user).success(function(response){
                         $scope.loading = true;
                         if(response.success){
@@ -74,11 +71,8 @@ userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPO
                             toaster.pop('success',"Update Status",response.msg);
                             $scope.loading = false;
                         }    
-                    });    
-                }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            }); 
+                    });   
+            })
         } 
     };
 

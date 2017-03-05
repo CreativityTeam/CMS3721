@@ -160,19 +160,9 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
         $scope.files = files;
         $scope.errFiles = errFiles;
         angular.forEach(files, function(file) {
-            file.upload = Upload.upload({
-                url:  API_ENDPOINT.url + '/api/photos/addphoto',
-                data: {file: file}
-            });
-
-            file.upload.then(function (response) {
-                listPhoto.push(API_ENDPOINT.urlHost + response.data.data.url)
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            }, function (evt) {
-                file.progress = Math.min(100, parseInt(100.0 * 
-                                         evt.loaded / evt.total));
+            $http.post('https://api.imgur.com/3/image',file, {
+                headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).then(function(response){
+                    listPhoto.push(response.data.link)
             });
         });
     }

@@ -4,10 +4,10 @@ photoctrl.controller("photoController", function($scope,$http,AuthService,API_EN
 
     $scope.searchPhoto = "";
     $scope.uploadPhoto = function(file){
-        file.upload = Upload.upload({
-            url: API_ENDPOINT.url + '/api/photos/addphoto',
-            data: {file: file},
-        });
+        $http.post('https://api.imgur.com/3/image',file, {
+            headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).success(function(response){
+                console.log(response);
+        })
         getPhotoByUser();
     };
 
