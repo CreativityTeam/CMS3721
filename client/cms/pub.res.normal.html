@@ -3,127 +3,339 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="header">
-				<h4 class="title">Gestion de la publicité</h4>			
+				<h4 class="title">Gestion de la publicité</h4>
 			</div>
 			<div class="content">
-				<form>
-					<div class="form-group">
-      					<div class="input-group">
-        					<div class="input-group-addon"><i class="fa fa-search"></i></div>
-        						<input type="text" class="form-control" placeholder="Search Name" ng-model="searchPublicity">
-      					</div>      
-   					</div>
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="sel1">Sélectionnez votre restaurant</label>
-								<select class="form-control" id="sel1" ng-change="loadPublicity()" ng-model="restaurant._id" required>
-    								<option value="{{restaurant._id}}" ng-repeat="restaurant in restaurantBelongUser">{{ restaurant.res_name }}</option>
-  								</select>
-						</div>
+				<form name ="publiciti1">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#publiciti1" aria-controls="publiciti1">
+							publicité #1
+							</a>
+						</h4>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-						 	<a type="button" class="btn btn-sm btn-info" ng-click="showFormPub()" ng-show="isRestaurantSelected">Ajouter publicité</a>
-						 	<a type="button" class="btn btn-sm btn-info" ng-click="hideFormPub()" ng-show="isClickAddButtonPublicity">Fermer la fiche</a>
-						 	<a type="button" class="btn btn-sm btn-info" ng-click="addPublicity()" ng-show="isClickAddButtonPublicity">Soumettre un publicité</a>
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonPublicity">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Num</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.publicity_name" required>
+					<div id="publiciti1" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="row" ng-if="publicity1.hasOwnProperty('photo')">
+								<div class="col-md-12">
+									<img ng-src="{{publicity1.photo}}" style="width: 300px;height: 300px" class="img-responsive" alt="Responsive image">
+								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Prix ​​du publicité</label>
-								<input type="number" class="form-control border-input" ng-model="publicity.publicity_price" required>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Num</label>
+										<input type="text" class="form-control border-input" ng-model="publicity1.publicity_name" value="{{publicity1.publicity_name}}" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Prix ​​du publicité</label>
+										<input type="number" class="form-control border-input" ng-model="publicity1.publicity_price" value="{{publicity1.publicity_price}}" required>
+									</div>
+								</div>
 							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="sel1">Description ​​du publicité</label>
+										<input class="form-control" ng-model="publicity1.publicity_desciption" value="{{publicity1.publicity_desciption}}" require></input>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="inputype">Photo</label>
+										<input type="file" ngf-select ng-model="picFile1" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<button class="btn btn-sm btn-info" ng-disabled="!publiciti1.$valid" ng-click="savePub(picFile1,publicity1)">Save</button>
+								</div>
+							</div>	
 						</div>
 					</div>
-					<div class="row" ng-show="isClickAddButtonPublicity">
-						<div class="col-md-12">
-							<div class="form-group">
-								<label for="sel1">Description ​​du publicité</label>
-								<textarea class="form-control" rows="5" ng-model="publicity.publicity_desciption"></textarea>
-							</div>
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonPublicity">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 1</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.photo1">							
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo1}}" border=3 height=100 width=100 ng-show="publicity.photo1"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonPublicity">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 2</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.photo2">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo2}}" border=3 height=100 width=100 ng-show="publicity.photo2"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonPublicity">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 3</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.photo3">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo3}}" border=3 height=100 width=100 ng-show="publicity.photo3"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonPublicity">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 4</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.photo4">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo4}}" border=3 height=100 width=100 ng-show="publicity.photo4"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonPublicity">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 5</label>
-								<input type="text" class="form-control border-input" ng-model="publicity.photo5">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo5}}" border=3 height=100 width=100 ng-show="publicity.photo5"></img>	
-						</div>
-					</div>
+				</div>
 				</form>
-				<table class="table">
-					<thead>
-						<th>ID</th>
-						<th>Num</th>
-						<th>Prix ​​du publicité</th>
-						<th>Description ​​du publicité</th>
-					</thead>
-					<tbody>
-						<tr ng-repeat="publicItem in listPublicity | filter:searchPublicity">
-							<td>{{ publicItem._id }}</td>
-							<td>{{ publicItem.publicity_name }}</td>
-							<td>{{ publicItem.publicity_price }}</td>
-							<td>{{ publicItem.publicity_desciption }}</td>
-							<td><button class="btn btn-warning" ng-click="editPublicity(publicItem._id)">Modifier</button></td>
-							<td><button class="btn btn-danger" ng-click="deletePublicity(publicItem._id,restaurant._id)">Effacer</button></td>
-						</tr>
-					</tbody>
-				</table>
+				<form name = "publiciti2">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion2" href="#publiciti2" aria-controls="publiciti2">
+							publicité #2
+							</a>
+						</h4>
+					</div>
+					<div id="publiciti1" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="row" ng-if="publicity2.hasOwnProperty('photo')">
+								<div class="col-md-12">
+									<img ng-src="{{publicity2.photo}}" class="img-responsive" alt="Responsive image">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Num</label>
+										<input type="text" class="form-control border-input" ng-model="publicity2.publicity_name" value="{{publicity2.publicity_name}}" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Prix ​​du publicité</label>
+										<input type="number" class="form-control border-input" ng-model="publicity2.publicity_price" value="{{publicity2.publicity_price}}" required>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="sel1">Description ​​du publicité</label>
+										<input class="form-control" ng-model="publicity2.publicity_desciption" value="{{publicity2.publicity_desciption}}" required></input>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="inputype">Photo</label>
+										<input type="file" ngf-select ng-model="picFile2" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<button class="btn btn-sm btn-info" ng-disabled="!publiciti2.$valid" ng-click="savePub(picFile2,publicity2)">Save</button>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+				</form>
+				<form name = "publiciti3">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion3" href="#publiciti3" aria-controls="publiciti3">
+							publicité #3
+							</a>
+						</h4>
+					</div>
+					<div id="publiciti3" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="row" ng-if="publicity3.hasOwnProperty('photo')">
+								<div class="col-md-12">
+									<img ng-src="{{publicity3.photo}}" class="img-responsive" alt="Responsive image">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Num</label>
+										<input type="text" class="form-control border-input" ng-model="publicity3.publicity_name" value="{{publicity3.publicity_name}}" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Prix ​​du publicité</label>
+										<input type="number" class="form-control border-input" ng-model="publicity3.publicity_price" value="{{publicity3.publicity_price}}" required>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="sel1">Description ​​du publicité</label>
+										<input class="form-control" ng-model="publicity3.publicity_desciption" value="{{publicity3.publicity_desciption}}" required></input>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="inputype">Photo</label>
+										<input type="file" ngf-select ng-model="picFile3" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<button class="btn btn-sm btn-info" ng-disabled="!publiciti3.$valid" ng-click="savePub(picFile3,publicity3)">Save</button>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+				</form>
+				<form name = "publiciti4">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion4" href="#publiciti4" aria-controls="publiciti4">
+							publicité #4
+							</a>
+						</h4>
+					</div>
+					<div id="publiciti1" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="row" ng-if="publicity4.hasOwnProperty('photo')">
+								<div class="col-md-12">
+									<img ng-src="{{publicity4.photo}}" class="img-responsive" alt="Responsive image">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Num</label>
+										<input type="text" class="form-control border-input" ng-model="publicity4.publicity_name" value="{{publicity4.publicity_name}}" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Prix ​​du publicité</label>
+										<input type="number" class="form-control border-input" ng-model="publicity4.publicity_price" value="{{publicity4.publicity_price}}" required>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="sel1">Description ​​du publicité</label>
+										<input class="form-control" ng-model="publicity4.publicity_desciption" value="{{publicity4.publicity_desciption}}" required></input>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="inputype">Photo</label>
+										<input type="file" ngf-select ng-model="picFile4" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<button class="btn btn-sm btn-info" ng-disabled="!publiciti4.$valid" ng-click="savePub(picFile4,publicity4)">Save</button>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+				</form>
+				<form name = "publiciti5">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion5" href="#publiciti5" aria-controls="publiciti5">
+							publicité #5
+							</a>
+						</h4>
+					</div>
+					<div id="publiciti1" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="row" ng-if="publicity5.hasOwnProperty('photo')">
+								<div class="col-md-12">
+									<img ng-src="{{publicity5.photo}}" class="img-responsive" alt="Responsive image">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Num</label>
+										<input type="text" class="form-control border-input" ng-model="publicity5.publicity_name" value="{{publicity5.publicity_name}}" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Prix ​​du publicité</label>
+										<input type="number" class="form-control border-input" ng-model="publicity5.publicity_price" value="{{publicity5.publicity_price}}" required>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="sel1">Description ​​du publicité</label>
+										<input class="form-control" ng-model="publicity5.publicity_desciption" value="{{publicity5.publicity_desciption}}" required></input>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="inputype">Photo</label>
+										<input type="file" ngf-select ng-model="picFile5" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<button class="btn btn-sm btn-info" ng-disabled="!publiciti5.$valid" ng-click="savePub(picFile5,publicity5)">Save</button>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+				</form>
+				</form name = "publiciti6">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion6" href="#publiciti6" aria-controls="publiciti6">
+							publicité #6
+							</a>
+						</h4>
+					</div>
+					<div id="publiciti1" class="panel-collapse collapse in" role="tabpanel" aria-expanded="false" aria-labelledby="headingOne">
+						<div class="panel-body">
+							<div class="row" ng-if="publicity6.hasOwnProperty('photo')">
+								<div class="col-md-12">
+									<img ng-src="{{publicity6.photo}}" class="img-responsive" alt="Responsive image">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Num</label>
+										<input type="text" class="form-control border-input" ng-model="publicity6.publicity_name" value="{{publicity6.publicity_name}}" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Prix ​​du publicité</label>
+										<input type="number" class="form-control border-input" ng-model="publicity6.publicity_price" value="{{publicity6.publicity_price}}" required>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="sel1">Description ​​du publicité</label>
+										<input class="form-control" ng-model="publicity6.publicity_desciption" value="{{publicity6.publicity_desciption}}" required></input>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="inputype">Photo</label>
+										<input type="file" ngf-select ng-model="picFile6" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<button class="btn btn-sm btn-info" ng-disabled="!publiciti6.$valid" ng-click="savePub(picFile6,publicity6)">Save</button>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+				</form>
 			</div>
 		</div>
 	</div>

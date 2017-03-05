@@ -1,6 +1,6 @@
 var userctrl = angular.module("userctrl",[]);
 
-userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPOINT,toaster,NgMap,NavigatorGeolocation){
+userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPOINT,toaster,NgMap,NavigatorGeolocation,Upload,$timeout){
     $scope.searchName = "";
     $scope.map = "map.html";
      var getinfo = function(){
@@ -50,15 +50,36 @@ userctrl.controller("usercontroller",function($scope,$http,AuthService,API_ENDPO
          });    
     };
 
-    $scope.updateUser = function(id) {
-        $http.put(API_ENDPOINT.url + '/api/users/update/' + id, $scope.user).success(function(response){
-            $scope.loading = true;
-            if(response.success){
-                getinfo();
-                toaster.pop('success',"Update Status",response.msg);
-                $scope.loading = false;
-            }    
-         });      
+    $scope.updateUser = function(id,file) {
+        if(!file){
+            $http.put(API_ENDPOINT.url + '/api/users/update/' + id, $scope.user).success(function(response){
+                $scope.loading = true;
+                if(response.success){
+                    getinfo();
+                    toaster.pop('success',"Update Status",response.msg);
+                    $scope.loading = false;
+                }    
+             });     
+        }else{
+            file.upload = Upload.upload({
+                url: API_ENDPOINT.url + '/api/photos/addphoto',
+                data: {file: file},
+            });
+            file.upload.then(function (response) {
+                    $scope.user.avatar = API_ENDPOINT.urlHost + response.data.data.url;
+                    $http.put(API_ENDPOINT.url + '/api/users/update/' + id, $scope.user).success(function(response){
+                        $scope.loading = true;
+                        if(response.success){
+                            getinfo();
+                            toaster.pop('success',"Update Status",response.msg);
+                            $scope.loading = false;
+                        }    
+                    });    
+                }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }); 
+        } 
     };
 
     var getUserCurrentLocation = function(){

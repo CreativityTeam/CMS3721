@@ -1,29 +1,14 @@
 var photoctrl = angular.module("photoctrl",[]);
 
-photoctrl.controller("photoController", function($scope,$http,AuthService,API_ENDPOINT,toaster){
+photoctrl.controller("photoController", function($scope,$http,AuthService,API_ENDPOINT,toaster,Upload){
 
     $scope.searchPhoto = "";
-    $scope.uploadPhoto = function(){
-        var file = $("#file")[0].files[0];
-        if(file == undefined){
-            toaster.pop('error',"Upload Exception","Please choose at least one file");    
-        }else{
-            $scope.loading = true;
-            var formData = new FormData;
-            formData.append('decription',$scope.photo.decription);
-            formData.append('userid',$scope.user._id);
-            formData.append('image',file);
-            $http.post(API_ENDPOINT.url + '/api/photos/addphoto', formData,{
-                transformRequest : angular.identity,
-                headers : {
-                    'Content-Type' : undefined
-                }
-            }).then(function(response){
-                getPhotoByUser(); 
-                toaster.pop('success',"Update Status",response.data.msg);
-                $scope.loading = false;
-            });
-        }
+    $scope.uploadPhoto = function(file){
+        file.upload = Upload.upload({
+            url: API_ENDPOINT.url + '/api/photos/addphoto',
+            data: {file: file},
+        });
+        getPhotoByUser();
     };
 
     var getCurrentUser = function(){

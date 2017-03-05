@@ -55,7 +55,10 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label for="exampleInputEmail1">Lien Avatar</label>
-								<input type="text" class="form-control border-input" placeholder="Lien Avatar" value="{{ user.avatar }}" ng-model="user.avatar">
+								<label for="inputype">Photo</label>
+								      <input type="file" ngf-select ng-model="file" name="file"    
+										accept="image/*" ngf-max-size="2MB"
+										ngf-model-invalid="errorFile">
 							</div>
 						</div>
 					</div>
@@ -110,7 +113,7 @@
 						</div>
 					</div>
 					<div class="text-center">
-						<button type="submit" class="btn btn-info btn-fill btn-wd" ng-click="updateUser(user._id)">Mise à jour du profil</button>
+						<button type="submit" class="btn btn-info btn-fill btn-wd" ng-click="updateUser(user._id,file)">Mise à jour du profil</button>
 					</div>
 					<div class="clearfix"></div>
 				</form>

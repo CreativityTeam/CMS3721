@@ -10,7 +10,8 @@ var app = angular.module('cms',[
     'resctrl',
     'toaster',
     'ngMap',
-    'suctrl'
+    'suctrl',
+    'ngFileUpload'
 ]);
 
 app.directive('loading',function(){
