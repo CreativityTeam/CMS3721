@@ -39,7 +39,8 @@ router.post('/register',function(req,res){
                     res.json({
                         success: true,
                         msg: 'Successfully create account',
-                        token: token
+                        token: token,
+                        data : user
                     });
                 }
             });
@@ -84,7 +85,8 @@ router.post('/login',function(req,res,next){
                     return res.json({
                         success : true,
                         msg : 'Login successful',
-                        token : token
+                        token : token,
+                        data : newuser
                     });    
                });
            });

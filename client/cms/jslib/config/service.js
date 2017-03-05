@@ -42,11 +42,7 @@ appservice.service('AuthService',function($q, $http,API_ENDPOINT){
             $http.post(API_ENDPOINT.url + '/api/users/register' , user).then(function(response){
                 if(response.data.success){
                     storeToken(response.data.token);
-                    $http.get(API_ENDPOINT.url + '/api/users/findone/' + response.data.token).success(function(response){
-                        if(response.success){
-                            storeUser(response.data);
-                        }
-                    });
+                    storeUser(response.data.data)
                     resolve(response.data.msg);
                 }else{
                     reject(response.data.msg);
@@ -60,11 +56,7 @@ appservice.service('AuthService',function($q, $http,API_ENDPOINT){
             $http.post(API_ENDPOINT.url + '/api/users/login' , user).then(function(response){
                 if(response.data.success){
                     storeToken(response.data.token);
-                    $http.get(API_ENDPOINT.url + '/api/users/findone/' + response.data.token).success(function(response){
-                        if(response.success){
-                            storeUser(response.data);
-                        }
-                    });
+                    storeUser(response.data.data)
                     resolve(response.data.msg);
                 }else{
                     reject(response.data.msg);

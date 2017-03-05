@@ -14,7 +14,7 @@ defaultctrl.controller("DefaultController",function($scope,$http,AuthService,$wi
         service : true
     };
     var getinfo = function(){
-        if(AuthService.isAuthenticated()){          
+        if(AuthService.isAuthenticated()){     
                 $scope.name = AuthService.getCurrentUser().local.name;
                 if(AuthService.getCurrentUser().role == "SuperUser"){
                     $scope.isHide.superUser = false;
