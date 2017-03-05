@@ -1,11 +1,12 @@
 var resctrl = angular.module("resctrl",[]);
 
-resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window,Upload){
+resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window,Upload,$timeout){
     var map;
     $('#resform').hide();
     /**Set Register Form to Hide */
     $scope.isvalidateadd = true;
     $scope.isfilledAdd = false;       
+    var listPhoto = [];
     /**Get restaurant that belong to current user */
     var getRestaurant = function(){
         if(AuthService.getCurrentUser().role === "SuperUser"){
@@ -111,7 +112,26 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
            }
         });
     }
-    
+    $scope.uploadFiles = function(files, errFiles) {
+        $scope.files = files;
+        $scope.errFiles = errFiles;
+        angular.forEach(files, function(file) {
+            file.upload = Upload.upload({
+                url:  API_ENDPOINT.url + '/api/photos/addphoto',
+                data: {file: file}
+            });
+
+            file.upload.then(function (response) {
+                listPhoto.push(API_ENDPOINT.urlHost + response.data.data.url)
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * 
+                                         evt.loaded / evt.total));
+            });
+        });
+    }
     $scope.submitres = function(){
         $scope.errormsg = false;
         $scope.saveRestaurant = {
@@ -128,11 +148,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             latitude : $scope.mapPosition.lat,
             timeopen : $scope.restaurant.timeopen,
             codesiret : $scope.restaurant.codesiret,
-            photo1 :  $scope.restaurant.photo1,
-            photo2 :  $scope.restaurant.photo2,
-            photo3 :  $scope.restaurant.photo3,
-            photo4 :  $scope.restaurant.photo4,
-            photo5 :  $scope.restaurant.photo5
+            photo1 :  listPhoto[0],
+            photo2 :  listPhoto[1],
+            photo3 :  listPhoto[2],
+            photo4 :  listPhoto[3],
+            photo5 :  listPhoto[4],
         }
         if($scope.isClickEditButton){
             $http.put(API_ENDPOINT.url + '/api/restaurants/updateinfo/' + $scope.restaurant.id,$scope.saveRestaurant).success(function(data){
