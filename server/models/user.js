@@ -43,7 +43,7 @@ var UserSchema = mongoose.Schema({
         type:String,
     },
     phone:{
-        type:Number,
+        type:String,
     },
     about:{
         type:String,

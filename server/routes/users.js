@@ -216,13 +216,15 @@ router.get('/findone/:token',function(req,res){
 router.put('/update/:id',function(req,res){
         User.getUserById(req.params.id,function(err,user){
         if(err) console.log(err);
+        user.local.name = req.body.local.name;
         user.avatar = req.body.avatar;
-        user.gender = req.body.gender;
-        user.birthday = req.body.birthday;
+        user.gender = req.body.gender;        
         user.address = req.body.address;
         user.phone = req.body.phone;
         user.about = req.body.about;
-        user.other = req.body.other;
+        user.other = req.body.other;        
+        var birthday = new Date(req.body.birthday)
+        user.birthday = new Date(birthday - (birthday.getTimezoneOffset()*60000));        
         User.updateUser(user,function(err,user){
                 if(err) console.log(err);
                 res.json({
