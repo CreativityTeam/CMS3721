@@ -24,6 +24,7 @@ router.post('/register',function(req,res){
     var codesiret = req.body.codesiret;
     var postalcode = req.body.postalcode;
     var timeopen = req.body.timeopen;
+    var country = req.body.country;
     var newRestaurant = new Restaurant({
         user_id : userid,
         res_name : res_name,
@@ -35,6 +36,7 @@ router.post('/register',function(req,res){
             street : street,
             district : district,
             city : city,
+            country :country,
             postalcode : postalcode,
             point: {
                 longitude : longitude,
@@ -255,6 +257,7 @@ router.put('/updateinfo/:id',function(req,res){
         restaurant.location.street = req.body.street;
         restaurant.location.district = req.body.district;
         restaurant.location.city = req.body.city;
+        restaurant.location.country = req.body.country;
         restaurant.location.postalcode = req.body.postalcode;
         restaurant.location.point.longitude = req.body.longitude;
         restaurant.location.point.latitude = req.body.latitude;

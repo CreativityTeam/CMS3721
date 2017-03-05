@@ -56,19 +56,25 @@
 								<input type="text" class="form-control border-input" ng-model="restaurant.street" required>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="form-group">
-								<label for="sel2">District</label>
-								<select class="form-control" id="sel2" ng-model="restaurant.district.id" ng-disabled="!restaurant.city.id" required>
-    								<option ng-repeat="district in districts" value="{{district.id}}">{{ district.name }}</option>
-  								</select>
+								<label for="sel2">Code postale</label>
+								<input type="text" class="form-control border-input" ng-model="restaurant.postalCode" ng-change="loadCity()" ng-disabled="!restaurant.country.id" required>
 							</div>
 						</div>	
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="form-group">
 								<label for="sel1">Ville</label>
-								<select class="form-control" id="sel1" ng-change="loadDistrict()" ng-model="restaurant.city.id" required>
-    								<option value="{{city.id}}" ng-repeat="city in cities">{{ city.name }}</option>
+								<select class="form-control" id="sel1" ng-model="restaurant.country.id" required>
+    								<option value="{{country.Code}}" ng-repeat="country in countries">{{ country.Country }}</option>
+  								</select>
+							</div>
+						</div>		
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="sel1">Ville</label>
+								<select class="form-control" id="sel1" ng-model="restaurant.city.id" required>
+    								<option value="{{city.state}}" ng-repeat="city in cities">{{ city.state }}</option>
   								</select>
 							</div>
 						</div>					
@@ -78,6 +84,20 @@
 							<div class="form-group">
 								<label for="sel1">La description</label>
 								<textarea class="form-control" rows="5" ng-model="restaurant.description"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="sel1">Code SIRET</label>
+								<input type="text" class="form-control border-input" ng-model="restaurant.codesiret" required>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="sel1">Horaire d'ouverture</label>
+								<input type="datetime" class="form-control border-input" ng-model="restaurant.timeopen" required>
 							</div>
 						</div>
 					</div>

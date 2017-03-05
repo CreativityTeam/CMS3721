@@ -49,31 +49,34 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     };
 
     var getNameAddress = function(){
-        return $q(function(resolve,reject){
-            $http.get("jslib/config/countryVN.json").then(function(data){
-                var nameStreet = $scope.restaurant.housenumber + " " + $scope.restaurant.street;
-                var nameCity = data.data.city[$scope.restaurant.city.id - 1].name;
-                var nameDistrict = data.data.city[$scope.restaurant.city.id - 1].Quan[$scope.restaurant.district.id - 1].name;
-                var address = {
-                    street : nameStreet,
-                    district : nameDistrict,
-                    city : nameCity,
-                    fullName : nameStreet + ", " + nameDistrict + ", " + nameCity,
-                    queryName : $scope.restaurant.street + ", " + nameDistrict + ", " + nameCity
-                }
-                resolve(address);
-            }); 
-        });
+        return new Promise(function(resolve,reject){
+            var addressValid;
+            $http.get("jslib/config/countryData.json").then(function(data){
+                    angular.forEach(data.data,function(value){
+                        if(value.Code == $scope.restaurant.country.id){
+                            var nameCountry = value.Country;
+                            var nameStreet = $scope.restaurant.housenumber + " " + $scope.restaurant.street;
+                            var nameCity = $scope.restaurant.city.id;
+                            addressValid = {
+                                street : nameStreet,
+                                country : nameCountry,
+                                city : nameCity,
+                                fullName : nameStreet + ", " + nameCity + ", " + nameCountry
+                            }
+                            resolve(addressValid);
+                        }
+                    })
+            })
+        }); 
     }
 
     /**Check Address */
     $scope.validateadd= function(){
-        var promise = getNameAddress();
-        promise.then(function(dataAddress){
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?v=3.27&address=" + dataAddress.district + dataAddress.city + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
+        getNameAddress().then(function(dataAddress){
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?v=3.27&address=" + dataAddress.country + dataAddress.city + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
                 initmap(response,dataAddress);
-            });
-        });    
+            }); 
+        })
         $scope.isvalidateadd = false;
         $scope.isfilledAdd = true;
     }
@@ -118,10 +121,13 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             housenumber : $scope.restaurant.housenumber,
             type : $scope.restaurant.type,
             street : $scope.restaurant.street,
-            district : $scope.oldAddress.district,
+            postalCode :$scope.restaurant.postalCode,
+            country : $scope.oldAddress.country,
             city :  $scope.oldAddress.city,
             longitude : $scope.mapPosition.lng,
             latitude : $scope.mapPosition.lat,
+            timeopen : $scope.restaurant.timeopen,
+            codesiret : $scope.restaurant.codesiret,
             photo1 :  $scope.restaurant.photo1,
             photo2 :  $scope.restaurant.photo2,
             photo3 :  $scope.restaurant.photo3,
@@ -141,20 +147,15 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
             });
         }
     }
-    var loadCity = function(){
-        $http.get("jslib/config/countryVN.json").then(function(data){
-            $scope.cities = data.data.city;
+    var loadCountry = function(){
+        $http.get("jslib/config/countryData.json").then(function(data){
+            $scope.countries = data.data;
         })
     }
 
-    $scope.loadDistrict = function(){
-        $http.get("jslib/config/countryVN.json").then(function(data){
-            for(var i = 0;i < data.data.city.length;i++){
-                /**Cach viet 1 */
-                if(data.data.city[i].id == $scope.restaurant.city.id){
-                        $scope.districts = data.data.city[i].Quan   
-                }
-            }
+    $scope.loadCity = function(){
+        $http.get("http://api.zippopotam.us/" + $scope.restaurant.country.id + "/" + $scope.restaurant.postalCode).then(function(data){
+            $scope.cities = data.data.places;
         })    
     }
 
@@ -538,7 +539,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
 
     getCategoryRestaurant()
     getListMenuFood()
-    loadCity();
+    loadCountry();
     getRestaurant();
     getCurrentUser();
     getAllRestaurant();
