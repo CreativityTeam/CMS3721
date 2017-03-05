@@ -62,6 +62,14 @@
 								<input type="text" class="form-control border-input" ng-model="restaurant.postalCode" ng-change="loadCity()" ng-disabled="!restaurant.country.id" required>
 							</div>
 						</div>	
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="sel1">City</label>
+								<select class="form-control" id="sel1" ng-model="restaurant.city.id" ng-disabled="!restaurant.postalCode" required>
+    								<option value="{{city.state}}" ng-repeat="city in cities">{{ city.state }}</option>
+  								</select>
+							</div>
+						</div>			
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="sel1">Ville</label>
@@ -69,15 +77,7 @@
     								<option value="{{country.Code}}" ng-repeat="country in countries">{{ country.Country }}</option>
   								</select>
 							</div>
-						</div>		
-						<div class="col-md-2">
-							<div class="form-group">
-								<label for="sel1">Ville</label>
-								<select class="form-control" id="sel1" ng-model="restaurant.city.id" required>
-    								<option value="{{city.state}}" ng-repeat="city in cities">{{ city.state }}</option>
-  								</select>
-							</div>
-						</div>					
+						</div>				
 					</div>
 					<div class="row">
 						<div class="col-md-12">

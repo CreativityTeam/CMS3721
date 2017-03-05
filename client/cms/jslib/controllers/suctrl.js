@@ -1,8 +1,9 @@
 var suctrl = angular.module("suctrl",[]);
 
-suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPOINT,toaster){
+suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPOINT,toaster,Upload){
     $scope.isvalidateadd = true;
     $scope.isfilledAdd = false;
+    var listPhoto = [];
     $scope.mainListCategory = [
         {
             name : 'Restaurant'
@@ -91,31 +92,36 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
     };
 
     var getNameAddress = function(){
-        return $q(function(resolve,reject){
-            $http.get("jslib/config/countryVN.json").then(function(data){
-                var nameStreet = $scope.service.housenumber + " " + $scope.service.street;
-                var nameCity = data.data.city[$scope.service.city.id - 1].name;
-                var nameDistrict = data.data.city[$scope.service.city.id - 1].Quan[$scope.service.district.id - 1].name;
-                var address = {
-                    street : nameStreet,
-                    district : nameDistrict,
-                    city : nameCity,
-                    fullName : nameStreet + ", " + nameDistrict + ", " + nameCity,
-                    queryName : $scope.service.street + ", " + nameDistrict + ", " + nameCity
-                }
-                resolve(address);
-            }); 
-        });
+        return new Promise(function(resolve,reject){
+            var addressValid;
+            $http.get("jslib/config/countryData.json").then(function(data){
+                    angular.forEach(data.data,function(value){
+                        if(value.Code == $scope.service.country.id){
+                            var nameCountry = value.Country;
+                            var nameStreet = $scope.service.housenumber + " " + $scope.service.street;
+                            var nameCity = $scope.service.city.id;
+                            addressValid = {
+                                street : nameStreet,
+                                country : nameCountry,
+                                city : nameCity,
+                                fullName : nameStreet + ", " + nameCity + ", " + nameCountry
+                            }
+                            resolve(addressValid);
+                        }
+                    })
+            })
+        }); 
     }
 
     /**Check Address */
     $scope.validateadd= function(){
-        var promise = getNameAddress();
-        promise.then(function(dataAddress){
-            $http.get("https://maps.googleapis.com/maps/api/geocode/json?v=3.27&address=" + dataAddress.district + dataAddress.city + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
+        getNameAddress().then(function(dataAddress){
+            $http.get("https://maps.googleapis.com/maps/api/geocode/json?v=3.27&address=" + dataAddress.country + dataAddress.city + "&key=AIzaSyCtZg8ZpyEFjRqin6kdAvckjKAT7M-hd_g").success(function(response){
                 initmap(response,dataAddress);
-            });
-        });    
+            }); 
+        })
+        $scope.isvalidateadd = false;
+        $scope.isfilledAdd = true; 
         $scope.isvalidateadd = false;
         $scope.isfilledAdd = true;
     }
@@ -151,6 +157,27 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
         });
     }
     
+    $scope.uploadFiles = function(files, errFiles) {
+        $scope.files = files;
+        $scope.errFiles = errFiles;
+        angular.forEach(files, function(file) {
+            file.upload = Upload.upload({
+                url:  API_ENDPOINT.url + '/api/photos/addphoto',
+                data: {file: file}
+            });
+
+            file.upload.then(function (response) {
+                listPhoto.push(API_ENDPOINT.urlHost + response.data.data.url)
+            }, function (response) {
+                if (response.status > 0)
+                    $scope.errorMsg = response.status + ': ' + response.data;
+            }, function (evt) {
+                file.progress = Math.min(100, parseInt(100.0 * 
+                                         evt.loaded / evt.total));
+            });
+        });
+    }
+    
     $scope.submitres = function(){
         $scope.errormsg = false;
         $scope.saveService = {
@@ -163,11 +190,15 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
             city :  $scope.oldAddress.city,
             longitude : $scope.mapPosition.lng,
             latitude : $scope.mapPosition.lat,
-            photo1 :  $scope.service.photo1,
-            photo2 :  $scope.service.photo2,
-            photo3 :  $scope.service.photo3,
-            photo4 :  $scope.service.photo4,
-            photo5 :  $scope.service.photo5
+            timeopen : $scope.service.timeopen,
+            codesiret : $scope.service.codesiret,
+            postalCode :$scope.service.postalCode,
+            country : $scope.oldAddress.country,
+            photo1 :  listPhoto[0],
+            photo2 :  listPhoto[1],
+            photo3 :  listPhoto[2],
+            photo4 :  listPhoto[3],
+            photo5 :  listPhoto[4],
         }
         if($scope.isEditService){
             $http.put(API_ENDPOINT.url + '/api/services/updateinfo/' + $scope.service._id,$scope.saveService).success(function(data){
@@ -184,19 +215,15 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
             });
         }
     }
-    var loadCity = function(){
-        $http.get("jslib/config/countryVN.json").then(function(data){
-            $scope.cities = data.data.city;
+    var loadCountry = function(){
+        $http.get("jslib/config/countryData.json").then(function(data){
+            $scope.countries = data.data;
         })
     }
 
-    $scope.loadDistrict = function(){
-        $http.get("jslib/config/countryVN.json").then(function(data){
-            for(var i = 0;i < data.data.city.length;i++){
-                if(data.data.city[i].id == $scope.service.city.id){
-                        $scope.districts = data.data.city[i].Quan   
-                }
-            }
+    $scope.loadCity = function(){
+        $http.get("http://api.zippopotam.us/" + $scope.service.country.id + "/" + $scope.service.postalCode).then(function(data){
+            $scope.cities = data.data.places;
         })    
     }
 
@@ -243,7 +270,7 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
     /**--------------------- */
     getListCategoryServices();
     loadService();
-    loadCity();
+    loadCountry();
     getListPublicity();
     getListOder();
     getListFood();

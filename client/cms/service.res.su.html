@@ -44,22 +44,28 @@
 								<input type="text" class="form-control border-input" ng-model="service.street" required>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="form-group">
-								<label for="sel2">District</label>
-								<select class="form-control" id="sel2" ng-model="service.district.id" ng-disabled="!service.city.id" required>
-    								<option ng-repeat="district in districts" value="{{district.id}}">{{ district.name }}</option>
-  								</select>
+								<label for="sel2">Code postale</label>
+								<input type="text" class="form-control border-input" ng-model="service.postalCode" ng-change="loadCity()" ng-disabled="!service.country.id" required>
 							</div>
 						</div>	
-						<div class="col-md-4">
+						<div class="col-md-2">
 							<div class="form-group">
-								<label for="sel1">Ville</label>
-								<select class="form-control" id="sel1" ng-change="loadDistrict()" ng-model="service.city.id" required>
-    								<option value="{{city.id}}" ng-repeat="city in cities">{{ city.name }}</option>
+								<label for="sel1">City</label>
+								<select class="form-control" id="sel1" ng-model="service.city.id" ng-disabled="!service.postalCode" required>
+    								<option value="{{city.state}}" ng-repeat="city in cities">{{ city.state }}</option>
   								</select>
 							</div>
-						</div>					
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="sel1">Ville</label>
+								<select class="form-control" id="sel1" ng-model="service.country.id" required>
+    								<option value="{{country.Code}}" ng-repeat="country in countries">{{ country.Country }}</option>
+  								</select>
+							</div>
+						</div>												
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -70,58 +76,37 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-10">
+						<div class="col-md-6">
 							<div class="form-group">
-								<label for="sel1">Url Image 1</label>
-								<input type="text" class="form-control border-input" ng-model="service.photo1">							
+								<label for="sel1">Code SIRET</label>
+								<input type="text" class="form-control border-input" ng-model="service.codesiret" required>
 							</div>
 						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo1}}" border=3 height=100 width=100 ng-show="service.photo1"></img>	
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="sel1">Horaire d'ouverture</label>
+								<input type="datetime" class="form-control border-input" ng-model="service.timeopen" required>
+							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 2</label>
-								<input type="text" class="form-control border-input" ng-model="service.photo2">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo2}}" border=3 height=100 width=100 ng-show="service.photo2"></img>	
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 3</label>
-								<input type="text" class="form-control border-input" ng-model="service.photo3">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo3}}" border=3 height=100 width=100 ng-show="service.photo3"></img>	
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 4</label>
-								<input type="text" class="form-control border-input" ng-model="service.photo4">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo4}}" border=3 height=100 width=100 ng-show="service.photo4"></img>	
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 5</label>
-								<input type="text" class="form-control border-input" ng-model="service.photo5">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{restaurant.photo5}}" border=3 height=100 width=100 ng-show="service.photo5"></img>	
+						<div class="col-md-12">
+						<label for="sel1">Photo</label>
+						<button ngf-select="uploadFiles($files, $invalidFiles)" multiple
+							accept="image/*" ngf-max-height="2000" ngf-max-size="1MB" ngf-max-files="5">
+						Select Files</button>
+						 Files:
+							<ul>
+								<li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+									<span class="progress" ng-show="f.progress >= 0">
+										<div style="width:{{f.progress}}%"  
+											ng-bind="f.progress + '%'"></div>
+									</span>
+								</li>
+								<li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+								</li> 
+							</ul>
+							{{errorMsg}}
 						</div>
 					</div>
 					<div class="row">
@@ -149,7 +134,7 @@
   				<div class="panel-body">
 					  	<div class="row">
 							  <div class="col-md-12">
-								  <span class="ti-direction-alt" aria-hidden="true"></span> Location : {{ serviceItem.location.housenumber }}, {{ restaurantItem.location.street }}, {{ restaurantItem.location.district }}, {{ restaurantItem.location.city }}
+								  <span class="ti-direction-alt" aria-hidden="true"></span> Location : {{ serviceItem.location.housenumber }}, {{ serviceItem.location.street }}, {{ serviceItem.location.district }}, {{ serviceItem.location.city }}
 							  </div>
 					  	</div>
 						<div class="row">

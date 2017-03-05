@@ -394,6 +394,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }); 
     }
     $scope.addFood = function(){
+        $scope.food.photo1 = listPhoto[0];
+        $scope.food.photo2 = listPhoto[1];
+        $scope.food.photo3 = listPhoto[2];
+        $scope.food.photo4 = listPhoto[3];
+        $scope.food.photo5 = listPhoto[4];
         if($scope.isClickEditButtonFood){
             $http.put(API_ENDPOINT.url + '/api/foods/updateinfo/' + $scope.food._id,$scope.food).success(function(data){
                 toaster.pop('success',"Status",data.msg);

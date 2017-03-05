@@ -30,15 +30,23 @@ router.post('/create', function (req, res) {
     var photo3 = req.body.photo3;
     var photo4 = req.body.photo4;
     var photo5 = req.body.photo5;
+    var codesiret = req.body.codesiret;
+    var postalcode = req.body.postalcode;
+    var timeopen = req.body.timeopen;
+    var country = req.body.country;
     var newService = new Service({
         service_name: service_name,
         service_desciption : service_desciption,
         category : category,
+        codesiret : codesiret,
+        timeopen : timeopen,
         location:{
             housenumber : housenumber,
             street : street,
             district : district,
             city : city,
+            country :country,
+            postalcode : postalcode,
             point: {
                 longitude : longitude,
                 latitude : latitude
@@ -118,6 +126,8 @@ router.put('/updateinfo/:id', function (req, res) {
             street : req.body.street,
             district : req.body.district,
             city : req.body.city,
+            country : req.body.country,
+            postalcode : req.body.postalcode,
             point: {
                 longitude : req.body.longitude,
                 latitude : req.body.latitude
@@ -128,6 +138,8 @@ router.put('/updateinfo/:id', function (req, res) {
         service.photo3 = req.body.photo3;
         service.photo4 = req.body.photo4;
         service.photo5 = req.body.photo5;
+        service.timeopen = req.body.timeopen;
+        service.codesiret = req.body.codesiret;
         Service.createService(service, function (err, service) {
             if (err) console.log(err);
             res.json({
