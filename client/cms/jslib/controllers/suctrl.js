@@ -123,7 +123,6 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
         $scope.isvalidateadd = false;
         $scope.isfilledAdd = true; 
         $scope.isvalidateadd = false;
-        $scope.isfilledAdd = true;
     }
 
     function initmap(addressList,dataAddress){
@@ -237,6 +236,7 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
         $scope.isClickAddButtonService = false;
         $scope.isEditService = false;
         $scope.service = null;
+        $scope.isfilledAdd = false;
     }
 
     var loadService = function(){
