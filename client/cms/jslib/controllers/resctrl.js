@@ -174,7 +174,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     }
 
     $scope.loadCity = function(){
-        $http.get("http://api.zippopotam.us/" + $scope.restaurant.country.id + "/" + $scope.restaurant.postalCode).then(function(data){
+        $http.get("https://api.zippopotam.us/" + $scope.restaurant.country.id + "/" + $scope.restaurant.postalCode).then(function(data){
             $scope.cities = data.data.places;
         })    
     }

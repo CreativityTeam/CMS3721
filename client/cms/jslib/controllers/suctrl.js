@@ -222,7 +222,7 @@ suctrl.controller("sucontroller", function($q,$scope,$http,AuthService,API_ENDPO
     }
 
     $scope.loadCity = function(){
-        $http.get("http://api.zippopotam.us/" + $scope.service.country.id + "/" + $scope.service.postalCode).then(function(data){
+        $http.get("https://api.zippopotam.us/" + $scope.service.country.id + "/" + $scope.service.postalCode).then(function(data){
             $scope.cities = data.data.places;
         })    
     }
