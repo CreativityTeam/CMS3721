@@ -60,7 +60,8 @@ module.exports.createService = function (newService, callback) {
 };
 
 module.exports.getServiceById = function (id, callback) {
-    Service.findById(id).populate('comments').populate('category').exec(callback)
+    Service.findById(id).populate({path: 'comments', populate: {path: 'user_id'}})
+    .populate('category').exec(callback)
 };
 
 module.exports.getServiceByName = function (name, callback) {
