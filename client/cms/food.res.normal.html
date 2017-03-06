@@ -59,58 +59,23 @@
 						</div>
 					</div>
 					<div class="row" ng-show="isClickAddButtonFood">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 1</label>
-								<input type="text" class="form-control border-input" ng-model="food.photo1">							
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{food.photo1}}" border=3 height=100 width=100 ng-show="food.photo1"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonFood">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 2</label>
-								<input type="text" class="form-control border-input" ng-model="food.photo2">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{food.photo2}}" border=3 height=100 width=100 ng-show="food.photo2"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonFood">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 3</label>
-								<input type="text" class="form-control border-input" ng-model="food.photo3">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{food.photo3}}" border=3 height=100 width=100 ng-show="foodphoto3"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonFood">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 4</label>
-								<input type="text" class="form-control border-input" ng-model="food.photo4">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{food.photo4}}" border=3 height=100 width=100 ng-show="food.photo4"></img>	
-						</div>
-					</div>
-					<div class="row" ng-show="isClickAddButtonFood">
-						<div class="col-md-10">
-							<div class="form-group">
-								<label for="sel1">Url Image 5</label>
-								<input type="text" class="form-control border-input" ng-model="food.photo5">
-							</div>
-						</div>
-						<div class="col-md-2">
-							<img ng-src="{{food.photo5}}" border=3 height=100 width=100 ng-show="food.photo5"></img>	
+						<div class="col-md-12">
+						<label for="sel1">Photo</label>
+						<button ngf-select="uploadFiles($files, $invalidFiles)" multiple
+							accept="image/*" ngf-max-height="2000" ngf-max-size="1MB" ngf-max-files="5">
+						Select Files</button>
+						 Files:
+							<ul>
+								<li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
+									<span class="progress" ng-show="f.progress >= 0">
+										<div style="width:{{f.progress}}%"  
+											ng-bind="f.progress + '%'"></div>
+									</span>
+								</li>
+								<li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+								</li> 
+							</ul>
+							{{errorMsg}}
 						</div>
 					</div>
 				</form>

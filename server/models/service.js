@@ -10,11 +10,19 @@ var ServiceSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
     },
+    codesiret:{
+        type : String
+    },
+    timeopen:{
+        type : Date
+    },
     location:{
         housenumber : String,
         street : String,
         district : String,
         city : String,
+        country :String,
+        postalcode : String,
         point:{
             longitude : Number,
             latitude : Number

@@ -39,11 +39,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'rescontroller',
             templateUrl: 'menu.res.normal.html'
         })
-        .state('pubres',{
-            url: '/publicityres',
-            controller : 'rescontroller',
-            templateUrl: 'pub.res.normal.html'
-        })
+        // .state('pubres',{
+        //     url: '/publicityres',
+        //     controller : 'rescontroller',
+        //     templateUrl: 'pub.res.normal.html'
+        // })
         .state('foodres',{
             url: '/foodres',
             controller : 'rescontroller',
@@ -71,8 +71,8 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
         })
         .state('publicity',{
             url: '/publicity',
-            controller : 'sucontroller',
-            templateUrl: 'pub.manage.html'
+            controller : 'rescontroller',
+            templateUrl: 'pub.res.normal.html'
         })
         .state('photo',{
             url: '/photo',

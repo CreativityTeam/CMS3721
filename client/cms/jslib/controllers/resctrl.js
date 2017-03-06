@@ -116,19 +116,10 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         $scope.files = files;
         $scope.errFiles = errFiles;
         angular.forEach(files, function(file) {
-            file.upload = Upload.upload({
-                url:  API_ENDPOINT.url + '/api/photos/addphoto',
-                data: {file: file}
-            });
-
-            file.upload.then(function (response) {
-                listPhoto.push(API_ENDPOINT.urlHost + response.data.data.url)
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            }, function (evt) {
-                file.progress = Math.min(100, parseInt(100.0 * 
-                                         evt.loaded / evt.total));
+            $http.post('https://api.imgur.com/3/image',file, {
+                headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).then(function(response){
+                    toaster.pop('success',"Status","Upload Successfully");
+                    listPhoto.push(response.data.link)
             });
         });
     }
@@ -174,7 +165,7 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
     }
 
     $scope.loadCity = function(){
-        $http.get("http://api.zippopotam.us/" + $scope.restaurant.country.id + "/" + $scope.restaurant.postalCode).then(function(data){
+        $http.get("https://api.zippopotam.us/" + $scope.restaurant.country.id + "/" + $scope.restaurant.postalCode).then(function(data){
             $scope.cities = data.data.places;
         })    
     }
@@ -295,24 +286,17 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
                 $http.post(API_ENDPOINT.url + '/api/publicities/create/' , publicity).success(function(responseCreate){
                     
                     if(responseCreate.success){
-
-                        file.upload = Upload.upload({
-                                url: API_ENDPOINT.url + '/api/photos/addphoto',
-                                data: {file: file},
-                        });
-                        file.upload.then(function (responsePhoto) {
-                            responseCreate.data.photo = API_ENDPOINT.urlHost + responsePhoto.data.data.url;
-                            console.log(responseCreate.data)
-                            $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + responseCreate.data._id, responseCreate.data).success(function(responseUpdate){
-                                if(responseUpdate.success){
+                        $http.post('https://api.imgur.com/3/image',file, {
+                            headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).success(function(responsePhoto){
+                                responseCreate.data.photo = responsePhoto.data.link;
+                                console.log(responseCreate.data)
+                                $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + responseCreate.data._id, responseCreate.data).success(function(responseUpdate){
+                                    if(responseUpdate.success){
                                         getPubLicities();
                                         toaster.pop('success',"Update Status",responseUpdate.msg);
                                     }    
                                 });    
-                            }, function (response) {
-                            if (response.status > 0)
-                                $scope.errorMsg = response.status + ': ' + response.data;
-                        }); 
+                        })
                     }    
                 }); 
 
@@ -327,23 +311,16 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
               
             }else if(publicity.hasOwnProperty('_id') && publicity.hasOwnProperty('photo') && file != undefined){
 
-                  file.upload = Upload.upload({
-                            url: API_ENDPOINT.url + '/api/photos/addphoto',
-                            data: {file: file},
-                    });
-                    file.upload.then(function (responsePhoto) {
-                        publicity.photo = API_ENDPOINT.urlHost + responsePhoto.data.data.url;
-                        $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + publicity._id, publicity).success(function(responseUpdate){
-                            if(responseUpdate.success){
+                    $http.post('https://api.imgur.com/3/image',file, {
+                        headers: {'Authorization': 'Client-ID d2a848d1eda742b'}}).success(function(responsePhoto){
+                            publicity.photo = responsePhoto.data.link;
+                            $http.put(API_ENDPOINT.url + '/api/publicities/updateinfo/' + publicity._id, publicity).success(function(responseUpdate){
+                                if(responseUpdate.success){
                                     getPubLicities();
                                     toaster.pop('success',"Update Status",responseUpdate.msg);
                                 }    
                             });    
-                        }, function (response) {
-                        if (response.status > 0)
-                            $scope.errorMsg = response.status + ': ' + response.data;
-                    }); 
-
+                    }) 
             }
 
         }
@@ -394,6 +371,11 @@ resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,
         }); 
     }
     $scope.addFood = function(){
+        $scope.food.photo1 = listPhoto[0];
+        $scope.food.photo2 = listPhoto[1];
+        $scope.food.photo3 = listPhoto[2];
+        $scope.food.photo4 = listPhoto[3];
+        $scope.food.photo5 = listPhoto[4];
         if($scope.isClickEditButtonFood){
             $http.put(API_ENDPOINT.url + '/api/foods/updateinfo/' + $scope.food._id,$scope.food).success(function(data){
                 toaster.pop('success',"Status",data.msg);

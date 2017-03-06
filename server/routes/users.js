@@ -7,6 +7,7 @@ var configAuth = require('../config/auth');
 var cors = require('cors');
 var jwt = require('jwt-simple');
 const generator = require('generate-password');
+const bunyan = require('bunyan');
 const nodemailer = require('nodemailer');
 
 router.post('/register',function(req,res){
@@ -39,7 +40,8 @@ router.post('/register',function(req,res){
                     res.json({
                         success: true,
                         msg: 'Successfully create account',
-                        token: token
+                        token: token,
+                        data : user
                     });
                 }
             });
@@ -84,7 +86,8 @@ router.post('/login',function(req,res,next){
                     return res.json({
                         success : true,
                         msg : 'Login successful',
-                        token : token
+                        token : token,
+                        data : newuser
                     });    
                });
            });
@@ -381,14 +384,26 @@ router.post('/resetpassword',function(req,res){
                     numbers: true
                 });
                 let transporter = nodemailer.createTransport({
-                    service: 'gmail',
+                    service: 'Gmail',
                     auth: {
-                        user: 'nhatndm1193@gmail.com',
-                        pass: 'Nhatnguyen0408'
+                        user: 'testdevapp0101@gmail.com',
+                        pass:  'Nhatnguyen0101'
+                    },
+                    logger: bunyan.createLogger({
+                        name: 'nodemailer'
+                    }),
+                    debug: true // include SMTP traffic in the logs
+                }, {
+                    // default message fields
+
+                    // sender info
+                    from: 'Admin <testdevapp0101@gmail.com>',
+                    headers: {
+                        'X-Laziness-level': 1000 // just an example header, no need to use this
                     }
                 });
                 let mailOptions = {
-                    from: '"Admin" <nhatndm1193@gmail.com>', // sender address
+                    from: '"Admin" <testdevapp0101@gmail.com>', // sender address
                     to: req.body.username, // list of receivers
                     subject: 'Reset Password ✔', // Subject line
                     html: '<b>Please use this password to reset password: ' + password + '</b>' // html body
