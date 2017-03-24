@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var Service = require('../models/service');
+var Comment = require('../models/comment');
 
 /**Request
  * body
@@ -199,16 +200,19 @@ router.get('/findcategory/:id', function (req, res) {
 
 /**Input : ID comments */
 /**Output : Array Restaurant */
-router.put('/updatecomment/:id/:idcomment',function(req,res){
+router.put('/addcomment/:id/:idcomment',function(req,res){
     Service.getServiceById(req.params.id,function(err,service){
         if(err) console.log(err);
         service.comments.push(req.params.idcomment);
-        Service.createService(service,function(err,service){
-            if(err) console.log(err);
-            res.json({
-                success : true,
-                data : service,
-                msg : "Successfully update"
+        Comment.findUser(req.params.idcomment, function(err, comment){
+			if(err) console.log(err);
+            Service.createService(service,function(err,service){
+                if(err) console.log(err);
+                res.json({
+                    success : true,
+                    data : comment,
+                    msg : "Successfully update"
+                });
             });
         });
     });

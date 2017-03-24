@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var configAuth = require('../config/auth');
 var Restaurant = require('../models/restaurant');
+var Comment = require('../models/comment');
 var jwt = require('jwt-simple');
 
 router.post('/register',function(req,res){
@@ -176,18 +177,21 @@ router.get('/findpublicity/:id',function(req,res){
 
 /**Input : ID comments */
 /**Output : Array Restaurant */
-router.put('/updatecomment/:id/:idcomment',function(req,res){
+router.put('/addcomment/:id/:idcomment',function(req,res){
     Restaurant.getRestaurantById(req.params.id,function(err,restaurant){
         if(err) console.log(err);
         restaurant.comments.push(req.params.idcomment);
-        Restaurant.createRestaurant(restaurant,function(err,restaurant){
+        Comment.findUser(req.params.idcomment, function(err, comment){
+			if(err) console.log(err);
+            Restaurant.createRestaurant(restaurant,function(err,restaurant){
             if(err) console.log(err);
             res.json({
                 success : true,
-                data : restaurant,
+                data : comment,
                 msg : "Successfully update"
             });
         });
+        })                
     });
 });
 

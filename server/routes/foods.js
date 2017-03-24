@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Food = require('../models/food');
+var Comment = require('../models/comment');
 
 /**Request
  * body
@@ -282,12 +283,15 @@ router.put('/addcomment/:id/:idcomment',function(req,res){
     Food.getFoodById(req.params.id,function(err,food){
         if(err) console.log(err);
         food.comments.push(req.params.idcomment);
-        Food.createFood(food,function(err,food){
-            if(err) console.log(err);
-            res.json({
-                success : true,
-                msg : "Successfully update",
-                data : food
+        Comment.findUser(req.params.idcomment, function(err, comment){
+			if(err) console.log(err);
+            Food.createFood(food,function(err,food){
+                if(err) console.log(err);
+                res.json({
+                    success : true,
+                    msg : "Successfully update",
+                    data : comment
+                });
             });
         });
     });
