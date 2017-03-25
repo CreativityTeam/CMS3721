@@ -12,13 +12,14 @@ var Comment = require('../models/comment');
 */
 router.post('/create',function(req,res){
     var currentDate = new Date();
-    var newDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset()*60000));
+    // var newDate = new Date(currentDate.getTime() - (currentDate.getTimezoneOffset()*60000));
     var user_id = req.body.user_id;
     var content = req.body.content;    
     var newComment = new Comment({
         user_id : user_id,
         content : content,
-        date_created: newDate
+        // date_created: newDate
+        date_created: currentDate
     });
     
     Comment.createComment(newComment,function(err,comment){
