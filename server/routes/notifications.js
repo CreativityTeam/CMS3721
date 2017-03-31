@@ -37,3 +37,5 @@ router.get('/createNewNotification',function(req){
         io.emit("newOderNotification",newNotificationFromDB);
     })
 });
+
+module.exports = router;
