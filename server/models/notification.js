@@ -9,7 +9,7 @@ const NotificationSchema = mongoose.Schema({
         type : String
     },
     state : {
-        type : AST_Boolean,
+        type : mongoose.Schema.Types.ObjectId,
         default : false
     }
 });
