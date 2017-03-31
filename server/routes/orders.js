@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var Order = require('../models/order');
-var User = require('../models/user');
+const express = require('express');
+const router = express.Router();
+const Order = require('../models/order');
+const User = require('../models/user');
 
 /**Request 
  * body 
@@ -243,13 +243,20 @@ router.get('/getResName',function(req,res){
 
 /**Router Update Fee and total_price */
 router.post('/updatefee/:id',function(req,res){
+    let io = req.io;
     Order.getOrderById(req.params.id,function(err,order){
         if(err) console.log(err); 
         var feeShipping = req.body.feeShipping;
         order.feeshipping = feeShipping;
-        order.total_price = order.total_price + feeShipping;               
+        order.total_price = order.total_price + feeShipping;
+        order.isValid = true;
         Order.createOrder(order,function(err,order){
             if(err) console.log(err);
+            const dataTransfer = {
+                msg : 'Your Order is confirmed'
+            };
+            //** Send Order has been confirmed
+            io.emit("newOderNotification",dataTransfer);
             res.json({
                 success : true,
                 msg : "Successfully update",

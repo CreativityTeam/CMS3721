@@ -50,6 +50,10 @@ var OrderSchema = mongoose.Schema({
     },
     total_price: {
         type: Number
+    },
+    isValid: {
+        type: Boolean,
+        default: false
     }
 });
 

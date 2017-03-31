@@ -69,6 +69,7 @@ var services = require('./routes/services');
 var restaurants = require('./routes/restaurants');
 var categories = require('./routes/categories');
 var menus = require('./routes/menus');
+var notifications = require('./routes/notifications');
 
 /**URL for model */
 //* Its purpose to call the right api for model
@@ -84,6 +85,7 @@ app.use('/api/services',services);
 app.use('/api/restaurants',restaurants);
 app.use('/api/categories',categories);
 app.use('/api/menus',menus);
+app.use('/api/notifications',notifications);
 app.use('/checkconnection/',function(req,res){
     res.json({
         status : 200

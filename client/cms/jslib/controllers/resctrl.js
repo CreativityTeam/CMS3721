@@ -1,17 +1,25 @@
 var resctrl = angular.module("resctrl",[]);
 
-resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window,Upload,$timeout){
+resctrl.controller("rescontroller",function($rootScope,$scope,$http,AuthService,API_ENDPOINT,toaster,$q,$window,Upload){
     var map;
     $('#resform').hide();
     /**Set Register Form to Hide */
     $scope.isvalidateadd = true;
-    $scope.isfilledAdd = false;       
+    $scope.isfilledAdd = false;
+    $scope.restaurantBelongCurrentUser = [];
     var listPhoto = [];
     /**Get restaurant that belong to current user */
     var getRestaurant = function(){
         if(AuthService.getCurrentUser().role === "SuperUser"){
+            console.log(AuthService.getCurrentUser());
             $http.get(API_ENDPOINT.url + '/api/restaurants/findres').success(function(data){
                 $scope.restaurantBelongUser = data.data;
+                $scope.restaurantBelongUser.forEach(function(value){
+                    if(value.user_id === AuthService.getCurrentUser()._id){
+                        $scope.restaurantBelongCurrentUser.push(value);
+                    }
+                });
+                console.log($scope.restaurantBelongUser);
             });   
         }else{
             $http.get(API_ENDPOINT.url + '/api/restaurants/findad/' + AuthService.tokensave()).success(function(response){
