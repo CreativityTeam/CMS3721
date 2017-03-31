@@ -1,0 +1,16 @@
+<div class="row">
+	<table class="table">
+		<thead>
+			<th>ID</th>
+			<th>Contenu</th>
+			<th>Etat</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="notification in listNotification">
+				<td>{{ notification._id }}</td>
+				<td>Notification for Order ID <a class="btn btn-success" href="http://test3721.herokuapp.com/order/show/{{notification.idRelated}}">{{notification.idRelated}}</a></td>
+				<td>{{ notification.state }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

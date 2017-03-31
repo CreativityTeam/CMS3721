@@ -72,7 +72,11 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Sexe</label>
-								<input type="text" class="form-control border-input" placeholder="Sexe" value="{{ user.gender }}" ng-model="user.gender">
+								<select class="form-control" placeholder="Sexe" value="{{ user.gender }}" ng-model="user.gender">
+									<option value="mâle">mâle</option>
+									<option value="shemale">shemale</option>
+									<option value="autre">autre</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-md-4">

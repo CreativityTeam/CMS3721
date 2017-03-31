@@ -9,7 +9,7 @@ const NotificationSchema = mongoose.Schema({
         type : String
     },
     state : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : Boolean,
         default : false
     }
 });
@@ -17,8 +17,8 @@ NotificationSchema.plugin(mongoose_timestamp);
 let Notification = module.exports = mongoose.model('Notification',NotificationSchema);
 
 /**Create new notification**/
-module.exports.createNewNotification = (newNotification,callback) => Notification.save(newNotification,callback);
+module.exports.createNewNotification = (newNotification,callback) => newNotification.save(callback);
 /**Get noditificationID**/
-module.exports.getNotificationID = (id,callback) => Notification.findById(id,callback);
+module.exports.getNotificationID = (id,callback) => Notification.findById(callback);
 /**Get all notification**/
 module.exports.getAllNotification = (callback) => Notification.find(callback);

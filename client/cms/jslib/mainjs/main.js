@@ -11,7 +11,8 @@ var app = angular.module('cms',[
     'toaster',
     'ngMap',
     'suctrl',
-    'ngFileUpload'
+    'ngFileUpload',
+    'notificationctrl'
 ]);
 
 app.directive('loading',function(){

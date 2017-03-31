@@ -79,6 +79,11 @@ mainroute.config(function($stateProvider, $urlRouterProvider, $locationProvider)
             controller : 'photoController',
             templateUrl: 'photo.html'
         })
+        .state('notification',{
+            url: '/notification',
+            controller : 'notificationController',
+            templateUrl: 'notification.html'
+        })
         .state('service',{
             url: '/service',
             controller : 'sucontroller',
