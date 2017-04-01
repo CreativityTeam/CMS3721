@@ -23,7 +23,38 @@ defaultctrl.controller("DefaultController",function($scope,$http,AuthService,$wi
                 }
         }
     };
+
+    const notifyMe = () => {
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+        }
+        else if (Notification.permission === "granted") {
+            let options = {
+                body: 'Your restaurant have new order',
+                icon: "icon.jpg",
+                dir : "ltr"
+            };
+            let notification = new Notification("CMS 3721 Notification",options);
+        }
+        else if (Notification.permission !== 'denied') {
+            Notification.requestPermission(function (permission) {
+                if (!('permission' in Notification)) {
+                    Notification.permission = permission;
+                }
+                if (permission === "granted") {
+                    let options = {
+                        body: 'Your restaurant have new order',
+                        icon: "icon.jpg",
+                        dir : "ltr"
+                    };
+                    let notification = new Notification("CMS 3721 Notification",options);
+                }
+            });
+        }
+    };
+
     getinfo();
+
     const getAllNotification = () => {
         $http.get(API_ENDPOINT.url + '/api/notifications/getAllNotification').then(function(response){
             response.data.allNotification.forEach(function(notification){
@@ -40,7 +71,6 @@ defaultctrl.controller("DefaultController",function($scope,$http,AuthService,$wi
                        }else{
                            $http.get(API_ENDPOINT.url + '/api/orders/findOrder/' + notification.idRelated).then(function (response) {
                                if (response.data.data.res_belong.user_id === AuthService.getCurrentUser()._id) {
-                                   toaster.pop('success',"New Notification","You have new order");
                                    $scope.listNotificationDefault.push(notification);
                                }
                            });
@@ -50,7 +80,9 @@ defaultctrl.controller("DefaultController",function($scope,$http,AuthService,$wi
             });
         })
     };
+
     getAllNotification();
+
     const ioConnect = ()  => {
         let socketHost = API_ENDPOINT.urlHost;
         let connect = function (ns) {
@@ -62,7 +94,8 @@ defaultctrl.controller("DefaultController",function($scope,$http,AuthService,$wi
         const ioConn = connect(socketHost);
         ioConn.on('newOderNotification', function(data){
             if(data){
-                getAllNotification();
+                    getAllNotification();
+                    notifyMe();
             }
         });
     };
