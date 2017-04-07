@@ -46,6 +46,10 @@ var FoodSchema = mongoose.Schema({
     totalRating: {
         type: Number,
         default: 0
+    },
+    isHot: {
+        type: Boolean,
+        default : false
     }
 });
 

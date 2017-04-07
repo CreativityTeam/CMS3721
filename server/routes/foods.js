@@ -25,6 +25,7 @@ router.post('/create',function(req,res){
     var photo3 = req.body.photo3;
     var photo4 = req.body.photo4;
     var photo5 = req.body.photo5;
+    var isHot = req.body.isHot;
     var newFood = new Food({
         food_name : food_name,
         description : description,
@@ -35,7 +36,8 @@ router.post('/create',function(req,res){
         photo2 : photo2,
         photo3 : photo3,
         photo4 : photo4,
-        photo5 : photo5
+        photo5 : photo5,
+        isHot : isHot
     });
     
     Food.createFood(newFood,function(err,food){
@@ -354,6 +356,7 @@ router.put('/updateinfo/:id',function(req,res){
         food.photo3 = req.body.photo3;
         food.photo4 = req.body.photo4;
         food.photo5 = req.body.photo5;
+        food.isHot =  req.body.isHot
         Food.createFood(food,function(err,food){
             if(err) console.log(err);
             res.json({
