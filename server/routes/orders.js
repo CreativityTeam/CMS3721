@@ -47,10 +47,12 @@ router.post('/create',function(req,res){
             food_id : req.body.foods[food].id,
             quantity : req.body.foods[food].quantity
         })
-    }
+    }    
 
     Order.createOrder(newOrder,function(err,order){
         if(err) console.log(err);
+        var io = req.io;
+        io.emit('pendingOrder', {"order_id": newOrder._id, "user_order": newOrder.user_order});
         res.json({
             success : true,
             msg : "Successfully Create Order",
