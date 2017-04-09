@@ -51,8 +51,7 @@ router.post('/create',function(req,res){
 
     Order.createOrder(newOrder,function(err,order){
         if(err) console.log(err);
-        var io = req.io;
-        io.emit('pendingOrder', {"order_id": newOrder._id, "user_order": newOrder.user_order});
+        var io = req.io;        
         res.json({
             success : true,
             msg : "Successfully Create Order",
@@ -253,12 +252,9 @@ router.post('/updatefee/:id',function(req,res){
         order.total_price = order.total_price + feeShipping;
         order.isValid = true;
         Order.createOrder(order,function(err,order){
-            if(err) console.log(err);
-            const dataTransfer = {
-                msg : 'Your Order is confirmed'
-            };
+            if(err) console.log(err);            
             //** Send Order has been confirmed
-            io.emit("newOderNotification",dataTransfer);
+            io.emit("orderConfirmed", {"isConfirmed": true, "orderId": order._id});
             res.json({
                 success : true,
                 msg : "Successfully update",

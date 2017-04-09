@@ -30,7 +30,7 @@ router.post('/createNewNotification',function(req){
     let io = req.io;
     let newNotification = new Notification({
         idRelated : req.body._id,
-        content : "Notification for order ID" + req.body._id,
+        content : "Notification for order ID " + req.body._id,
     });
     Notification.createNewNotification(newNotification,function(err,newNotificationFromDB){
         if(err) console.log(err);
