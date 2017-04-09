@@ -54,6 +54,9 @@ var OrderSchema = mongoose.Schema({
     isValid: {
         type: Boolean,
         default: false
+    },
+    time_created: {
+        type: Date
     }
 });
 

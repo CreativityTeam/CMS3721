@@ -31,6 +31,7 @@ router.post('/create',function(req,res){
         user_order: user_order,
         res_belong : res_belong,
         time_ordered: time_ordered,
+        time_created: new Date(),
         location_ordered: {
             address : address,
             point : {
@@ -254,7 +255,7 @@ router.post('/updatefee/:id',function(req,res){
         Order.createOrder(order,function(err,order){
             if(err) console.log(err);            
             //** Send Order has been confirmed
-            io.emit("orderConfirmed", {"isConfirmed": true, "orderId": order._id});
+            io.emit("orderConfirmed", order);
             res.json({
                 success : true,
                 msg : "Successfully update",
